@@ -12,6 +12,21 @@ class Selection extends StatefulWidget {
       this.onTap5,
       this.onTap6,
       this.onTap7,
+      this.onTap8,
+      this.onTap9,
+      this.onTap10,
+      this.onTap11,
+      this.color1,
+      this.color2,
+      this.color3,
+      this.color4,
+      this.color5,
+      this.color6,
+      this.color7,
+      this.color8,
+      this.color9,
+      this.color10,
+      this.color11,
       key});
 
   VoidCallback? onTap1;
@@ -21,20 +36,83 @@ class Selection extends StatefulWidget {
   VoidCallback? onTap5;
   VoidCallback? onTap6;
   VoidCallback? onTap7;
+  VoidCallback? onTap8;
+  VoidCallback? onTap9;
+  VoidCallback? onTap10;
+  VoidCallback? onTap11;
+
+  Color? color1;
+  Color? color2;
+  Color? color3;
+  Color? color4;
+  Color? color5;
+  Color? color6;
+  Color? color7;
+  Color? color8;
+  Color? color9;
+  Color? color10;
+  Color? color11;
 
   @override
   State<Selection> createState() => _SelectionState();
 }
 
 class _SelectionState extends State<Selection> {
+  void createImageTable() async {
+    final conn = await connectToDatabase();
+    try {
+      await conn.execute('CREATE TABLE IF NOT EXISTS pictures ('
+          ' id SERIAL PRIMARY KEY,'
+          ' info_id INTEGER,'
+          ' image1 VARCHAR(500),'
+          ' image2 VARCHAR(500),'
+          ' image3 VARCHAR(500),'
+          ' image4 VARCHAR(500),'
+          ' image5 VARCHAR(500),'
+          ' image6 VARCHAR(500),'
+          ' image7 VARCHAR(500),'
+          ' image8 VARCHAR(500),'
+          ' image9 VARCHAR(500),'
+          ' image10 VARCHAR(500),'
+          ' FOREIGN KEY (info_id) REFERENCES info(info_id)'
+          ')');
+      conn.close();
+      print("created pictures table");
+    } catch (error) {
+      print(error);
+    }
+  }
 
+  void createChildrenTable() async {
+    final conn = await connectToDatabase();
+    try {
+      await conn.execute('CREATE TABLE IF NOT EXISTS children ('
+          ' id SERIAL PRIMARY KEY,'
+          ' info_id INTEGER,'
+          ' name VARCHAR(45),'
+          ' birthdate VARCHAR(45),'
+          ' gender VARCHAR(45),'
+          ' age VARCHAR(45),'
+          ' school VARCHAR(45),'
+          ' grade VARCHAR(45),'
+          ' shoeSize VARCHAR(45),'
+          ' uniformSize VARCHAR(45),'
+          ' additionalInfo VARCHAR(45),'
+          ' FOREIGN KEY (info_id) REFERENCES info(info_id)'
+          ')');
+      conn.close();
+      print("created children table");
+    } catch (error) {
+      print(error);
+    }
+  }
 
   void createFull() async {
     final conn = await connectToDatabase();
 
     try {
       await conn.execute('CREATE TABLE IF NOT EXISTS info ('
-          '   id SERIAL PRIMARY KEY, '
+          '   info_id SERIAL PRIMARY KEY, '
           '  districtMunicipality VARCHAR(255), '
           '  localMunicipality VARCHAR(255), '
           '  ward VARCHAR(255), '
@@ -78,9 +156,7 @@ class _SelectionState extends State<Selection> {
           '  textbookDamage VARCHAR(255), '
           '  anyLostDocument VARCHAR(255), '
           '  lostDocumentAmount VARCHAR(255), '
-
           '  itemsLost VARCHAR(255), '
-
           '  numberOfStructuresInHousehold VARCHAR(255), '
           '  numberOfPartiallyDamagedStructures VARCHAR(255), '
           '  anyHomeless VARCHAR(255), '
@@ -111,14 +187,17 @@ class _SelectionState extends State<Selection> {
           '  croplosses VARCHAR(255), '
           '  soilDegredation VARCHAR(255), '
           '  jobOpportunities VARCHAR(255), '
-          '  Veld VARCHAR(255) '
+          '  Veld VARCHAR(255), '
+          '  numberOfMattreses VARCHAR(255), '
+          '  numberoOfLightingConductor VARCHAR(255), '
+          '  otherIntervention VARCHAR(255), '
+          '  notes VARCHAR(255) '
           ')');
       print("successful");
     } catch (error) {
       print(error);
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -136,7 +215,7 @@ class _SelectionState extends State<Selection> {
                   color: Colors.black26,
                 ),
               ),
-              SubTitle(
+              SubTitle2(
                 title: 'Sections',
               ),
               const Padding(
@@ -149,46 +228,105 @@ class _SelectionState extends State<Selection> {
               ButtonSelection(
                 inSide: "1. SPATIAL LOCATION",
                 onTap: widget.onTap1,
+                color: widget.color1!,
               ),
               ButtonSelection(
                 inSide: "2. INCIDENT DETAILS",
                 onTap: widget.onTap2,
+                color: widget.color2!,
               ),
               ButtonSelection(
                 inSide: "3. HOUSEHOLD EFFECTED",
                 onTap: widget.onTap3,
+                color: widget.color3!,
               ),
               ButtonSelection(
                 inSide: "4. WELLBEING IMPACT ON THE HOUSEHOLD MEMBERS",
                 onTap: widget.onTap4,
+                color: widget.color4!,
               ),
               ButtonSelection(
                 inSide: "5. CONDITION OF THE INFRASTRUCTURE",
                 onTap: widget.onTap5,
+                color: widget.color5!,
               ),
               ButtonSelection(
                 inSide: "6. SOCIAL RELIEF SUPPORT",
                 onTap: widget.onTap6,
+                color: widget.color6!,
               ),
               ButtonSelection(
                 inSide: "7. AGRICULTURAL DAMAGE – PRELIMINARY SURVEY",
                 onTap: widget.onTap7,
+                color: widget.color7!,
+              ),
+              ButtonSelection(
+                inSide: "8. Pictures Selection",
+                onTap: widget.onTap8,
+                color: widget.color8,
+              ),
+              ButtonSelection(
+                inSide: "9. Special Notes       ",
+                onTap: widget.onTap9,
+                color: widget.color9,
+              ),
+              ButtonSelection(
+                inSide: "10. Submit               ",
+                onTap: widget.onTap10,
+                color: widget.color10,
+              ),
+              ButtonSelection2(
+                inSide: "View Map",
+                size: 24.0,
+                color: widget.color11,
+                onTap: widget.onTap11,
               ),
               Divider(),
-              Padding(
-                padding: const EdgeInsets.only(top: 30.0, bottom: 10.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                        child: ElevatedButton(
-
-                            onPressed: () {
-                              createFull();
-                            },
-                            child: Text("CREAT DATABASE"))),
-                  ],
-                ),
-              )
+              // Padding(
+              //   padding: const EdgeInsets.only(top: 30.0, bottom: 10.0),
+              //   child: Row(
+              //     children: [
+              //       Expanded(
+              //         child: ElevatedButton(
+              //           onPressed: () {
+              //             createFull();
+              //           },
+              //           child: Text("CREATE MAIN DATABASE"),
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              // Padding(
+              //   padding: const EdgeInsets.only(top: 30.0, bottom: 10.0),
+              //   child: Row(
+              //     children: [
+              //       Expanded(
+              //         child: ElevatedButton(
+              //           onPressed: () {
+              //             createChildrenTable();
+              //           },
+              //           child: Text("CREAT CHILD DATABASE"),
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              // Padding(
+              //   padding: const EdgeInsets.only(top: 30.0, bottom: 10.0),
+              //   child: Row(
+              //     children: [
+              //       Expanded(
+              //         child: ElevatedButton(
+              //           onPressed: () {
+              //             createImageTable();
+              //           },
+              //           child: Text("CREAT IMAGE DATABASE"),
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // )
             ],
           ),
         ),
@@ -199,13 +337,62 @@ class _SelectionState extends State<Selection> {
 
 class ButtonSelection extends StatelessWidget {
   ButtonSelection({
+    this.color,
     this.onTap,
     this.inSide,
+    this.size,
     super.key,
   });
 
   VoidCallback? onTap;
   String? inSide;
+  Color? color;
+  double? size;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: GestureDetector(
+        onTap: onTap ?? () {},
+        child: Container(
+          alignment: Alignment.centerLeft,
+          margin: EdgeInsets.only(left: 8.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(0.0),
+            color: color!,
+          ),
+          height: 70.0,
+          child: Padding(
+            padding: const EdgeInsets.only(
+                left: 60.0, top: 10, bottom: 10, right: 15.0),
+            child: Center(
+              child: Text(
+                inSide ?? "",
+                style: TextStyle(fontSize: size ?? 18.0),
+                textAlign: TextAlign.start,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ButtonSelection2 extends StatelessWidget {
+  ButtonSelection2({
+    this.color,
+    this.onTap,
+    this.inSide,
+    this.size,
+    super.key,
+  });
+
+  VoidCallback? onTap;
+  String? inSide;
+  Color? color;
+  double? size;
 
   @override
   Widget build(BuildContext context) {
@@ -216,17 +403,23 @@ class ButtonSelection extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(0.0),
-            color: Colors.grey[100],
+            color: color!,
           ),
           height: 70.0,
           child: Padding(
             padding: const EdgeInsets.all(5.0),
-            child: Center(
-              child: Text(
-                inSide ?? "",
-                style: const TextStyle(fontSize: 20.0),
-                textAlign: TextAlign.center,
-              ),
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 20.0),
+                  child: Text(
+                    inSide ?? "",
+                    style: TextStyle(
+                        fontSize: size ?? 18.0, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.start,
+                  ),
+                ),
+              ],
             ),
           ),
         ),

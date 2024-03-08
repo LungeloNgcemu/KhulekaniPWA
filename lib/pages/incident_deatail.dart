@@ -6,8 +6,11 @@ import 'package:khulekani_app/components/menu_list.dart';
 import 'package:khulekani_app/components/questionTextStrip.dart';
 import 'package:khulekani_app/components/save_button.dart';
 import 'package:khulekani_app/components/subtitle.dart';
-import 'package:khulekani_app/provider_answers.dart';
+import 'package:khulekani_app/providers/provider_answers.dart';
 import 'package:provider/provider.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:khulekani_app/providers/clear_function.dart';
+import 'package:khulekani_app/providers/saved_pages.dart';
 
 class IncidentDetails extends StatefulWidget {
   const IncidentDetails({super.key});
@@ -16,11 +19,18 @@ class IncidentDetails extends StatefulWidget {
   State<IncidentDetails> createState() => _IncidentDetailsState();
 }
 
-class _IncidentDetailsState extends State<IncidentDetails> {
+class _IncidentDetailsState extends State<IncidentDetails>
+    with AutomaticKeepAliveClientMixin {
+  bool isSaved = false;
 
   TextEditingController controllerA = TextEditingController();
   TextEditingController controllerB = TextEditingController();
 
+  void clear2() {
+    controllerA.clear();
+    controllerB.clear();
+    print("cleared 2");
+  }
   String answerA = "";
   String answerB = "";
 
@@ -30,21 +40,27 @@ class _IncidentDetailsState extends State<IncidentDetails> {
   String? selectedValue4;
 
   @override
+  bool get wantKeepAlive => true;
+
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 1.0),
-            child: Divider(color: Colors.black,),
+            child: Divider(
+              color: Colors.black,
+            ),
           ),
           HeaderBlue(
-            text:"INCIDENT DETAILS" ,
+            text: "INCIDENT DETAILS",
           ),
 
           Padding(
             padding: const EdgeInsets.only(top: 1.0),
-            child: Divider(color: Colors.black,),
+            child: Divider(
+              color: Colors.black,
+            ),
           ),
           SubTitle(
             title: "2.1 Type of incident",
@@ -53,24 +69,19 @@ class _IncidentDetailsState extends State<IncidentDetails> {
           //17 provider
           MenuList(
             // On the end
-            choice: selectedValue1 == "Select"
-                ? "Selectd Nothing"
-                : 'Selected: ${context.watch<ProviderSeventeen>().seventeen ?? "Nothing"}',
+            choice:context.watch<ProviderSeventeen>().seventeen ?? "",
             //first value
-            selectedValue: "Select",
+            selectedValue: "",
             listName: collection.Incedents,
             text: "A) Type of incident",
             //
             onChanged: (String? value) {
               setState(() {
                 selectedValue1 = value;
-                context.read<ProviderSeventeen>().changeValue(newValue: selectedValue1!);
-
-                if (selectedValue1 == "select") {
-                  selectedValue1 = "nothing";
-                }
+                context
+                    .read<ProviderSeventeen>()
+                    .changeValue(newValue: selectedValue1!);
               });
-
             },
           ),
 
@@ -84,22 +95,18 @@ class _IncidentDetailsState extends State<IncidentDetails> {
           ),
           MenuList(
             // On the end
-            choice: selectedValue2 == "Select"
-                ? "Selectd Nothing"
-                : 'Selected: ${context.watch<ProviderNineteen>() ?? "Nothing"}',
+            choice: context.watch<ProviderNineteen>().nineteen ?? "",
             //first value
-            selectedValue: "Select",
+            selectedValue: "",
             listName: collection.Incedents,
             text: "A) Cause of incident",
             //
             onChanged: (String? value) {
               setState(() {
                 selectedValue2 = value;
-                context.read<ProviderNineteen>().changeValue(newValue: selectedValue2!);
-
-                if (selectedValue2 == "select") {
-                  selectedValue2 = "nothing";
-                }
+                context
+                    .read<ProviderNineteen>()
+                    .changeValue(newValue: selectedValue2!);
               });
               print(selectedValue2);
             },
@@ -111,16 +118,40 @@ class _IncidentDetailsState extends State<IncidentDetails> {
           Divider(
             height: 30,
           ),
+
           SaveButton(
-            onPressed: (){
-              context
-                  .read<ProviderEighteen>()
-                  .changeValue(newValue: controllerA.text);
-              context
-                  .read<ProviderTwenty>()
-                  .changeValue(newValue: controllerB.text);
+            color: context.watch<ProviderSavedTwo>().two == false ? Colors.red : Colors.green[500],
+            onPressed: () {
+              context.read<ProviderClear2>().setMyFunction(newFunction: clear2);
+              context.read<ProviderSavedTwo>().changeValue(newValue: true);
+              Future<bool?> saveData() {
+                context
+                    .read<ProviderEighteen>()
+                    .changeValue(newValue: controllerA.text);
+                context
+                    .read<ProviderTwenty>()
+                    .changeValue(newValue: controllerB.text);
+                return Alert(
+                  context: context,
+                  type: AlertType.success,
+                  title: "Saved",
+                  desc: "Your Data has been Saved.",
+                  buttons: [
+                    DialogButton(
+                      child: Text(
+                        "Done",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                      onPressed: () => Navigator.pop(context),
+                      width: 120,
+                    )
+                  ],
+                ).show();
+              }
+
+              saveData();
             },
-          )
+          ),
         ],
       ),
     );

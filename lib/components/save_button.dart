@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 class SaveButton extends StatelessWidget {
-  SaveButton({this.onPressed, super.key});
+  SaveButton({this.onPressed,this.color,this.text, super.key});
 
   VoidCallback? onPressed;
+  Color? color;
+  String? text;
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +23,12 @@ class SaveButton extends StatelessWidget {
                 child: MaterialButton(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0)),
-                  color: Colors.green[500],
+                  color: color ?? Colors.green[500],
                   onPressed: onPressed ?? () {},
-                  child: const Text(
-                    "Save",
+                  child: Text(
+                    text ?? "Save",
                     style:
-                    TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
+                    const TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),

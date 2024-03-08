@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class QuestionTextStrip extends StatelessWidget {
   QuestionTextStrip({
     this. controller,
+    this.onChanged,
     this.text,
     super.key,
   });
 
   String? text;
+  void Function(String)? onChanged;
   TextEditingController? controller;
   //The argument type 'void Function()' can't be assigned to the parameter type 'TextEditingController?'.
 
@@ -26,7 +28,7 @@ class QuestionTextStrip extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 8.0),
                   child: Text(
                     text ?? "",
-                    style: TextStyle(fontSize: 30.0),
+                    style: TextStyle(fontSize: 25.0),
                   ),
                 )),
             Expanded(
@@ -36,6 +38,7 @@ class QuestionTextStrip extends StatelessWidget {
                   height: 50,
                   width: 20,
                   child: TextField(
+                    onChanged: onChanged ?? (String) {},
                     controller: controller,
                     decoration: InputDecoration(
                       filled: true,

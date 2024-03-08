@@ -6,6 +6,13 @@ import 'pages/wellbeing_impact.dart';
 import 'pages/infrastructure_condtition.dart';
 import 'pages/social_relief_support.dart';
 import 'pages/agricultural_damages.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'data_base.dart';
+import 'pages/map_screen.dart';
+import 'not_google.dart';
+import 'pages/image_screen.dart';
+import 'pages/notes_sceen.dart';
+import 'pages/submit_screen.dart';
 //import 'pages/table.dart' as collect;
 
  List<Widget> _pages = const [
@@ -16,23 +23,80 @@ import 'pages/agricultural_damages.dart';
   InfrastructureCondition(),
   SocialReliefSupport(),
   AgriculturalDamages(),
-  // collect.Table(),
+   ImageScreen(),
+   NotesScreen(),
+   SubmitScreen(),
+  NotGoogle(),
 ];
 
 
 class Viewx extends StatefulWidget {
   Viewx({ this.changer,this.controller});
 
-  dynamic changer;
+ // dynamic changer;
+  void Function(int)? changer;
   PageController? controller;
   @override
   State<Viewx> createState() => _ViewxState();
 }
 
 class _ViewxState extends State<Viewx> {
+bool isLoading = true;
+  @override
+  void initState() {
+    super.initState();
+    // Call connect function when the widget is initialized
 
+    connect(context);
 
+  }
 
+  Future<bool?> connect(BuildContext context) async  {
+    try {
+      final conn = await connectToDatabase();
+      print('has connection!');
+      setState(() {
+        isLoading = false;
+      });
+      return Alert(
+        context: context,
+        type: AlertType.success,
+        title: "Connection Succesful",
+        //desc: "Data base is available",
+        buttons: [
+          DialogButton(
+            child: Text(
+              "continue",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+            onPressed: () => Navigator.pop(context),
+            width: 120,
+          )
+        ],
+      ).show();
+    } catch (error) {
+      setState(() {
+        isLoading = false;
+      });
+      return Alert(
+        context: context,
+        type: AlertType.error,
+        title: "No Connection",
+        desc: "Network Error...Close and Reopen App",
+        buttons: [
+          DialogButton(
+            child: Text(
+              "Okay",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+            onPressed: () => Navigator.pop(context),
+            width: 120,
+          )
+        ],
+      ).show();
+      // print("problem : ${error}");
+    }
+  }
 
 
 
@@ -40,10 +104,10 @@ class _ViewxState extends State<Viewx> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PageView(
+      body: isLoading == true ? Center(child: CircularProgressIndicator()) : PageView(
         scrollDirection: Axis.horizontal,
-        onPageChanged: widget.changer?? (){},
-        controller: widget.controller!,
+        onPageChanged: widget.changer?? (int pageIndex){},
+        controller: widget.controller,
         children: _pages,
       ),
     );

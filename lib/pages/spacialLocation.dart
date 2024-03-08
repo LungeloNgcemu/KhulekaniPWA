@@ -13,9 +13,16 @@ import 'package:khulekani_app/components/subtitle.dart';
 import 'package:postgres/postgres.dart';
 import 'package:khulekani_app/data_base.dart';
 import 'package:provider/provider.dart';
-import 'package:khulekani_app/provider_answers.dart';
+import 'package:khulekani_app/providers/provider_answers.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:khulekani_app/providers/clear_function.dart';
+import 'package:khulekani_app/providers/saved_pages.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'package:khulekani_app/create_table.dart';
 
+
+//TODO is saved logo
 class SpacialLocationPage extends StatefulWidget {
   const SpacialLocationPage({super.key});
 
@@ -23,7 +30,69 @@ class SpacialLocationPage extends StatefulWidget {
   State<SpacialLocationPage> createState() => _SpacialLocationPageState();
 }
 
-class _SpacialLocationPageState extends State<SpacialLocationPage> {
+class _SpacialLocationPageState extends State<SpacialLocationPage>
+    with AutomaticKeepAliveClientMixin {
+  //////////////////////////////////////////
+  static const apiKey = 'a8e5d16218e64e879c5e1b78f9baa70e';
+
+  Future<Map<String, double>> getLocationb() async {
+    try {
+      ////////////////////////////////////////////////////////////////////////
+
+      LocationPermission permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission != LocationPermission.whileInUse &&
+            permission != LocationPermission.always) {
+          // Handle the case where the user denies location permissions.
+          print('Location permission not granted');
+          return {'latitude': 0.0, 'longitude': 0.0};
+        }
+      }
+
+      ////////////////////////////////////////////////////////////////////////////
+      Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.medium,
+      );
+
+      double latitude = position.latitude;
+      double longitude = position.longitude;
+
+      // final response = await http.get(
+      //   Uri.parse(
+      //     'https://api.opencagedata.com/geocode/v1/json?q=$latitude%2C$longitude&key=$apiKey',
+      //   ),
+      // );
+      //
+      // if (response.statusCode == 200) {
+      //   Map<String, dynamic> data = json.decode(response.body);
+      //
+      //   // Extracting latitude and longitude
+      //   double lat = data['results'][0]['geometry']['lat'];
+      //   double lng = data['results'][0]['geometry']['lng'];
+
+      setState(() {
+        // Update your state variables here with lat and lng
+        context.read<ProviderFourteen>().changeValue(
+            newValue: longitude.toString());
+        context.read<ProviderFifteen>().changeValue(
+            newValue: latitude.toString());
+      });
+
+      print('Latitude: $latitude, Longitude: $longitude');
+
+      return {'latitude': latitude, 'longitude': longitude};
+    } catch (e) {
+      print('Error getting current location: $e');
+      return {
+        'latitude': 0.0,
+        'longitude': 0.0
+      }; // Return a default value or handle the error accordingly
+    }
+  }
+
+////////////////////////////////////////////
+  bool isSaved = false;
   DateTime selectedDate = DateTime.now();
   TimeOfDay selectedTime = TimeOfDay.now();
   String? formattedTime;
@@ -36,8 +105,9 @@ class _SpacialLocationPageState extends State<SpacialLocationPage> {
   String? date3;
   String? selectedValue1;
   String? selectedValue2 = collect.yesOrNo[1];
+  String? selectedValue3;
 
- final controllerA = TextEditingController();
+  TextEditingController controllerA = TextEditingController();
   TextEditingController controllerB = TextEditingController();
   TextEditingController controllerC = TextEditingController();
   TextEditingController controllerD = TextEditingController();
@@ -52,6 +122,23 @@ class _SpacialLocationPageState extends State<SpacialLocationPage> {
   String answerE = "";
   String answerF = "";
   String answerG = "";
+
+  void clear1() {
+    controllerA.clear();
+    controllerB.clear();
+    controllerC.clear();
+    controllerD.clear();
+    controllerE.clear();
+    controllerF.clear();
+    controllerG.clear();
+    print("cleared 1");
+  }
+
+
+  // void inputFunction() {
+  //   context.read<ProviderClear1>().setMyFunction(newFunction: clear1);
+  // }
+
 
   // void insert20(BuildContext context)async{
   //   final conn = await connectToDatabase();
@@ -141,10 +228,6 @@ class _SpacialLocationPageState extends State<SpacialLocationPage> {
   //   );
   // }
 
-
-
-
-
   Future<String?> _selectTime(BuildContext context) async {
     final TimeOfDay? pickedTime = await showTimePicker(
       context: context,
@@ -218,28 +301,34 @@ class _SpacialLocationPageState extends State<SpacialLocationPage> {
     // When we reach here, permissions are granted and we can
     // continue accessing the position of the device.
     return await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.medium);
+      forceAndroidLocationManager: true,
+      desiredAccuracy: LocationAccuracy.bestForNavigation,);
   }
 
-  void postgressUpload() async {
-    final conn = await connectToDatabase();
-    await conn.execute('CREATE TABLE Cars ('
-        '  id TEXT NOT NULL, '
-        '  totals INTEGER NOT NULL DEFAULT 0'
-        ')');
-  }
+  // void postgressUpload() async {
+  //   final conn = await connectToDatabase();
+  //   await conn.execute('CREATE TABLE Cars ('
+  //       '  id TEXT NOT NULL, '
+  //       '  totals INTEGER NOT NULL DEFAULT 0'
+  //       ')');
+  // }
+  //
+  // void postgressInsert() async {
+  //   final conn = await connectToDatabase();
+  //   final result1 = await conn.execute(
+  //     r'INSERT INTO Cars (id,totals) VALUES ($1,$2)',
+  //     parameters: ['rabit', '2'],
+  //   );
+  //   print('Inserted ${result1.affectedRows} rows');
+  // }
 
-  void postgressInsert() async {
-    final conn = await connectToDatabase();
-    final result1 = await conn.execute(
-      r'INSERT INTO Cars (id,totals) VALUES ($1,$2)',
-      parameters: ['rabit', '2'],
-    );
-    print('Inserted ${result1.affectedRows} rows');
-  }
+
 
   @override
+  bool get wantKeepAlive => true;
+
   Widget build(BuildContext context) {
+    controllerA.text = "Zululand District Municipality";
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -261,21 +350,40 @@ class _SpacialLocationPageState extends State<SpacialLocationPage> {
           SubTitle(
             title: "Details",
           ),
+
           QuestionTextStrip(
             text: "1. District municipality:",
             controller: controllerA,
           ),
-          QuestionTextStrip(
-            text: "1.2. Local municipality: ",
-            controller: controllerB,
+          // QuestionTextStrip(
+          //   text: "1.2. Local municipality: ",
+          //   controller: controllerB,
+          // ),
+
+          ///////////////////////////////////////////////////////////
+          MenuList(
+            choice: "Nongoma",
+            selectedValue: 'Nongoma',
+            listName: collect.municipality,
+            text:  "1.2. Local municipality: ",
+            onChanged: (String? value) {
+              setState(() {
+                selectedValue3 = value;
+                context
+                    .read<ProviderTwo>()
+                    .changeValue(newValue: 'Nongoma'!);
+              });
+              print(selectedValue3);
+            },
           ),
+          /////////////////////////////////////////////////////
           QuestionTextStrip(
             text: "1.3. Municipal ward number:",
             controller: controllerC,
           ),
           QuestionTextStrip(
             text:
-                "1.4. Name of the area (Isigodi) where the incident occurred:",
+            "1.4. Name of the area (Isigodi) where the incident occurred:",
             controller: controllerD,
           ),
           QuestionTextStrip(
@@ -301,8 +409,9 @@ class _SpacialLocationPageState extends State<SpacialLocationPage> {
             title: "1.8 Date and Time",
           ),
           MuliDateTime(
-            textTime:
-                'The selected Date is ${context.watch<ProviderEight>().eight ?? "not selected"}',
+            textTime: context
+                .watch<ProviderEight>()
+                .eight ?? "",
             text: "A) Date of the incident",
             call: () async {
               String? datenow = await _selectDate(context);
@@ -315,8 +424,9 @@ class _SpacialLocationPageState extends State<SpacialLocationPage> {
             },
           ),
           MuliDateTime(
-            textTime:
-                'The selected Date is ${context.watch<ProviderNine>().nine ?? "not selected"}',
+            textTime: context
+                .watch<ProviderNine>()
+                .nine ?? "",
             text: "B) Date of reporting",
             call: () async {
               String? datenow = await _selectDate(context);
@@ -329,8 +439,9 @@ class _SpacialLocationPageState extends State<SpacialLocationPage> {
             },
           ),
           MuliDateTime(
-            textTime:
-                'The selected Date is ${context.watch<ProviderTen>().ten ?? "not selected"}',
+            textTime: context
+                .watch<ProviderTen>()
+                .ten ?? "",
             text: "C) Actual date of response",
             call: () async {
               String? datenow = await _selectDate(context);
@@ -346,8 +457,9 @@ class _SpacialLocationPageState extends State<SpacialLocationPage> {
             height: 30.0,
           ),
           MuliDateTime(
-            textTime:
-                'The selected Time is ${context.watch<ProviderEleven>().eleven ?? "not selected"}',
+            textTime: context
+                .watch<ProviderEleven>()
+                .eleven ?? "",
             text: "D) Time of the incident",
             call: () async {
               String? time = await _selectTime(context);
@@ -360,8 +472,9 @@ class _SpacialLocationPageState extends State<SpacialLocationPage> {
             },
           ),
           MuliDateTime(
-            textTime:
-                'The selected Time is ${context.watch<ProviderTwelve>().twelve ?? "not selected"}',
+            textTime: context
+                .watch<ProviderTwelve>()
+                .twelve ?? "",
             text: "E) Time of the reporting",
             call: () async {
               String? time = await _selectTime(context);
@@ -374,9 +487,10 @@ class _SpacialLocationPageState extends State<SpacialLocationPage> {
             },
           ),
           MuliDateTime(
-            textTime:
-                'The selected Time is ${context.watch<ProviderThirteen>().thirteen ?? "not selected"}',
-            text: "1.8f Actual time of response",
+            textTime: context
+                .watch<ProviderThirteen>()
+                .thirteen ?? "",
+            text: "F) Actual time of response",
             call: () async {
               String? time = await _selectTime(context);
               setState(() {
@@ -394,20 +508,31 @@ class _SpacialLocationPageState extends State<SpacialLocationPage> {
           ),
           Locator(
             text:
-                "${context.watch<ProviderFourteen>().fourteen} ${context.read<ProviderFifteen>().fifteen}",
+            "${context
+                .watch<ProviderFourteen>()
+                .fourteen} ${context
+                .read<ProviderFifteen>()
+                .fifteen}",
             buttonText: "1.9 Get current GPS Location",
             get: () async {
-              final location = await _determinePosition();
-              context.read<ProviderFourteen>().changeValue(newValue: location!.toString());
-              context.read<ProviderFifteen>().changeValue(newValue: location!.toString());
-
+              // final location = await _determinePosition();
+              // print(location);
+              print('Pressed');
+              getLocationb();
+              //   context
+              //       .read<ProviderFourteen>()
+              //       .changeValue(newValue: location!.toString());
+              //   context
+              //       .read<ProviderFifteen>()
+              //       .changeValue(newValue: location!.toString());
+              //   print(location);
             },
           ),
           MenuList(
-            choice: selectedValue1 == "Select"
-                ? "Selectd Nothing"
-                : 'Selected: ${context.watch<ProviderSixteen>().sixteen ?? "Nothing"}',
-            selectedValue: "Select",
+            choice: context
+                .watch<ProviderSixteen>()
+                .sixteen ?? "",
+            selectedValue: "",
             listName: collect.yesOrNo,
             text: "1.10 Early warning received: Yes/No",
             onChanged: (String? value) {
@@ -416,46 +541,67 @@ class _SpacialLocationPageState extends State<SpacialLocationPage> {
                 context
                     .read<ProviderSixteen>()
                     .changeValue(newValue: selectedValue1!);
-                if (selectedValue1 == "select") {
-                  selectedValue1 = "nothing";
-                }
               });
               print(selectedValue1);
             },
           ),
 
           SaveButton(
+            color: context.watch<ProviderSavedOne>().one == false ? Colors.red : Colors.green[500],
             onPressed: () {
-setState(() {
-  print(controllerA.text);
-});
-              context
-                  .read<ProviderOne>()
-                  .changeValue(newValue: controllerA.text);
-              context
-                  .read<ProviderTwo>()
-                  .changeValue(newValue: controllerB.text);
-              context
-                  .read<ProviderThree>()
-                  .changeValue(newValue: controllerC.text);
-              context
-                  .read<ProviderFour>()
-                  .changeValue(newValue: controllerD.text);
-              context
-                  .read<ProviderFive>()
-                  .changeValue(newValue: controllerE.text);
-              context
-                  .read<ProviderSix>()
-                  .changeValue(newValue: controllerF.text);
-              context
-                  .read<ProviderSeven>()
-                  .changeValue(newValue: controllerG.text);
-            //  print('here : ${context.watch<ProviderOne>(listen: false).one}');
-              print('ProviderOne value: ${Provider.of<ProviderOne>(context, listen: false).one}');
-              print(controllerA.text);
+              context.read<ProviderClear1>().setMyFunction(newFunction: clear1);
+              context.read<ProviderSavedOne>().changeValue(newValue: true);
+              Future<bool?> saveData() {
+                setState(() {
+                  isSaved = true;
+                });
+                context
+                    .read<ProviderOne>()
+                    .changeValue(newValue: controllerA.text = "Zululand District Municipality");
+                // context
+                //     .read<ProviderTwo>()
+                //     .changeValue(newValue: controllerB.text);
+                context
+                    .read<ProviderThree>()
+                    .changeValue(newValue: controllerC.text);
+                context
+                    .read<ProviderFour>()
+                    .changeValue(newValue: controllerD.text);
+                context
+                    .read<ProviderFive>()
+                    .changeValue(newValue: controllerE.text);
+                context
+                    .read<ProviderSix>()
+                    .changeValue(newValue: controllerF.text);
+                context
+                    .read<ProviderSeven>()
+                    .changeValue(newValue: controllerG.text);
+                //  print('here : ${context.watch<ProviderOne>(listen: false).one}');
+                print(
+                    'ProviderOne value: ${Provider
+                        .of<ProviderOne>(context, listen: false)
+                        .one}');
 
-
+                return Alert(
+                  context: context,
+                  type: AlertType.success,
+                  title: "Saved",
+                  desc: "Your Data has been Saved.",
+                  buttons: [
+                    DialogButton(
+                      child: Text(
+                        "Done",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                      onPressed: () => Navigator.pop(context),
+                      width: 120,
+                    )
+                  ],
+                ).show();
+              }
+              saveData();
             },
+
           ),
         ],
       ),
@@ -491,7 +637,7 @@ class _MuliDateTimeState extends State<MuliDateTime> {
                 child: Text(
                   widget.text ?? "",
                   // Use null-aware operator to provide an empty string if text is null
-                  style: TextStyle(fontSize: 30.0, color: Colors.black),
+                  style: TextStyle(fontSize: 25.0, color: Colors.black),
                 ),
               ),
             ),
@@ -551,12 +697,18 @@ class _LocatorState extends State<Locator> {
               ),
             ),
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Text(
-                  widget.text ?? "",
-                  style: const TextStyle(fontSize: 30.0, color: Colors.black),
-                ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Text(
+                      widget.text ?? "",
+                      style: const TextStyle(
+                          fontSize: 20.0, color: Colors.black),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

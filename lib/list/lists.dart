@@ -1,37 +1,46 @@
 import 'package:flutter/material.dart';
 
 
+
+final List<String> municipality = [
+  'Nongoma',
+  'eDumbe',
+  'AbaQulusi',
+  'Ulundi',
+  'uPhongolo',
+];
+
 final List<String> gender = [
-  'Select',
+  '',
   'Male',
   'Female',
 ];
 //
-final List<String>  intervention = [
-  'Select',
+final List<String> intervention = [
+  '',
   'Repair',
   'Rebuild',
   'Relocate',
   'None',
 ];
 //
-final List<String>  essentialServicesDamaged = [
-  'Select',
+final List<String> essentialServicesDamaged = [
+  '',
   'Water Supply',
   'Electricity',
   'Municipal Access Road',
   'Crossing bridge/causeway',
 ];
 //
-final List<String>  structuralDamage = [
-  'Select',
+final List<String> structuralDamage = [
+  '',
   'Walls',
   'Doors',
   'Windows',
 ];
 //
 final List<String> roofDamage = [
-  'Select',
+  '',
   'Asbestos',
   'Zinc',
   'Tiled',
@@ -39,14 +48,14 @@ final List<String> roofDamage = [
 ];
 //
 final List<String> accomidation = [
-  'Select',
+  '',
   'Neighbour',
- ' School',
+  'School',
   'Hall',
 ];
 //
 final List<String> lostItem = [
-  'Select',
+  '',
   'ID Book',
   'Birth certificate',
   'Grant Card',
@@ -55,7 +64,7 @@ final List<String> lostItem = [
 ];
 //
 final List<String> transportForInjured = [
-  'Select',
+  '',
   'Public Ambulance',
   'Private Ambulance',
   'Municipal Vehicle',
@@ -63,20 +72,20 @@ final List<String> transportForInjured = [
 ];
 //
 final List<String> injuredEvacuated = [
-  'Select',
+  '',
   'Hospital',
   'Clinic',
 ];
 
 //
 final List<String> yesOrNo = [
-  'Select',
+  '',
   'Yes',
   'No',
 ];
 //
 final List<String> Incedents = [
-  'Select',
+  '',
   'Veld Fire',
   'Heavy Rainfall',
   'Lightning',
@@ -101,5 +110,5 @@ final List<String> Incedents = [
 ];
 //
 List<String> numbers = List.generate(20, (index) => '${index + 1}');
-List<String> numbers20 = ['Select', ...numbers];
+List<String> numbers20 = ['', ...numbers];
 //

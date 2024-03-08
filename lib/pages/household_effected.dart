@@ -6,7 +6,11 @@ import 'package:khulekani_app/components/save_button.dart';
 import 'package:khulekani_app/components/header_blue.dart';
 import 'package:khulekani_app/components/subtitle.dart';
 import 'package:provider/provider.dart';
-import 'package:khulekani_app/provider_answers.dart';
+import 'package:khulekani_app/providers/provider_answers.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:khulekani_app/providers/clear_function.dart';
+import 'package:khulekani_app/providers/saved_pages.dart';
+
 class HouseholdEffected extends StatefulWidget {
   const HouseholdEffected({super.key});
 
@@ -14,34 +18,50 @@ class HouseholdEffected extends StatefulWidget {
   State<HouseholdEffected> createState() => _HouseholdEffectedState();
 }
 
-class _HouseholdEffectedState extends State<HouseholdEffected> {
- String? selectedValue1;
- String? selectedValue2;
- String? selectedValue3;
- String? selectedValue4;
- String? selectedValue5;
- String? selectedValue6;
+class _HouseholdEffectedState extends State<HouseholdEffected> with AutomaticKeepAliveClientMixin {
+  bool isSaved = false;
+  String? selectedValue1;
+  String? selectedValue2;
+  String? selectedValue3;
+  String? selectedValue4;
+  String? selectedValue5;
+  String? selectedValue6;
 
- TextEditingController controllerA = TextEditingController();
- TextEditingController controllerB = TextEditingController();
- TextEditingController controllerC = TextEditingController();
- TextEditingController controllerD = TextEditingController();
- TextEditingController controllerE = TextEditingController();
+  TextEditingController controllerA = TextEditingController();
+  TextEditingController controllerB = TextEditingController();
+  TextEditingController controllerC = TextEditingController();
+  TextEditingController controllerD = TextEditingController();
+  TextEditingController controllerE = TextEditingController();
 
- String answerA = "";
- String answerB = "";
- String answerC = "";
- String answerD = "";
- String answerE = "";
+  void clear3() {
+    controllerA.clear();
+    controllerB.clear();
+    controllerC.clear();
+    controllerD.clear();
+    controllerE.clear();
+
+    print("cleared 3");
+  }
+
+
+  String answerA = "";
+  String answerB = "";
+  String answerC = "";
+  String answerD = "";
+  String answerE = "";
 
   @override
+  bool get wantKeepAlive => true;
+
   Widget build(BuildContext context) {
-    return  SingleChildScrollView(
+    return SingleChildScrollView(
       child: Column(
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 1.0),
-            child: Divider(color: Colors.black,),
+            child: Divider(
+              color: Colors.black,
+            ),
           ),
           HeaderBlue(
             text: "DETAILS OF HOUSEHOLD AFFECTED",
@@ -49,13 +69,16 @@ class _HouseholdEffectedState extends State<HouseholdEffected> {
 
           Padding(
             padding: const EdgeInsets.only(top: 1.0),
-            child: Divider(color: Colors.black,),
+            child: Divider(
+              color: Colors.black,
+            ),
           ),
-          SubTitle(title: "3.1 Name of the Family",),
+          SubTitle(
+            title: "3.1 Name of the Family",
+          ),
           QuestionTextStrip(
             text: "A) Name of the family",
             controller: controllerA,
-
           ),
 
           SubTitle(
@@ -84,161 +107,166 @@ class _HouseholdEffectedState extends State<HouseholdEffected> {
             title: "3.4 Number of Household Members",
           ),
 
-
           //provide 26
           MenuList(
             // On the end
-            choice: selectedValue1 == "Select"
-                ? "Selectd Nothing"
-                : 'Selected: ${ context.watch<ProviderTwentySix>().twentySix ?? "Nothing"}',
+            choice: context.watch<ProviderTwentySix>().twentySix ?? "",
             //first value
-            selectedValue: "Select",
+            selectedValue: "",
             listName: collection.numbers20,
             text: "A) Number of household member(s) ",
             //
             onChanged: (String? value) {
               setState(() {
                 selectedValue1 = value;
-                context.read<ProviderTwentySix>().changeValue(newValue: selectedValue1!);
-
-                if (selectedValue1 == "select") {
-                  selectedValue1 = "nothing";
-                }
+                context
+                    .read<ProviderTwentySix>()
+                    .changeValue(newValue: selectedValue1!);
               });
             },
           ),
           //start
           MenuList(
             // On the end
-            choice: selectedValue2 == "Select"
-                ? "Selectd Nothing"
-                : 'Selected: ${context.watch<ProviderTwentySeven>().twentySeven ?? "Nothing"}',
+            choice: context.watch<ProviderTwentySeven>().twentySeven ?? "",
             //first value
-            selectedValue: "Select",
+            selectedValue: "",
             listName: collection.numbers20,
             text: "B) Number of senior citizen affected (Pensioners)",
             //
             onChanged: (String? value) {
               setState(() {
                 selectedValue2 = value;
-                context.read<ProviderTwentySeven>().changeValue(newValue: selectedValue2!);
-
-                if (selectedValue2 == "select") {
-                  selectedValue2 = "nothing";
-                }
+                context
+                    .read<ProviderTwentySeven>()
+                    .changeValue(newValue: selectedValue2!);
               });
               print(selectedValue2);
             },
           ),
           MenuList(
             // On the end
-            choice: selectedValue3 == "Select"
-                ? "Selectd Nothing"
-                : 'Selected: ${context.watch<ProviderTwentyEight>().twentyEight ?? "Nothing"}',
+            choice: context.watch<ProviderTwentyEight>().twentyEight ?? "",
             //first value
-            selectedValue: "Select",
+            selectedValue: "",
             listName: collection.numbers20,
             text: "C) Number of women affected ",
             //
             onChanged: (String? value) {
               setState(() {
                 selectedValue3 = value;
-                context.read<ProviderTwentyEight>().changeValue(newValue: selectedValue3!);
-
-                if (selectedValue3 == "select") {
-                  selectedValue3 = "nothing";
-                }
+                context
+                    .read<ProviderTwentyEight>()
+                    .changeValue(newValue: selectedValue3!);
               });
               print(selectedValue3);
             },
           ),
           MenuList(
             // On the end
-            choice: selectedValue4 == "Select"
-                ? "Selectd Nothing"
-                : 'Selected: ${context.watch<ProviderTwentyNine>().twentyNine ?? "Nothing"}',
+            choice: context.watch<ProviderTwentyNine>().twentyNine ?? "",
             //first value
-            selectedValue: "Select",
+            selectedValue: "",
             listName: collection.numbers20,
             text: "D) Number of men affected",
             //
             onChanged: (String? value) {
               setState(() {
                 selectedValue4 = value;
-                context.read<ProviderTwentyNine>().changeValue(newValue: selectedValue4!);
-
-                if (selectedValue4 == "select") {
-                  selectedValue4 = "nothing";
-                }
+                context
+                    .read<ProviderTwentyNine>()
+                    .changeValue(newValue: selectedValue4!);
               });
               print(selectedValue4);
             },
           ),
           MenuList(
             // On the end
-            choice: selectedValue5 == "Select"
-                ? "Selectd Nothing"
-                : 'Selected: ${context.watch<ProviderThirty>().thirty ?? "Nothing"}',
+            choice: context.watch<ProviderThirty>().thirty ?? "",
             //first value
-            selectedValue: "Select",
+            selectedValue: "",
             listName: collection.numbers20,
             text: "E) Number of children affected (under 18 years)",
             //
             onChanged: (String? value) {
               setState(() {
                 selectedValue5 = value;
-                context.read<ProviderThirty>().changeValue(newValue: selectedValue5!);
-
-                if (selectedValue5 == "select") {
-                  selectedValue5 = "nothing";
-                }
+                context
+                    .read<ProviderThirty>()
+                    .changeValue(newValue: selectedValue5!);
               });
               print(selectedValue5);
             },
           ),
           MenuList(
             // On the end
-            choice: selectedValue6 == "Select"
-                ? "Selectd Nothing"
-                : 'Selected: ${context.watch<ProviderThirtyOne>().thirtyOne ?? "Nothing"}',
+            choice:context.watch<ProviderThirtyOne>().thirtyOne ?? "",
             //provider to watch
 
             //first value
-            selectedValue: "Select",
+            selectedValue: "",
             listName: collection.numbers20,
             text: "F) Number of people with disability affected",
             //
             onChanged: (String? value) {
               setState(() {
                 selectedValue6 = value;
-                context.read<ProviderThirtyOne>().changeValue(newValue: selectedValue6!);
+                context
+                    .read<ProviderThirtyOne>()
+                    .changeValue(newValue: selectedValue6!);
                 //provider to be here to read
-
-                if (selectedValue6 == "select") {
-                  selectedValue6 = "nothing";
-                }
               });
               print(selectedValue6);
             },
           ),
-          Divider(height: 30.0,),
+          Divider(
+            height: 30.0,
+          ),
           SaveButton(
-            onPressed: (){
-              context
-                  .read<ProviderTwentyOne>()
-                  .changeValue(newValue: controllerA.text);
-              context
-                  .read<ProviderTwentyTwo>()
-                  .changeValue(newValue: controllerB.text);
-              context
-                  .read<ProviderTwentyThree>()
-                  .changeValue(newValue: controllerC.text);
-              context
-                  .read<ProviderTwentyFour>()
-                  .changeValue(newValue: controllerD.text);
-              context
-                  .read<ProviderTwentyFive>()
-                  .changeValue(newValue: controllerE.text);
+            color: context.watch<ProviderSavedThree>().three == false ? Colors.red : Colors.green[500],
+            onPressed: () {
+              context.read<ProviderClear3>().setMyFunction(newFunction: clear3);
+              context.read<ProviderSavedThree>().changeValue(newValue: true);
+              Future<bool?> saveData() {
+                // setState(() {
+                //   isSaved = true;
+                //
+                // });
+                // items here
+                context
+                    .read<ProviderTwentyOne>()
+                    .changeValue(newValue: controllerA.text);
+                context
+                    .read<ProviderTwentyTwo>()
+                    .changeValue(newValue: controllerB.text);
+                context
+                    .read<ProviderTwentyThree>()
+                    .changeValue(newValue: controllerC.text);
+                context
+                    .read<ProviderTwentyFour>()
+                    .changeValue(newValue: controllerD.text);
+                context
+                    .read<ProviderTwentyFive>()
+                    .changeValue(newValue: controllerE.text);
+                return Alert(
+                  context: context,
+                  type: AlertType.success,
+                  title: "Saved",
+                  desc: "Your Data has been Saved.",
+                  buttons: [
+                    DialogButton(
+                      child: Text(
+                        "Done",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                      onPressed: () => Navigator.pop(context),
+                      width: 120,
+                    )
+                  ],
+                ).show();
+              }
+
+              saveData();
             },
           ),
         ],

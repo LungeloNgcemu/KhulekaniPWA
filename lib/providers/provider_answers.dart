@@ -1103,3 +1103,35 @@ class ProviderEightyFour extends ChangeNotifier {
     notifyListeners();
   }
 }
+
+
+//TODO    provider for last items
+
+
+class ProviderPictuers extends ChangeNotifier {
+  // otherIntervention
+  List<String> pictures;
+
+  ProviderPictuers({
+    this.pictures = const [],
+  });
+
+  void changeValue({required List<String> newValue}) {
+    pictures = newValue;
+    notifyListeners();
+  }
+}
+
+class ProviderNotes extends ChangeNotifier {
+// otherIntervention
+String  notes;
+
+ProviderNotes({
+  this.notes = '',
+});
+
+void changeValue({required String newValue}) {
+  notes = newValue;
+  notifyListeners();
+}
+}

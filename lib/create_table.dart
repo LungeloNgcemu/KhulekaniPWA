@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'data_base.dart';
-import 'provider_answers.dart';
-import 'package:khulekani_app/provider_answers.dart';
+import 'providers/provider_answers.dart';
+import 'package:khulekani_app/providers/provider_answers.dart';
 
 // await conn.execute('CREATE TABLE IF NOT EXISTS information ('
 // '  id INT PRIMARY KEY AUTO_INCREMENT, '

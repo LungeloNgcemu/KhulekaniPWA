@@ -4,12 +4,17 @@ import 'world_view.dart';
 import 'package:postgres/postgres.dart';
 import 'data_base.dart';
 import 'package:provider/provider.dart';
-import 'provider_answers.dart';
+import 'providers/provider_answers.dart';
+import 'pages/splash_screen.dart';
+import 'sample.dart';
+import 'not_google.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:khulekani_app/providers/clear_function.dart';
+import 'package:khulekani_app/providers/saved_pages.dart';
+
 
 //https://stackoverflow.com/questions/51806662/how-to-set-landscape-orientation-mode-for-flutter-app
-void main() async {
- final  conn = await connectToDatabase();
-  print('has connection!');
+void main(context) async {
 
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft])
@@ -103,18 +108,54 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => ProviderSeventyFive()),
         ChangeNotifierProvider(create: (context) => ProviderSeventySix()),
         ChangeNotifierProvider(create: (context) => ProviderSeventySeven()),
-        ChangeNotifierProvider(create: (context) => ProviderSeventyEight()),
-        ChangeNotifierProvider(create: (context) => ProviderSeventyNine()),
-        ChangeNotifierProvider(create: (context) => ProviderEighty()),
+        // ChangeNotifierProvider(create: (context) => ProviderSeventyEight()),
+        // ChangeNotifierProvider(create: (context) => ProviderSeventyNine()),
+        // ChangeNotifierProvider(create: (context) => ProviderEighty()),
+        //////////////////////////////////////////////////////////////////////
+        ChangeNotifierProvider(create: (context) => ProviderEightyOne()),
+        ChangeNotifierProvider(create: (context) => ProviderEightyTwo()),
+        ChangeNotifierProvider(create: (context) => ProviderEightyThree()),
+        ChangeNotifierProvider(create: (context) => ProviderEightyFour()),
+        //////////////////////////////////////////////////////////////////////////////
+        ChangeNotifierProvider(create: (context) => ProviderClear1()),
+        ChangeNotifierProvider(create: (context) => ProviderClear2()),
+        ChangeNotifierProvider(create: (context) => ProviderClear3()),
+        ChangeNotifierProvider(create: (context) => ProviderClear4()),
+        ChangeNotifierProvider(create: (context) => ProviderClear5()),
+        ChangeNotifierProvider(create: (context) => ProviderClear6()),
+        ChangeNotifierProvider(create: (context) => ProviderClear7()),
+        //
+        ChangeNotifierProvider(create: (context) => ProviderClear8()),
+
+        /////////////////////////////////////////////////////////////////////////////
+        ChangeNotifierProvider(create: (context) => ProviderSavedOne()),
+        ChangeNotifierProvider(create: (context) => ProviderSavedTwo()),
+        ChangeNotifierProvider(create: (context) => ProviderSavedThree()),
+        ChangeNotifierProvider(create: (context) => ProviderSavedFour()),
+        ChangeNotifierProvider(create: (context) => ProviderSavedFive()),
+        ChangeNotifierProvider(create: (context) => ProviderSavedSix()),
+        //
+        ChangeNotifierProvider(create: (context) => ProviderSavedSeven()),
+        ChangeNotifierProvider(create: (context) => ProviderSavedEight()),
+        ChangeNotifierProvider(create: (context) => ProviderSavedNine()),
+        //////////////////////////////////////////////////////////////////////////////
+        ChangeNotifierProvider(create: (context) => ProviderPictuers()),
+        ChangeNotifierProvider(create: (context) => ProviderNotes()),
+
+
+
+
       ],
       child: MaterialApp(
+        navigatorObservers: [FlutterSmartDialog.observer],
+        builder: FlutterSmartDialog.init(),
         debugShowCheckedModeBanner: false,
         title: 'DISASTER MANAGEMENT INCIDENT ASSESSMENT',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const WorldView(),
+        home: const SplashScreen(),
       ),
     );
   }

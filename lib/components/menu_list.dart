@@ -4,11 +4,11 @@ import 'drop_down.dart';
 class MenuList extends StatefulWidget {
   MenuList(
       {this.text,
-        this.onChanged,
-        this.listName,
-        this.selectedValue,
-        this.choice,
-        key});
+      this.onChanged,
+      this.listName,
+      this.selectedValue,
+      this.choice,
+      key});
 
   String? text;
   dynamic onChanged;
@@ -38,12 +38,12 @@ class _MenuListState extends State<MenuList> {
                 child: Text(
                   widget.text ?? "",
                   // Use null-aware operator to provide an empty string if text is null
-                  style: TextStyle(fontSize: 30.0, color: Colors.black),
+                  style: TextStyle(fontSize: 25.0, color: Colors.black),
                 ),
               ),
             ),
             Expanded(
-              flex: 5,
+              flex: 2,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: DropDown(
@@ -54,16 +54,20 @@ class _MenuListState extends State<MenuList> {
               ),
             ),
             Expanded(
-              flex: 2,
+              flex: 3,
               child: Padding(
                 padding: const EdgeInsets.only(
-                  right: 20.0,
+                  top: 20,
+                  bottom: 20,
+                  left: 20,
+                  right: 50
                 ),
-                child: FittedBox(
-                    child: Text(
-                      widget.choice ?? "",
-                      style: TextStyle(fontSize: 20.0),
-                    )),
+                child: SizedBox.expand(
+                  child: Text(
+                    widget.choice ?? "",
+                    style: TextStyle(fontSize: 25.0),
+                  ),
+                ),
               ),
             ),
           ],
@@ -72,4 +76,3 @@ class _MenuListState extends State<MenuList> {
     );
   }
 }
-

@@ -7,7 +7,11 @@ import 'package:khulekani_app/components/subtitle.dart';
 import 'package:khulekani_app/components/save_button.dart';
 import 'package:khulekani_app/components/subtitle.dart';
 import 'package:provider/provider.dart';
-import 'package:khulekani_app/provider_answers.dart';
+import 'package:khulekani_app/providers/provider_answers.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:khulekani_app/providers/clear_function.dart';
+import 'package:khulekani_app/providers/saved_pages.dart';
+
 
 class InfrastructureCondition extends StatefulWidget {
   const InfrastructureCondition({super.key});
@@ -17,7 +21,8 @@ class InfrastructureCondition extends StatefulWidget {
       _InfrastructureConditionState();
 }
 
-class _InfrastructureConditionState extends State<InfrastructureCondition> {
+class _InfrastructureConditionState extends State<InfrastructureCondition> with AutomaticKeepAliveClientMixin {
+  bool isSaved = false;
 
   String? selectedValue1;
   String? selectedValue2;
@@ -35,9 +40,16 @@ class _InfrastructureConditionState extends State<InfrastructureCondition> {
 
   TextEditingController controllerA = TextEditingController();
 
+  void clear4() {
+    controllerA.clear();
+    print("cleared 4");
+  }
+
+
   String answerA = "";
 
   @override
+  bool get wantKeepAlive => true;
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
@@ -64,11 +76,9 @@ class _InfrastructureConditionState extends State<InfrastructureCondition> {
           // 46 provider
           MenuList(
             // On the end
-            choice: selectedValue1 == "Select"
-                ? "Selectd Nothing"
-                : 'Selected: ${context.watch<ProviderFortySix>().fortySix ?? "Nothing"}',
+            choice:context.watch<ProviderFortySix>().fortySix ?? "",
             //first value
-            selectedValue: "Select",
+            selectedValue: "",
             listName: collection.numbers20,
             text: "A) Number of structures in a homestead/number of households",
             //
@@ -76,21 +86,15 @@ class _InfrastructureConditionState extends State<InfrastructureCondition> {
               setState(() {
                 selectedValue1 = value;
                 context.read<ProviderFortySix>().changeValue(newValue: selectedValue1!);
-
-                if (selectedValue1 == "select") {
-                  selectedValue1 = "nothing";
-                }
               });
               print(selectedValue1);
             },
           ),
           MenuList(
             // On the end
-            choice: selectedValue2 == "Select"
-                ? "Selectd Nothing"
-                : 'Selected: ${context.watch<ProviderFortySeven>().fortySeven ?? "Nothing"}',
+            choice:context.watch<ProviderFortySeven>().fortySeven ?? "",
             //first value
-            selectedValue: "Select",
+            selectedValue: "",
             listName: collection.numbers20,
             text: "B) Number of partially damaged structures",
             //
@@ -98,21 +102,15 @@ class _InfrastructureConditionState extends State<InfrastructureCondition> {
               setState(() {
                 selectedValue2 = value;
                 context.read<ProviderFortySeven>().changeValue(newValue: selectedValue2!);
-
-                if (selectedValue2 == "select") {
-                  selectedValue2 = "nothing";
-                }
               });
               print(selectedValue2);
             },
           ),
           MenuList(
             // On the end
-            choice: selectedValue3 == "Select"
-                ? "Selectd Nothing"
-                : 'Selected: ${context.watch<ProviderFortyEight>().fortyEight ?? "Nothing"}',
+            choice: context.watch<ProviderFortyEight>().fortyEight ?? "",
             //first value
-            selectedValue: "Select",
+            selectedValue: "",
             listName: collection.yesOrNo,
             text: "C) Were there any homeless families? ",
             //
@@ -121,20 +119,15 @@ class _InfrastructureConditionState extends State<InfrastructureCondition> {
                 selectedValue3 = value;
                 context.read<ProviderFortyEight>().changeValue(newValue: selectedValue3!);
 
-                if (selectedValue3 == "select") {
-                  selectedValue3 = "nothing";
-                }
               });
               print(selectedValue3);
             },
           ),
           MenuList(
             // On the end
-            choice: selectedValue4 == "Select"
-                ? "Selectd Nothing"
-                : 'Selected: ${context.watch<ProviderFortyNine>().fortyNine ?? "Nothing"}',
+            choice: context.watch<ProviderFortyNine>().fortyNine ?? "",
             //first value
-            selectedValue: "Select",
+            selectedValue: "",
             listName: collection.numbers20,
             text: "D) If yes, number of homeless families",
             //
@@ -142,21 +135,15 @@ class _InfrastructureConditionState extends State<InfrastructureCondition> {
               setState(() {
                 selectedValue4 = value;
                 context.read<ProviderFortyNine>().changeValue(newValue: selectedValue4!);
-
-                if (selectedValue4 == "select") {
-                  selectedValue4 = "nothing";
-                }
               });
               print(selectedValue4);
             },
           ),
           MenuList(
             // On the end
-            choice: selectedValue5 == "Select"
-                ? "Selectd Nothing"
-                : 'Selected: ${context.watch<ProviderFifty>().fifty ?? "Nothing"}',
+            choice: context.watch<ProviderFifty>().fifty ?? "",
             //first value
-            selectedValue: "Select",
+            selectedValue: "",
             listName: collection.accomidation,
             text: "E) Where are they accommodated?",
             //
@@ -164,17 +151,13 @@ class _InfrastructureConditionState extends State<InfrastructureCondition> {
               setState(() {
                 selectedValue5 = value;
                 context.read<ProviderFifty>().changeValue(newValue: selectedValue5!);
-
-                if (selectedValue5 == "select") {
-                  selectedValue5 = "nothing";
-                }
               });
               print(selectedValue5);
             },
           ),
 
           QuestionTextStrip(
-            text: "F) 1f Other Damage",
+            text: "F)  Other Damage",
             controller: controllerA,
           ),
           SubTitle(
@@ -182,88 +165,64 @@ class _InfrastructureConditionState extends State<InfrastructureCondition> {
           ),
           MenuList(
             // On the end
-            choice: selectedValue6 == "Select"
-                ? "Selectd Nothing"
-                : 'Selected: ${context.watch<ProviderFiftyTwo>().fiftyTwo ?? "Nothing"}',
+            choice: context.watch<ProviderFiftyTwo>().fiftyTwo ?? "",
             //first value
-            selectedValue: "Select",
-            listName: collection.Incedents,
+            selectedValue: "",
+            listName: collection.numbers20,
             text: "G) Number of effected Mud houses",
             //
             onChanged: (String? value) {
               setState(() {
                 selectedValue6 = value;
                 context.read<ProviderFiftyTwo>().changeValue(newValue: selectedValue6!);
-
-                if (selectedValue6 == "select") {
-                  selectedValue6 = "nothing";
-                }
               });
               print(selectedValue6);
             },
           ),
           MenuList(
             // On the end
-            choice: selectedValue7 == "Select"
-                ? "Selectd Nothing"
-                : 'Selected: ${context.watch<ProviderFiftyThree>().fiftyThree?? "Nothing"}',
+            choice: context.watch<ProviderFiftyThree>().fiftyThree?? "",
             //first value
-            selectedValue: "Select",
-            listName: collection.Incedents,
+            selectedValue: "",
+            listName: collection.numbers20,
             text: "H) Number of effected Informal settement/shack",
             //
             onChanged: (String? value) {
               setState(() {
                 selectedValue7 = value;
                 context.read<ProviderFiftyThree>().changeValue(newValue: selectedValue7!);
-
-                if (selectedValue7 == "select") {
-                  selectedValue7 = "nothing";
-                }
               });
               print(selectedValue7);
             },
           ),
           MenuList(
             // On the end
-            choice: selectedValue8 == "Select"
-                ? "Selectd Nothing"
-                : 'Selected: ${context.watch<ProviderFiftyFour>().fiftyFour ?? "Nothing"}',
+            choice: context.watch<ProviderFiftyFour>().fiftyFour ?? "",
             //first value
-            selectedValue: "Select",
-            listName: collection.Incedents,
+            selectedValue: "",
+            listName: collection.numbers20,
             text: "I) Number of effected Formal Dwelling/Structure",
             //
             onChanged: (String? value) {
               setState(() {
                 selectedValue8 = value;
               context.read<ProviderFiftyFour>().changeValue(newValue: selectedValue8!);
-
-                if (selectedValue8 == "select") {
-                  selectedValue8 = "nothing";
-                }
               });
               print(selectedValue8);
             },
           ),
           MenuList(
             // On the end
-            choice: selectedValue9 == "Select"
-                ? "Selectd Nothing"
-                : 'Selected: ${context.watch<ProviderFiftyFive>().fiftyFive ?? "Nothing"}',
+            choice: context.watch<ProviderFiftyFive>().fiftyFive ?? "",
             //first value
-            selectedValue: "Select",
-            listName: collection.Incedents,
+            selectedValue: "",
+            listName: collection.numbers20,
             text: "J) Number of effected RDP",
             //
             onChanged: (String? value) {
               setState(() {
                 selectedValue9 = value;
                 context.read<ProviderFiftyFive>().changeValue(newValue: selectedValue9!);
-
-                if (selectedValue9 == "select") {
-                  selectedValue9 = "nothing";
-                }
               });
               print(selectedValue9);
             },
@@ -285,11 +244,9 @@ class _InfrastructureConditionState extends State<InfrastructureCondition> {
 
           MenuList(
             // On the end
-            choice: selectedValue11 == "Select"
-                ? "Selectd Nothing"
-                : 'Selected: ${context.watch<ProviderFiftySix>().fiftySix ?? "Nothing"}',
+            choice: context.watch<ProviderFiftySix>().fiftySix ?? "",
             //first value
-            selectedValue: "Select",
+            selectedValue: "",
             listName: collection.roofDamage,
             text: "A) Roof Damages",
             //
@@ -297,21 +254,15 @@ class _InfrastructureConditionState extends State<InfrastructureCondition> {
               setState(() {
                 selectedValue11 = value;
                 context.read<ProviderFiftySix>().changeValue(newValue: selectedValue11!);
-
-                if (selectedValue11 == "select") {
-                  selectedValue11 = "nothing";
-                }
               });
               print(selectedValue11);
             },
           ),
           MenuList(
             // On the end
-            choice: selectedValue12 == "Select"
-                ? "Selectd Nothing"
-                : 'Selected: ${context.watch<ProviderFiftySeven>().fiftySeven ?? "Nothing"}',
+            choice: context.watch<ProviderFiftySeven>().fiftySeven ?? "",
             //first value
-            selectedValue: "Select",
+            selectedValue: "",
             listName: collection.structuralDamage,
             text: "B) Structural Damage",
             //
@@ -319,10 +270,6 @@ class _InfrastructureConditionState extends State<InfrastructureCondition> {
               setState(() {
                 selectedValue12 = value;
                 context.read<ProviderFiftySeven>().changeValue(newValue: selectedValue12!);
-
-                if (selectedValue12 == "select") {
-                  selectedValue12 = "nothing";
-                }
               });
               print(selectedValue12);
             },
@@ -332,32 +279,55 @@ class _InfrastructureConditionState extends State<InfrastructureCondition> {
           ),
           MenuList(
             // On the end
-            choice: selectedValue13 == "Select"
-                ? "Selectd Nothing"
-                : 'Selected: ${context.watch<ProviderFiftyEight>().fiftyEight ?? "Nothing"}',
+            choice: context.watch<ProviderFiftyEight>().fiftyEight ?? "",
             //first value
-            selectedValue: "Select",
+            selectedValue: "",
             listName: collection.essentialServicesDamaged,
             text: "A) Essential service damaged",
             //
             onChanged: (String? value) {
               setState(() {
-                selectedValue9 = value;
+                selectedValue13 = value;
                 context.read<ProviderFiftyEight>().changeValue(newValue: selectedValue13!);
-
-                if (selectedValue13 == "select") {
-                  selectedValue13 = "nothing";
-                }
               });
               print(selectedValue13);
             },
           ),
+
           SaveButton(
-            onPressed: (){
-              context
-                  .read<ProviderFiftyOne>()
-                  .changeValue(newValue: controllerA.text);
+            color: context.watch<ProviderSavedFive>().five == false ? Colors.red : Colors.green[500],
+            onPressed: () {
+              context.read<ProviderClear4>().setMyFunction(newFunction: clear4);
+              context.read<ProviderSavedFive>().changeValue(newValue: true);
+              Future<bool?> saveData() {
+                setState(() {
+                  isSaved = true;
+                });
+                // items here
+                context
+                    .read<ProviderFiftyOne>()
+                    .changeValue(newValue: controllerA.text);
+                return Alert(
+                  context: context,
+                  type: AlertType.success,
+                  title: "Saved",
+                  desc: "Your Data has been Saved.",
+                  buttons: [
+                    DialogButton(
+                      child: Text(
+                        "Done",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                      onPressed: () => Navigator.pop(context),
+                      width: 120,
+                    )
+                  ],
+                ).show();
+              }
+
+              saveData();
             },
+            /////////////////////////////////////////////////////////////////////////////////////
           ),
         ],
       ),
