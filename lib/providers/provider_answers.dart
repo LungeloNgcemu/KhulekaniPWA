@@ -536,13 +536,13 @@ class ProviderFortyOne extends ChangeNotifier {
 }
 
 class ProviderFortyTwo extends ChangeNotifier {
-  String fortyTwo;
+  List<List<dynamic>> fortyTwo;
 
   ProviderFortyTwo({
-    this.fortyTwo = "",
+    this.fortyTwo = const [],
   });
 
-  void changeValue({required String newValue}) {
+  void changeValue({required List<List<dynamic>> newValue}) {
     fortyTwo = newValue;
     notifyListeners();
   }
@@ -1003,42 +1003,103 @@ class ProviderSeventySeven extends ChangeNotifier {
   }
 }
 
-class ProviderSeventyEight extends ChangeNotifier {
-  String seventyEight;
+// class ProviderSeventyEight extends ChangeNotifier {
+//   String seventyEight;
+//
+//   ProviderSeventyEight({
+//     this.seventyEight = "",
+//   });
+//
+//   void changeValue({required String newValue}) {
+//     seventyEight = newValue;
+//     notifyListeners();
+//   }
+// }
+//
+// class ProviderSeventyNine extends ChangeNotifier {
+//   String seventyNine;
+//
+//   ProviderSeventyNine({
+//     this.seventyNine = "",
+//   });
+//
+//   void changeValue({required String newValue}) {
+//     seventyNine = newValue;
+//     notifyListeners();
+//   }
+// }
+//
+// class ProviderEighty extends ChangeNotifier {
+//   String eighty;
+//
+//   ProviderEighty({
+//     this.eighty = "",
+//   });
+//
+//   void changeValue({required String newValue}) {
+//     eighty = newValue;
+//     notifyListeners();
+//   }
+// }
 
-  ProviderSeventyEight({
-    this.seventyEight = "",
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+class ProviderEightyOne extends ChangeNotifier {
+  // numberOfMattreses
+  String eightyOne;
+
+  ProviderEightyOne({
+    this.eightyOne = "",
   });
 
   void changeValue({required String newValue}) {
-    seventyEight = newValue;
+    eightyOne = newValue;
     notifyListeners();
   }
 }
 
-class ProviderSeventyNine extends ChangeNotifier {
-  String seventyNine;
+class ProviderEightyTwo extends ChangeNotifier {
+  // numberoOfLightingConductor
+  String eightyTwo;
 
-  ProviderSeventyNine({
-    this.seventyNine = "",
+  ProviderEightyTwo({
+    this.eightyTwo = "",
   });
 
   void changeValue({required String newValue}) {
-    seventyNine = newValue;
+    eightyTwo = newValue;
     notifyListeners();
   }
 }
 
-class ProviderEighty extends ChangeNotifier {
-  String eighty;
 
-  ProviderEighty({
-    this.eighty = "",
+class ProviderEightyThree extends ChangeNotifier {
+  // otherIntervention
+  String eightyThree;
+
+  ProviderEightyThree({
+    this.eightyThree = "",
   });
 
   void changeValue({required String newValue}) {
-    eighty = newValue;
+    eightyThree = newValue;
     notifyListeners();
   }
 }
+// get table with media querry!!!!!!
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// numberOfMattreses, numberoOfLightingConductor, otherIntervention
 
+class ProviderEightyFour extends ChangeNotifier {
+  // otherIntervention
+  int eightyFour;
+
+  ProviderEightyFour({
+    this.eightyFour = 0,
+  });
+
+  void changeValue({required int newValue}) {
+    eightyFour = newValue;
+    notifyListeners();
+  }
+}
