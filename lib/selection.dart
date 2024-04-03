@@ -58,12 +58,14 @@ class Selection extends StatefulWidget {
 }
 
 class _SelectionState extends State<Selection> {
+
+
   void createImageTable() async {
     final conn = await connectToDatabase();
     try {
-      await conn.execute('CREATE TABLE IF NOT EXISTS pictures ('
-          ' id SERIAL PRIMARY KEY,'
-          ' info_id INTEGER,'
+      await conn.execute('CREATE TABLE IF NOT EXISTS "Pictures" ('
+          ' "Id" SERIAL PRIMARY KEY,'
+          ' "Information Id" INTEGER,'
           ' image1 VARCHAR(500),'
           ' image2 VARCHAR(500),'
           ' image3 VARCHAR(500),'
@@ -74,7 +76,7 @@ class _SelectionState extends State<Selection> {
           ' image8 VARCHAR(500),'
           ' image9 VARCHAR(500),'
           ' image10 VARCHAR(500),'
-          ' FOREIGN KEY (info_id) REFERENCES info(info_id)'
+          ' FOREIGN KEY ("Information Id") REFERENCES "Information"("Information Id")'
           ')');
       conn.close();
       print("created pictures table");
@@ -86,19 +88,19 @@ class _SelectionState extends State<Selection> {
   void createChildrenTable() async {
     final conn = await connectToDatabase();
     try {
-      await conn.execute('CREATE TABLE IF NOT EXISTS children ('
-          ' id SERIAL PRIMARY KEY,'
-          ' info_id INTEGER,'
-          ' name VARCHAR(45),'
-          ' birthdate VARCHAR(45),'
-          ' gender VARCHAR(45),'
-          ' age VARCHAR(45),'
-          ' school VARCHAR(45),'
-          ' grade VARCHAR(45),'
-          ' shoeSize VARCHAR(45),'
-          ' uniformSize VARCHAR(45),'
-          ' additionalInfo VARCHAR(45),'
-          ' FOREIGN KEY (info_id) REFERENCES info(info_id)'
+      await conn.execute('CREATE TABLE IF NOT EXISTS "Children" ('
+          ' "Id" SERIAL PRIMARY KEY,'
+          ' "Information Id" INTEGER,'
+          ' "Name" VARCHAR(45),'
+          ' "Birthdate" VARCHAR(45),'
+          ' "Gender" VARCHAR(45),'
+          ' "Age" VARCHAR(45),'
+          ' "School" VARCHAR(45),'
+          ' "Grade" VARCHAR(45),'
+          ' "Shoe Size" VARCHAR(45),'
+          ' "Uniform Size" VARCHAR(45),'
+          ' "Additional Information" VARCHAR(45),'
+          ' FOREIGN KEY ("Information Id") REFERENCES "Information"("Information Id")'
           ')');
       conn.close();
       print("created children table");
@@ -111,87 +113,88 @@ class _SelectionState extends State<Selection> {
     final conn = await connectToDatabase();
 
     try {
-      await conn.execute('CREATE TABLE IF NOT EXISTS info ('
-          '   info_id SERIAL PRIMARY KEY, '
-          '  districtMunicipality VARCHAR(255), '
-          '  localMunicipality VARCHAR(255), '
-          '  ward VARCHAR(255), '
-          '  areaName VARCHAR(255), '
-          '  streetAddress VARCHAR(255), '
-          '  wardCouncillor VARCHAR(255), '
-          '  wardCouncillorNumber VARCHAR(255), '
-          '  dateOfIncident VARCHAR(255), '
-          '  dateReported VARCHAR(255), '
-          '  dateResponded VARCHAR(255), '
-          '  timeOfIncident VARCHAR(255), '
-          '  timeReported VARCHAR(255), '
-          '  timeResponded VARCHAR(255), '
-          '  gpsCoordinatesLong VARCHAR(255), '
-          '  gpsCoordinatesLatt VARCHAR(255), '
-          '  earlyWarningReceived VARCHAR(255), '
-          '  typeOfIncident VARCHAR(255), '
-          '  otherIncident VARCHAR(255), '
-          '  causeOfIncident VARCHAR(255), '
-          '  otherCause VARCHAR(255), '
-          '  nameofFamily VARCHAR(255), '
-          '  headOfHousehold VARCHAR(255), '
-          '  identityNumber VARCHAR(255), '
-          '  contactNumber VARCHAR(255), '
-          '  alternitiveNumber VARCHAR(255), '
-          '  numberOfHouseholdMembers VARCHAR(255), '
-          '  numberOfPensioners VARCHAR(255), '
-          '  numberOfWomanEffected VARCHAR(255), '
-          '  numberOfMenEffected VARCHAR(255), '
-          '  numberOfChildrenEffected VARCHAR(255), '
-          '  numberOfDisabled VARCHAR(255), '
-          '  anyInjured VARCHAR(255), '
-          '  numberOfInjuries VARCHAR(255), '
-          '  emergencyAssistanceRequired VARCHAR(255), '
-          '  evacuatadeTo VARCHAR(255), '
-          '  modeofTransport VARCHAR(255), '
-          '  anyFatalities VARCHAR(255), '
-          '  numberOfFatalities VARCHAR(255), '
-          '  fatalitiesConfirmed VARCHAR(255), '
-          '  anyScholarsEffeccted VARCHAR(255), '
-          '  textbookDamage VARCHAR(255), '
-          '  anyLostDocument VARCHAR(255), '
-          '  lostDocumentAmount VARCHAR(255), '
-          '  itemsLost VARCHAR(255), '
-          '  numberOfStructuresInHousehold VARCHAR(255), '
-          '  numberOfPartiallyDamagedStructures VARCHAR(255), '
-          '  anyHomeless VARCHAR(255), '
-          '  numberOfHomeless VARCHAR(255), '
-          '  temporalAccomidation VARCHAR(255), '
-          '  otherDamages VARCHAR(255), '
-          '  numberOfMudHouseStructures VARCHAR(255), '
-          '  numberOfShackStructures VARCHAR(255), '
-          '  numberOfEffectedDwellings VARCHAR(255), '
-          '  numberOfRDP VARCHAR(255), '
-          '  roofDamages VARCHAR(255), '
-          '  structuralDamages VARCHAR(255), '
-          '  essentialServicesDamaged VARCHAR(255), '
-          '  assitanceIssued VARCHAR(255), '
-          '  TempShelter VARCHAR(255), '
-          '  soupKitchen VARCHAR(255), '
-          '  foodParcels VARCHAR(255), '
-          '  tents VARCHAR(255), '
-          '  blankets VARCHAR(255), '
-          '  sponges VARCHAR(255), '
-          '  plasticSheeting VARCHAR(255), '
-          '  stove VARCHAR(255), '
-          '  pots VARCHAR(255), '
-          '  Other VARCHAR(255), '
-          '  typeOfIntervention VARCHAR(255), '
-          '  infrastructure VARCHAR(255), '
-          '  livestock VARCHAR(255), '
-          '  croplosses VARCHAR(255), '
-          '  soilDegredation VARCHAR(255), '
-          '  jobOpportunities VARCHAR(255), '
-          '  Veld VARCHAR(255), '
-          '  numberOfMattreses VARCHAR(255), '
-          '  numberoOfLightingConductor VARCHAR(255), '
-          '  otherIntervention VARCHAR(255), '
-          '  notes VARCHAR(255) '
+      await conn.execute('CREATE TABLE IF NOT EXISTS "Information" ('
+          '  "Information Id" SERIAL PRIMARY KEY, ' // Added quotes around info_id
+          '  "District Municipality" VARCHAR(255), ' // Added quotes around District Municipality
+          '  "Local Municipality" VARCHAR(255), ' // Added quotes around Local Municipality
+          '  "Ward" VARCHAR(255), ' // Added quotes around Ward
+          '  "Name of Area/Location (House No./Isigodi)" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Specify street address where possible/applicable" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Ward Councillor" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Ward Councillor Number" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Date of Incident" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Date Reported" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Date Responded" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Time of Incident" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Time Reported" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Time Responded" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Longitude (E)" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Latitude (S)" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Early warning received (Yes/No)" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Type of Incident" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Other Incident" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Cause of Incident" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Other Cause" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Name of Family" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Head of Household" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Identity Number" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Contact Number" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Alternitive Number" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Number of household member(s)" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Senior Citizen (Pensioners)" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Woman" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Men" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Children (under 18 years)" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "People with Disability" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Any Injured" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "No. of injuries" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Emergency Assistance Required" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Evacuated To" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Mode of Transport" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Any Fatalities" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "No. of Fatalities" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Fatalities Confirmed" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Any Scholars Effeccted" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Textbook Damage" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Any Lost Document" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Lost Document Amount" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Items Lost" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "No. of structures in a household" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "No. of partially damaged structures" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Any Homeless" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "No. of Homeless" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Temporal Accomidation" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Other Damages" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "No. of Mud house/structure" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "No. of shack/ informal settlement structure" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "No. of totally destroyed structures" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Number of RDP" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Roof Damages" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "structuralDamages" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Essential Services Damaged" VARCHAR(255)[], ' // Remove [] after VARCHAR(255)
+          '  "Assistance Issued" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Temporal Shelter" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Soup Kitchen" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Food Parcels" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Tents" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Blankets" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Sponges" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Plastic Sheeting" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Stove" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Pots" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Other" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Type of Intervention" VARCHAR(256)[], ' // Remove [] after VARCHAR(256)
+          '  "Infrastructure" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Livestock" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Croplosses" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Soil Degradation" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Job Opportunities" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Veld" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Mattresses" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Repair" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Other Intervention" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "Notes" VARCHAR(255), ' // Surround column name with quotes due to spaces
+          '  "No. of formal house/structure" VARCHAR(255) '
           ')');
       print("successful");
     } catch (error) {
@@ -362,7 +365,7 @@ class ButtonSelection extends StatelessWidget {
             borderRadius: BorderRadius.circular(0.0),
             color: color!,
           ),
-          height: 70.0,
+          height: 85.0,
           child: Padding(
             padding: const EdgeInsets.only(
                 left: 60.0, top: 10, bottom: 10, right: 15.0),

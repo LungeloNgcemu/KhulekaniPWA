@@ -47,6 +47,8 @@ class _SocialReliefSupportState extends State<SocialReliefSupport>
 
 
   String answerA = "";
+  List<String> selectedItems = [];
+  List<String> list = [];
 
   @override
   bool get wantKeepAlive => true;
@@ -307,24 +309,102 @@ class _SocialReliefSupportState extends State<SocialReliefSupport>
             title:
                 "6.2. Please indicate the kind of intervention that is required",
           ),
-          MenuList(
-            // On the end
-            choice: context.watch<ProviderSeventyOne>().seventyOne ?? "",
-            //first value
-            selectedValue: "",
-            listName: collection.intervention,
-            text: "A) kind of intervention that is required",
-            //
-            onChanged: (String? value) {
-              setState(() {
-                selectedValue11 = value;
-                context
-                    .read<ProviderSeventyOne>()
-                    .changeValue(newValue: selectedValue11!);
-              });
-              print(selectedValue11);
+          //TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+          DropMenu(
+            message: "A) kind of intervention that is required",
+            display: list.join(', '),
+            onChanged:(value) {},
+            value:selectedItems.isEmpty ? null : selectedItems.last,
+            items: collection.essentialServicesDamaged.map((item) {
+              return DropdownMenuItem(
+                value: item,
+                //disable default onTap to avoid closing menu when selecting an item
+                enabled: false,
+                child: StatefulBuilder(
+                  builder: (context, menuSetState) {
+                    final isSelected = selectedItems.contains(item);
+                    return InkWell(
+                      onTap: () {
+                        isSelected
+                            ? selectedItems.remove(item)
+                            : selectedItems.add(item);
+                        print(selectedItems);
+                        context
+                            .read<ProviderSeventyOne>()
+                            .changeValue(newValue: selectedItems!);
+                        list =  Provider.of<ProviderSeventyOne>(context, listen: false).seventyOne;
+
+                        //This rebuilds the StatefulWidget to update the button's text
+                        setState(() {});
+                        //This rebuilds the dropdownMenu Widget to update the check mark
+                        menuSetState(() {});
+                      },
+                      child: Container(
+                        height: double.infinity,
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Row(
+                          children: [
+                            if (isSelected)
+
+                              const Icon(Icons.check_box_outlined)
+                            else
+                              const Icon(Icons.check_box_outline_blank),
+                            const SizedBox(width: 16),
+                            Expanded(
+                              child: Text(
+                                item,
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              );
+            }).toList(),
+            selectedItemBuilder: (context) {
+              return collection.intervention.map((item) {
+                return Container(
+                  // alignment: AlignmentDirectional.center,
+                  child: Text(
+                    selectedItems.join(', '),
+                    style: const TextStyle(
+                      //Font Size
+                      fontSize: 20,
+                      color: Colors.black,
+
+                      //overflow: TextOverflow.ellipsis,
+                    ),
+                    maxLines: 1,
+                  ),
+                );
+              },
+              ).toList();
             },
           ),
+          //
+          // MenuList(
+          //   // On the end
+          //   choice: context.watch<ProviderSeventyOne>().seventyOne ?? "",
+          //   //first value
+          //   selectedValue: "",
+          //   listName: collection.intervention,
+          //   text: "A) kind of intervention that is required",
+          //   //
+          //   onChanged: (String? value) {
+          //     setState(() {
+          //       selectedValue11 = value;
+          //       context
+          //           .read<ProviderSeventyOne>()
+          //           .changeValue(newValue: selectedValue11!);
+          //     });
+          //     print(selectedValue11);
+          //   },
+          // ),
           QuestionTextStrip(
             text: "B) Other",
             controller: controllerB,

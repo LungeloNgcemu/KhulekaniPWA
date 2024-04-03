@@ -110,7 +110,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => ProviderSeventySeven()),
         // ChangeNotifierProvider(create: (context) => ProviderSeventyEight()),
         // ChangeNotifierProvider(create: (context) => ProviderSeventyNine()),
-        // ChangeNotifierProvider(create: (context) => ProviderEighty()),
+        ChangeNotifierProvider(create: (context) => ProviderEighty()),
         //////////////////////////////////////////////////////////////////////
         ChangeNotifierProvider(create: (context) => ProviderEightyOne()),
         ChangeNotifierProvider(create: (context) => ProviderEightyTwo()),
@@ -153,7 +153,7 @@ class MyApp extends StatelessWidget {
         title: 'DISASTER MANAGEMENT INCIDENT ASSESSMENT',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
+          useMaterial3: false,
         ),
         home: const SplashScreen(),
       ),

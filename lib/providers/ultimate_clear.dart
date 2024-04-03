@@ -62,7 +62,7 @@ void ultimateClear(BuildContext context) {
   context.read<ProviderFiftyFive>().changeValue(newValue: "");
   context.read<ProviderFiftySix>().changeValue(newValue: "");
   context.read<ProviderFiftySeven>().changeValue(newValue: "");
-  context.read<ProviderFiftyEight>().changeValue(newValue: "");
+  context.read<ProviderFiftyEight>().changeValue(newValue: []);
   context.read<ProviderFiftyNine>().changeValue(newValue: "");
   context.read<ProviderSixty>().changeValue(newValue: "");
   context.read<ProviderSixtyOne>().changeValue(newValue: "");
@@ -75,7 +75,7 @@ void ultimateClear(BuildContext context) {
   context.read<ProviderSixtyEight>().changeValue(newValue: "");
   context.read<ProviderSixtyNine>().changeValue(newValue: "");
   context.read<ProviderSeventy>().changeValue(newValue: "");
-  context.read<ProviderSeventyOne>().changeValue(newValue: "");
+  context.read<ProviderSeventyOne>().changeValue(newValue: []);
   context.read<ProviderSeventyTwo>().changeValue(newValue: "");
   context.read<ProviderSeventyThree>().changeValue(newValue: "");
   context.read<ProviderSeventyFour>().changeValue(newValue: "");

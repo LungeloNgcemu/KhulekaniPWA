@@ -103,7 +103,7 @@ class _SubmitScreenState extends State<SubmitScreen> {
     try {
       List<dynamic> param = [id, ...images];
       final result1 = await conn.execute(
-        r'INSERT INTO pictures (info_id,image1,image2, image3, image4, image5, image6, image7, image8, image9, image10)'
+        r'INSERT INTO "Pictures" ("Information Id",image1,image2, image3, image4, image5, image6, image7, image8, image9, image10)'
         r'VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)',
         parameters: param,
       );
@@ -120,10 +120,14 @@ class _SubmitScreenState extends State<SubmitScreen> {
     final conn = await connectToDatabase();
 
     try {
+
+      final List<String> list58 = Provider.of<ProviderFiftyEight>(context, listen: false).fiftyEight;
+    final List <String> list71 = Provider.of<ProviderSeventyOne>(context, listen: false).seventyOne;
+
       final result1 = await conn.execute(
-        r'INSERT INTO info (districtMunicipality, localMunicipality, ward, areaName, streetAddress, wardCouncillor, wardCouncillorNumber, dateOfIncident, dateReported, dateResponded, timeOfIncident, timeReported, timeResponded, gpsCoordinatesLong, gpsCoordinatesLatt, earlyWarningReceived, typeOfIncident, otherIncident, causeOfIncident, otherCause, nameofFamily, headOfHousehold, identityNumber, contactNumber, alternitiveNumber, numberOfHouseholdMembers, numberOfPensioners, numberOfWomanEffected, numberOfMenEffected, numberOfChildrenEffected, numberOfDisabled, anyInjured, numberOfInjuries, emergencyAssistanceRequired, evacuatadeTo, modeofTransport, anyFatalities, numberOfFatalities, fatalitiesConfirmed, anyScholarsEffeccted, textbookDamage, anyLostDocument, lostDocumentAmount,itemsLost,  numberOfStructuresInHousehold, numberOfPartiallyDamagedStructures,       anyHomeless, numberOfHomeless, temporalAccomidation, otherDamages, numberOfMudHouseStructures, numberOfShackStructures,   numberOfEffectedDwellings, numberOfRDP, roofDamages, structuralDamages, essentialServicesDamaged, assitanceIssued, TempShelter, soupKitchen, foodParcels, tents, blankets, sponges, plasticSheeting, stove, pots, Other, typeOfIntervention, infrastructure, livestock, croplosses, soilDegredation, jobOpportunities, Veld, numberOfMattreses, numberoOfLightingConductor, otherIntervention, notes)'
-        r'VALUES (                          $1,                  $2,           $3,      $4,           $5,            $6,                   $7,                $8,           $9,             $10,        $11,            $12,           $13,             $14,                 $15,                 $16,                $17,          $18,           $19,           $20,         $21,           $22,             $23,             $24,            $25,                  $26,                   $27,                    $28,              $29,                     $30,                 $31,            $32,            $33,                   $34,                $35,           $36,            $37,             $38,               $39,                   $40,                $41,           $42,                 $43,                  $44,        $45,                $46,              $47,              $48,                        $49,                $50,         $51,           $52,                  $53,                    $54,           $55,           $56,       $57,      $58,   $59,       $60,         $61,       $62,  $63,    $64,        $65,             $66,            $67,       $68,           $69,             $70,        $71, $72, $73, $74, $75,  $76, $77, $78, $79 )'
-        r'RETURNING info_id',
+        r'INSERT INTO "Information" ("District Municipality", "Local Municipality", "Ward", "Name of Area/Location (House No./Isigodi)", "Specify street address where possible/applicable", "Ward Councillor", "Ward Councillor Number", "Date of Incident", "Date Reported", "Date Responded", "Time of Incident", "Time Reported", "Time Responded", "Longitude (E)", "Latitude (S)", "Early warning received (Yes/No)", "Type of Incident", "Other Incident", "Cause of Incident", "Other Cause", "Name of Family", "Head of Household", "Identity Number", "Contact Number", "Alternitive Number", "Number of household member(s)", "Senior Citizen (Pensioners)", "Woman", "Men", "Children (under 18 years)", "People with Disability", "Any Injured", "No. of injuries", "Emergency Assistance Required", "Evacuated To", "Mode of Transport", "Any Fatalities", "No. of Fatalities", "Fatalities Confirmed", "Any Scholars Effeccted", "Textbook Damage", "Any Lost Document", "Lost Document Amount", "Items Lost", "No. of structures in a household", "No. of partially damaged structures", "Any Homeless", "No. of Homeless", "Temporal Accomidation", "Other Damages", "No. of Mud house/structure", "No. of shack/ informal settlement structure", "No. of totally destroyed structures", "Number of RDP", "Roof Damages", "structuralDamages", "Essential Services Damaged", "Assistance Issued", "Temporal Shelter", "Soup Kitchen", "Food Parcels", "Tents", "Blankets", "Sponges", "Plastic Sheeting", "Stove", "Pots", "Other", "Type of Intervention", "Infrastructure", "Livestock", "Croplosses", "Soil Degradation", "Job Opportunities", "Veld", "Mattresses", "Repair", "Other Intervention", "Notes", "No. of formal house/structure")'
+        r'VALUES (                          $1,                  $2,           $3,      $4,           $5,            $6,                   $7,                $8,           $9,             $10,        $11,            $12,           $13,             $14,                 $15,                 $16,                $17,          $18,           $19,           $20,         $21,           $22,             $23,             $24,            $25,                  $26,                   $27,                    $28,              $29,                     $30,                 $31,            $32,            $33,                   $34,                $35,           $36,            $37,             $38,               $39,                   $40,                $41,           $42,                 $43,                  $44,        $45,                $46,              $47,              $48,                        $49,                $50,         $51,           $52,                  $53,                    $54,           $55,           $56,       $57,      $58,   $59,       $60,$61,$62,$63,$64, $65,$66,$67,$68,$69,$70,$71, $72, $73, $74, $75,  $76, $77, $78, $79, $80 )'
+        r'RETURNING "Information Id"',
         parameters: [
           // 'example_row_id',
           Provider.of<ProviderOne>(context, listen: false).one,
@@ -183,7 +187,8 @@ class _SubmitScreenState extends State<SubmitScreen> {
           Provider.of<ProviderFiftyFive>(context, listen: false).fiftyFive,
           Provider.of<ProviderFiftySix>(context, listen: false).fiftySix,
           Provider.of<ProviderFiftySeven>(context, listen: false).fiftySeven,
-          Provider.of<ProviderFiftyEight>(context, listen: false).fiftyEight,
+          list58,
+          // Provider.of<ProviderFiftyEight>(context, listen: false).fiftyEight,
           Provider.of<ProviderFiftyNine>(context, listen: false).fiftyNine,
           Provider.of<ProviderSixty>(context, listen: false).sixty,
           Provider.of<ProviderSixtyOne>(context, listen: false).sixtyOne,
@@ -198,7 +203,8 @@ class _SubmitScreenState extends State<SubmitScreen> {
           //     .sixtyEight,
           Provider.of<ProviderSixtyNine>(context, listen: false).sixtyNine,
           Provider.of<ProviderSeventy>(context, listen: false).seventy,
-          Provider.of<ProviderSeventyOne>(context, listen: false).seventyOne,
+          list71,
+          // Provider.of<ProviderSeventyOne>(context, listen: false).seventyOne,
           Provider.of<ProviderSeventyTwo>(context, listen: false).seventyTwo,
           Provider.of<ProviderSeventyThree>(context, listen: false)
               .seventyThree,
@@ -213,6 +219,7 @@ class _SubmitScreenState extends State<SubmitScreen> {
           Provider.of<ProviderEightyThree>(context, listen: false).eightyThree,
 //////////////////////////////////////////////////////////////
           Provider.of<ProviderNotes>(context, listen: false).notes,
+          Provider.of<ProviderEighty>(context, listen: false).eighty,
 
 
           /// added 77 then the 81 82 83
@@ -281,7 +288,7 @@ class _SubmitScreenState extends State<SubmitScreen> {
     try {
       for (List<dynamic> data in dataBase) {
         final result1 = await conn.execute(
-          r'INSERT INTO children (info_id,name,birthdate,gender,age,school,grade,shoeSize,uniformSize,additionalInfo)'
+          r'INSERT INTO "Children" ("Information Id", "Name", "Birthdate", "Gender", "Age", "School", "Grade", "Shoe Size", "Uniform Size", "Additional Information")'
           r'VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)',
           parameters: [
             id,

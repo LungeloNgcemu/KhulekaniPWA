@@ -744,13 +744,13 @@ class ProviderFiftySeven extends ChangeNotifier {
 }
 
 class ProviderFiftyEight extends ChangeNotifier {
-  String fiftyEight;
+ List<String> fiftyEight;
 
   ProviderFiftyEight({
-    this.fiftyEight = "",
+    this.fiftyEight = const[],
   });
 
-  void changeValue({required String newValue}) {
+  void changeValue({required List<String> newValue}) {
     fiftyEight = newValue;
     notifyListeners();
   }
@@ -913,13 +913,13 @@ class ProviderSeventy extends ChangeNotifier {
 }
 
 class ProviderSeventyOne extends ChangeNotifier {
-  String seventyOne;
+  List<String> seventyOne;
 
   ProviderSeventyOne({
-    this.seventyOne = "",
+    this.seventyOne = const [],
   });
 
-  void changeValue({required String newValue}) {
+  void changeValue({required List<String> newValue}) {
     seventyOne = newValue;
     notifyListeners();
   }
@@ -1104,6 +1104,19 @@ class ProviderEightyFour extends ChangeNotifier {
   }
 }
 
+
+class ProviderEighty extends ChangeNotifier {
+  String eighty;
+
+  ProviderEighty({
+    this.eighty = "",
+  });
+
+  void changeValue({required String newValue}) {
+    eighty = newValue;
+    notifyListeners();
+  }
+}
 
 //TODO    provider for last items
 

@@ -25,7 +25,6 @@ final List<String> intervention = [
 ];
 //
 final List<String> essentialServicesDamaged = [
-  '',
   'Water Supply',
   'Electricity',
   'Municipal Access Road',
