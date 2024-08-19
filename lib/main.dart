@@ -11,12 +11,26 @@ import 'not_google.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:khulekani_app/providers/clear_function.dart';
 import 'package:khulekani_app/providers/saved_pages.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
+
+// const supabaseUrl = 'https://xritndwmdbbjeqcocsnr.supabase.co';
+// const supabaseKey = String.fromEnvironment('SUPABASE_KEY');
+
+// Future<void> main() async {
+//   await Supabase.initialize(url: supabaseUrl, anonKey: supabaseKey);
+//   runApp(MyApp());
+// }
 
 //https://stackoverflow.com/questions/51806662/how-to-set-landscape-orientation-mode-for-flutter-app
 void main(context) async {
-
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Supabase.initialize(
+      url: "https://xritndwmdbbjeqcocsnr.supabase.co",
+      anonKey:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhyaXRuZHdtZGJiamVxY29jc25yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTgwNjMyOTIsImV4cCI6MjAzMzYzOTI5Mn0.uKMbFyn-En4cUe4hC_Ga4R3UofbkMZkQBuOQZES40L0");
+
   SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft])
       .then((_) {
     runApp(const MyApp());
@@ -141,10 +155,6 @@ class MyApp extends StatelessWidget {
         //////////////////////////////////////////////////////////////////////////////
         ChangeNotifierProvider(create: (context) => ProviderPictuers()),
         ChangeNotifierProvider(create: (context) => ProviderNotes()),
-
-
-
-
       ],
       child: MaterialApp(
         navigatorObservers: [FlutterSmartDialog.observer],
@@ -160,4 +170,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

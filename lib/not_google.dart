@@ -1,6 +1,7 @@
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'data_base.dart';
@@ -17,8 +18,11 @@ class NotGoogle extends StatefulWidget {
   State<NotGoogle> createState() => _NotGoogleState();
 }
 
+
+
 class _NotGoogleState extends State<NotGoogle> {
   bool isLoading = true;
+    List<Marker> newMarkers = [];
 
   // List<Marker> markersA = [];
 
@@ -108,13 +112,13 @@ class _NotGoogleState extends State<NotGoogle> {
   List<Marker>? structuralFailure;
   List<Marker>? shipWreck;
 
-  void showT(context, String type, String familyName,String adress) {
+  void showT(context, String type, String familyName, String adress) {
     Alert(
       context: context,
       type: AlertType.none,
       title: familyName ?? '',
       desc: adress ?? '',
-      id: type ?? "",
+      // id: type ?? "",
       buttons: [
         DialogButton(
           child: Text(
@@ -129,7 +133,7 @@ class _NotGoogleState extends State<NotGoogle> {
         )
       ],
     ).show();
-   // SmartDialog.showToast('test toast');
+    // SmartDialog.showToast('test toast');
     print("hello");
   }
 
@@ -416,52 +420,103 @@ class _NotGoogleState extends State<NotGoogle> {
   //   });
   // }
 
+
+  void getMap() async {}
+
   Future<List<Marker>> getForMap(String target, Color color) async {
+    try {
+      final supabase = Supabase.instance.client;
 
-try {
-  final conn = await connectToDatabase();
-  final result = await conn.execute(
-    Sql.named(
-        'SELECT headOfHousehold, gpsCoordinatesLong, gpsCoordinatesLatt, typeOfIncident, streetAddress FROM info WHERE typeOfIncident=@type'),
-    parameters: {'type': target},
-  );
+      final List<Map<String, dynamic>> result =
+          await supabase.from('Information').select().eq("Type of Incident", target);
 
-  if (result.isNotEmpty) {
-    List<dynamic> items = await result.map((item) {
-      return {
-        'name': item[0].toString() ?? 'No Family Name',
-        'gpsLng': double.tryParse(item[1]) ?? 0.0,
-        'gpsLat': double.tryParse(item[2]) ?? 0.0,
-        'type': item[3].toString() ?? '',
-        'adress': item[4].toString() ?? 'No Adress',
-      };
-    }).toList();
-    final List<Marker> markersStream = items.map((item) {
-      return Marker(
-        point: LatLng(item['gpsLat'], item['gpsLng']),
-        width: 500,
-        height: 500,
-        child: Pin(
-          color: color!,
-          call: () {
-            showT(context, item['type'], item['type'], item['type']);
-          },
-        ),
-      );
-    }).toList();
+      print("map data : $result");
 
-    print('these are items : ${items}');
-    print(markersStream);
-    return markersStream;
-  } else {
-    print('No records found.');
-    return [];
+      if (result.isNotEmpty) {
+        List<dynamic> items = await result.map((item) {
+          return {
+            'name': item['Head of Household'] ?? 'No Family Name',
+            'gpsLng': double.tryParse(item['Longitude (E)']) ?? 0.0,
+            'gpsLat': double.tryParse(item['Latitude (S)']) ?? 0.0,
+            'type': item['Type of Incident'] ?? '',
+            'adress': item['Specify street address where possible/applicable'].toString() ?? 'No Adress',
+          };
+        }).toList();
+        final List<Marker> markersStream = items.map((item) {
+          return Marker(
+            point: LatLng(item['gpsLat'], item['gpsLng']),
+            width: 500,
+            height: 500,
+            child: Pin(
+              color: color!,
+              call: () {
+                showT(context, item['type'], item['type'], item['name']);
+              },
+            ),
+          );
+        }).toList();
+
+        print('these are items : ${items}');
+        print(markersStream);
+        return markersStream;
+      } else {
+        print('No records found.');
+        return [];
+      }
+    } catch (error) {
+      print(error);
+      return [];
+    }
   }
-}catch(error){
-  print(error);
-  return [];
-}
-  }
+
+//   Future<List<Marker>> getForMap(String target, Color color) async {
+
+// try {
+//   final conn = await connectToDatabase();
+//   final result = await conn.execute(
+//     Sql.named(
+//         'SELECT "Head of Household", "Longitude (E)", "Latitude (S)", "Type of Incident", "Specify street address where possible/applicable" FROM "Information" WHERE "Type of Incident"=@type'),
+//     parameters: {'type': target},
+//   );
+
+// print("map data : $result");
+
+//   if (result.isNotEmpty) {
+//     List<dynamic> items = await result.map((item) {
+//       return {
+//         'name': item[0].toString() ?? 'No Family Name',
+//         'gpsLng': double.tryParse(item[1]) ?? 0.0,
+//         'gpsLat': double.tryParse(item[2]) ?? 0.0,
+//         'type': item[3].toString() ?? '',
+//         'adress': item[4].toString() ?? 'No Adress',
+//       };
+//     }).toList();
+//     final List<Marker> markersStream = items.map((item) {
+//       return Marker(
+//         point: LatLng(item['gpsLat'], item['gpsLng']),
+//         width: 500,
+//         height: 500,
+//         child: Pin(
+//           color: color!,
+//           call: () {
+//             showT(context, item['type'], item['type'], item['type']);
+//           },
+//         ),
+//       );
+//     }).toList();
+
+//     print('these are items : ${items}');
+//     print(markersStream);
+//     return markersStream;
+//   } else {
+//     print('No records found.');
+//     return [];
+//   }
+// }catch(error){
+//   print(error);
+//   return [];
+// }
+//   }
 
   // IconButton(
   // splashColor: null,
@@ -496,25 +551,18 @@ try {
                       urlTemplate:
                           'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                       userAgentPackageName: 'com.example.app',
-                        // You can implement custom error handling logic here
-
-
+                      // You can implement custom error handling logic here
                     ),
                     TileLayer(
                       urlTemplate:
-                      'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
+                          'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
                       userAgentPackageName: 'com.example.app',
                       // You can implement custom error handling logic here
-
                     ),
-
-
-
 
                     // https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}
                     // 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                     // https://www.google.cn/maps/vt?lyrs=s@189&gl=cn&x={x}&y={y}&z={z},
-
 
                     MarkerLayer(markers: snow ?? []),
                     MarkerLayer(markers: veldFire ?? []),

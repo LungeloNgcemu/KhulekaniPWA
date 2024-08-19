@@ -16,6 +16,7 @@ class Selection extends StatefulWidget {
       this.onTap9,
       this.onTap10,
       this.onTap11,
+      this.onTap12,
       this.color1,
       this.color2,
       this.color3,
@@ -27,6 +28,7 @@ class Selection extends StatefulWidget {
       this.color9,
       this.color10,
       this.color11,
+      this.color12,
       key});
 
   VoidCallback? onTap1;
@@ -40,6 +42,7 @@ class Selection extends StatefulWidget {
   VoidCallback? onTap9;
   VoidCallback? onTap10;
   VoidCallback? onTap11;
+  VoidCallback? onTap12;
 
   Color? color1;
   Color? color2;
@@ -52,14 +55,13 @@ class Selection extends StatefulWidget {
   Color? color9;
   Color? color10;
   Color? color11;
+  Color? color12;
 
   @override
   State<Selection> createState() => _SelectionState();
 }
 
 class _SelectionState extends State<Selection> {
-
-
   void createImageTable() async {
     final conn = await connectToDatabase();
     try {
@@ -284,6 +286,11 @@ class _SelectionState extends State<Selection> {
                 color: widget.color11,
                 onTap: widget.onTap11,
               ),
+              ButtonSelection2(
+                inSide: "View Beneficiary               ",
+                onTap: widget.onTap12,
+                color: widget.color12,
+              ),
               Divider(),
               // Padding(
               //   padding: const EdgeInsets.only(top: 30.0, bottom: 10.0),
@@ -364,6 +371,7 @@ class ButtonSelection extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(0.0),
             color: color!,
+            //todo remember this
           ),
           height: 85.0,
           child: Padding(

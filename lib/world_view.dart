@@ -69,15 +69,16 @@ class _WorldViewState extends State<WorldView> {
                 color6: visit == 5 ? Colors.grey[300] : Colors.grey[100],
                 onTap7: () => navigateToPage(6),
                 color7: visit == 6 ? Colors.grey[300] : Colors.grey[100],
-                onTap8:  () => navigateToPage(7),
+                onTap8: () => navigateToPage(7),
                 color8: visit == 7 ? Colors.grey[300] : Colors.grey[100],
-                onTap9:  () => navigateToPage(8),
+                onTap9: () => navigateToPage(8),
                 color9: visit == 8 ? Colors.grey[300] : Colors.grey[100],
-                onTap10:  () => navigateToPage(9),
+                onTap10: () => navigateToPage(9),
                 color10: visit == 9 ? Colors.grey[300] : Colors.grey[100],
-                onTap11:  () => navigateToPage(10),
+                onTap11: () => navigateToPage(10),
                 color11: visit == 10 ? Colors.grey[300] : Colors.grey[100],
-
+                onTap12: () => navigateToPage(11),
+                color12: visit == 11 ? Colors.grey[300] : Colors.grey[100],
               ),
             ),
           ),
@@ -90,7 +91,7 @@ class _WorldViewState extends State<WorldView> {
                   //TODO hook up
                   child: Viewx(
                     controller: controller,
-                    changer: (int pageIndex ) {
+                    changer: (int pageIndex) {
                       setState(() {
                         visit = pageIndex;
                         (context as Element).markNeedsBuild();
