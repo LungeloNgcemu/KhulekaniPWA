@@ -61,6 +61,8 @@ dependencies:
   data_table_2: ^2.5.15
 
   supabase_flutter: ^2.6.0
+  bottom_sheet: ^4.0.4
+
 #  multiselect: ^0.0.4
 
 

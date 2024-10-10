@@ -37,6 +37,7 @@ Future connectToDatabase() async {
 //       password: 'lungeloo',
 //
 //     ),
+
 //
 //     settings: ConnectionSettings(sslMode: SslMode.disable),
 //   );

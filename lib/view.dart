@@ -79,7 +79,7 @@ class _ViewxState extends State<Viewx> {
         isLoading = false;
       });
 
-      print("THis is tthe connection error :$error");
+      print("THis is the connection error :$error");
 
       return Alert(
         context: context,

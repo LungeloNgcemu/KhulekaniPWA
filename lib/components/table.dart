@@ -7,28 +7,28 @@ import 'package:provider/provider.dart';
 import 'package:khulekani_app/components/save_button.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
-class Table extends StatefulWidget {
-  const Table({
+class TableT extends StatefulWidget {
+  const TableT({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<Table> createState() => _TableState();
+  State<TableT> createState() => _TableTState();
 }
 
-class _TableState extends State<Table> {
+class _TableTState extends State<TableT> {
   List<List<dynamic>> dummyData = [
-    [
-      "John Doe",
-      DateTime(1990, 5, 15),
-      "Male",
-      "19", //age
-      "School ",
-      "10", //grade
-      "8", // Shoe Size
-      "8", // Uniform Size
-      "Additional info about John",
-    ],
+    // [
+    //   "John Doe",
+    //   DateTime(1990, 5, 15),
+    //   "Male",
+    //   "19", //age
+    //   "School ",
+    //   "10", //grade
+    //   "8", // Shoe Size
+    //   "8", // Uniform Size
+    //   "Additional info about John",
+    // ],
   ];
 
   // List<List<dynamic>> dummyData = [
@@ -89,9 +89,9 @@ class _TableState extends State<Table> {
   }
 
   void tableUpdate() {
-    setState(() {
-      myData = dummyData;
-    });
+    // setState(() {
+    //   myData = dummyData;
+    // });
     context.read<ProviderFortyTwo>().changeValue(newValue: myData);
   }
 
@@ -103,7 +103,7 @@ class _TableState extends State<Table> {
           width: MediaQuery.of(context).size.width * 0.8,
           child: DynamicTable(
             key: tableKey,
-            header: const Text("Scholars effectede"),
+            header: const Text("Scholars effected"),
             onRowEdit: (index, row) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
@@ -176,7 +176,7 @@ class _TableState extends State<Table> {
                     .nextInt(500)
                     .toString(); // to add Unique ID because it is not editable
               }
-              myData[index] = newValue; // Update data
+              // myData[index] = newValue; // Update data ..this line is not needed.
               if (newValue[0] == null) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(

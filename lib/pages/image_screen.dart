@@ -86,20 +86,13 @@ class _ImageScreenState extends State<ImageScreen>
     try {
       resultList = await MultiImagePicker.pickImages(
         selectedAssets: images,
-        cupertinoOptions: CupertinoOptions(
-          doneButton:
-              UIBarButtonItem(title: 'Confirm', tintColor: colorScheme.primary),
-          cancelButton:
-              UIBarButtonItem(title: 'Cancel', tintColor: colorScheme.primary),
-          albumButtonColor: Theme.of(context).colorScheme.primary,
-        ),
         materialOptions: const MaterialOptions(
           maxImages: 10,
           enableCamera: true,
           actionBarColor: Colors.blue,
           actionBarTitle: "Example App",
           allViewTitle: "All Photos",
-          useDetailsView: false,
+          useDetailsView: true,
           selectCircleStrokeColor: Colors.grey,
         ),
       );
@@ -113,11 +106,11 @@ class _ImageScreenState extends State<ImageScreen>
       urls.add(url);
     }
 
-    while(urls.length < 10){
-      String blank = 'https://learn.canva.com/wp-content/uploads/2014/10/whitespace.jpg';
+    while (urls.length < 10) {
+      String blank =
+          'https://learn.canva.com/wp-content/uploads/2014/10/whitespace.jpg';
       urls.add(blank);
     }
-
 
     if (!mounted) return;
 
@@ -153,8 +146,8 @@ class _ImageScreenState extends State<ImageScreen>
         ),
         SaveButton(
           text: 'Upload Images',
-          onPressed: () {
-            _loadAssets();
+          onPressed: () async {
+            await _loadAssets();
           },
         ),
         SaveButton(
@@ -165,7 +158,6 @@ class _ImageScreenState extends State<ImageScreen>
           onPressed: () {
             void stuck() {
               if (imagez.length < 10) {
-
                 Future<bool?> problem() {
                   return Alert(
                     context: context,
@@ -184,8 +176,8 @@ class _ImageScreenState extends State<ImageScreen>
                     ],
                   ).show();
                 }
-                problem();
 
+                problem();
               } else {
                 context
                     .read<ProviderClear7>()
@@ -202,11 +194,12 @@ class _ImageScreenState extends State<ImageScreen>
                       DialogButton(
                         child: Text(
                           "Done",
+
                           style: TextStyle(color: Colors.white, fontSize: 20),
                         ),
                         onPressed: () => Navigator.pop(context),
                         width: 120,
-                      )
+                      ),
                     ],
                   ).show();
                 }
@@ -214,11 +207,12 @@ class _ImageScreenState extends State<ImageScreen>
                 saveData();
               }
             }
+
             stuck();
           },
         ),
         Container(
-          //color: Colors.redAccent,
+          // color: Colors.redAccent,
           height: h * 0.54,
           child: isLoading == true
               ? const Center(
@@ -266,7 +260,6 @@ class _ImageScreenState extends State<ImageScreen>
                   ),
                 ),
         ),
-
       ],
     );
   }

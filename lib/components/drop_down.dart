@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
@@ -19,11 +20,12 @@ class _DropDownState extends State<DropDown> {
     return Center(
       child: DropdownButtonHideUnderline(
         child: DropdownButton2<String>(
+
           isExpanded: true,
           hint: Text(
             'Select Item',
             style: TextStyle(
-              fontSize: 14,
+              fontSize: 20,
               color: Theme.of(context).hintColor,
             ),
           ),
@@ -33,7 +35,8 @@ class _DropDownState extends State<DropDown> {
             child: Text(
               item,
               style: const TextStyle(
-                fontSize: 14,
+                fontSize: 25,
+
               ),
             ),
           ))
@@ -41,12 +44,15 @@ class _DropDownState extends State<DropDown> {
           value: widget.selectedValue ??  "",
           onChanged: widget.onChanged ?? () {},
           buttonStyleData: const ButtonStyleData(
-            padding: EdgeInsets.symmetric(horizontal: 16),
+            padding: EdgeInsets.symmetric(horizontal: 20),
             height: 60,
             width: 140,
           ),
           menuItemStyleData: const MenuItemStyleData(
             height: 60,
+          ),
+          dropdownStyleData: const DropdownStyleData(
+           width: 200,
           ),
         ),
       ),

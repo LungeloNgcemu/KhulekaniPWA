@@ -328,7 +328,7 @@ class _SpacialLocationPageState extends State<SpacialLocationPage>
   bool get wantKeepAlive => true;
 
   Widget build(BuildContext context) {
-    controllerA.text = "Zululand District Municipality";
+    // controllerA.text = "Zululand District Municipality";
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -360,10 +360,13 @@ class _SpacialLocationPageState extends State<SpacialLocationPage>
           //   controller: controllerB,
           // ),
 
+        
           ///////////////////////////////////////////////////////////
           MenuList(
-            choice: "Nongoma",
-            selectedValue: 'Nongoma',
+            choice: context
+                .watch<ProviderTwo>()
+                .two ?? "",
+            selectedValue: '',
             listName: collect.municipality,
             text:  "1.2. Local municipality: ",
             onChanged: (String? value) {
@@ -371,7 +374,7 @@ class _SpacialLocationPageState extends State<SpacialLocationPage>
                 selectedValue3 = value;
                 context
                     .read<ProviderTwo>()
-                    .changeValue(newValue: 'Nongoma'!);
+                    .changeValue(newValue: selectedValue3!);
               });
               print(selectedValue3);
             },
@@ -557,7 +560,7 @@ class _SpacialLocationPageState extends State<SpacialLocationPage>
                 });
                 context
                     .read<ProviderOne>()
-                    .changeValue(newValue: controllerA.text = "Zululand District Municipality");
+                    .changeValue(newValue: controllerA.text);
                 // context
                 //     .read<ProviderTwo>()
                 //     .changeValue(newValue: controllerB.text);

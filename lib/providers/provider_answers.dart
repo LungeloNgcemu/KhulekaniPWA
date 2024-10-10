@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
@@ -1148,3 +1151,45 @@ void changeValue({required String newValue}) {
   notifyListeners();
 }
 }
+
+class ProviderIsDetails extends ChangeNotifier {
+// otherIntervention
+  bool  isDetails;
+
+  ProviderIsDetails({
+    this.isDetails = false,
+  });
+
+  void changeValue({required bool newValue}) {
+    isDetails = newValue;
+    notifyListeners();
+  }
+}
+
+class TableListProvider extends ChangeNotifier {
+
+  List<Map<String, dynamic>> list = [];
+
+  TableListProvider({this.list = const []});
+
+  void updateTableList ({required List<Map<String, dynamic>>  newList}) async {
+    list = newList;
+    notifyListeners();
+  }
+}
+
+
+
+// class ProviderState extends ChangeNotifier {
+//
+//   oid Function(void Function()) state;
+//
+//   ProviderState({
+//     required this.state,
+//   });
+//
+//   void setMyFunction({required void Function() newFunction}) {
+//     state = newFunction;
+//     notifyListeners();
+//   }
+// }

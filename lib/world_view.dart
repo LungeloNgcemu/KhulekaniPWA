@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:khulekani_app/classes/alert.dart';
 import 'selection.dart';
 import 'view.dart';
 
@@ -37,6 +39,25 @@ class _WorldViewState extends State<WorldView> {
             "images/logo.png",
           ),
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 25.0),
+            child: IconButton(
+              onPressed: () {
+                const title = "Close App ?";
+
+                AlertPop().alertExit(context, title, (){
+                  SystemNavigator.pop();
+                });
+              },
+              icon:const  Icon(
+                Icons.power_settings_new_rounded,
+                color: Colors.red,
+                size: 35.0,
+              ),
+            ),
+          ),
+        ],
         toolbarHeight: 60.0,
         title: const Center(
           child: Text(

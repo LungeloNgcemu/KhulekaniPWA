@@ -36,7 +36,7 @@ class _MenuListState extends State<MenuList> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Expanded(
-              flex: 5,
+              flex: 3,
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8.0),
                 child: Text(
@@ -58,7 +58,7 @@ class _MenuListState extends State<MenuList> {
               ),
             ),
             Expanded(
-              flex: 3,
+              flex: 4,
               child: Padding(
                 padding: const EdgeInsets.only(
                   top: 20,

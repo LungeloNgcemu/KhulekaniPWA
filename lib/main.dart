@@ -155,6 +155,10 @@ class MyApp extends StatelessWidget {
         //////////////////////////////////////////////////////////////////////////////
         ChangeNotifierProvider(create: (context) => ProviderPictuers()),
         ChangeNotifierProvider(create: (context) => ProviderNotes()),
+
+        ChangeNotifierProvider(create: (context) => ProviderIsDetails()),
+        ChangeNotifierProvider(create: (context) => TableListProvider()),
+
       ],
       child: MaterialApp(
         navigatorObservers: [FlutterSmartDialog.observer],

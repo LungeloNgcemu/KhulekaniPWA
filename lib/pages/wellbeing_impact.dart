@@ -310,7 +310,7 @@ class _WellbeingImpactState extends State<WellbeingImpact>
             title: "C) Scholars Effected?",
           ),
 // TODO 42 provider is empty
-          fun.Table(),
+          fun.TableT(),
 
           SubTitle(
             title: "4.3 WELLBEING IMPACT ON THE HOUSEHOLD",
