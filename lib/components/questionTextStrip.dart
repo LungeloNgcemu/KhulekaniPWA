@@ -38,6 +38,10 @@ class QuestionTextStrip extends StatelessWidget {
                   height: 50,
                   width: 20,
                   child: TextField(
+                    style: const TextStyle(
+                      fontSize: 25.0, // Set your desired font size here
+                      color: Colors.black, // Set your desired text color here
+                    ),
                     onChanged: onChanged ?? (String) {},
                     controller: controller,
                     decoration: InputDecoration(
@@ -47,6 +51,7 @@ class QuestionTextStrip extends StatelessWidget {
                       border: OutlineInputBorder(
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.circular(20),
+
                       ),
                     ),
                   ),

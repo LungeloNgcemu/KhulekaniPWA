@@ -350,7 +350,7 @@ class _TableTState extends State<TableT> {
               DynamicTableDataColumn(
                 label: const Text("Grade"),
                 dynamicTableInputType: DynamicTableInputType.dropDown<String>(
-                  items: collection.numbers20
+                  items: collection.grades
                       .map((e) => DropdownMenuItem(
                             value: e,
                             child: Text(e),

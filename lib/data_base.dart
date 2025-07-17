@@ -11,11 +11,11 @@ Future connectToDatabase() async {
 
   return await Connection.open(
     Endpoint(
-      host: 'aws-0-eu-central-1.pooler.supabase.com',
+      host: 'aws-0-ap-southeast-1.pooler.supabase.com',
       database: 'postgres',
       port: 5432,
-      username: 'postgres.xritndwmdbbjeqcocsnr',
-      password: 'KhulekaniKhulekan',
+      username: 'postgres.rfvaloxuxjvwkjmbtehy',
+      password: '#Lungelo1992',
 
     ),
 

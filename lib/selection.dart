@@ -376,12 +376,15 @@ class ButtonSelection extends StatelessWidget {
           height: 85.0,
           child: Padding(
             padding: const EdgeInsets.only(
-                left: 60.0, top: 10, bottom: 10, right: 15.0),
+                left: 30.0, top: 10, bottom: 10, right: 15.0),
             child: Center(
-              child: Text(
-                inSide ?? "",
-                style: TextStyle(fontSize: size ?? 18.0),
-                textAlign: TextAlign.start,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  inSide ?? "",
+                  style: TextStyle(fontSize: size ?? 18.0),
+                  textAlign: TextAlign.start,
+                ),
               ),
             ),
           ),
