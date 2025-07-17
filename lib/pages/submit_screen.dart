@@ -8,7 +8,7 @@ import 'package:khulekani_app/components/questionTextStrip.dart';
 import 'package:khulekani_app/components/save_button.dart';
 import 'package:khulekani_app/providers/provider_answers.dart';
 import 'package:provider/provider.dart';
-import 'package:khulekani_app/data_base.dart  ';
+import 'package:khulekani_app/data_base.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:khulekani_app/components/table.dart';
 import 'package:khulekani_app/providers/clear_function.dart';
