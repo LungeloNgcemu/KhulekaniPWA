@@ -684,10 +684,10 @@ packages:
     dependency: "direct main"
     description:
       name: multi_image_picker_plus
-      sha256: "3077e64dcc312cd4d93c35d4170d739bfabf5c70a87783b7da55fd2cedc0e4e6"
+      sha256: "5440eb37799df19026d860ef5ea093a769dc9adc378c49dfa659341668339417"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.3"
+    version: "0.0.7"
   nested:
     dependency: transitive
     description:

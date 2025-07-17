@@ -86,15 +86,15 @@ class _ImageScreenState extends State<ImageScreen>
     try {
       resultList = await MultiImagePicker.pickImages(
         selectedAssets: images,
-        materialOptions: const MaterialOptions(
-          maxImages: 10,
-          enableCamera: true,
-          actionBarColor: Colors.blue,
-          actionBarTitle: "Example App",
-          allViewTitle: "All Photos",
-          useDetailsView: true,
-          selectCircleStrokeColor: Colors.grey,
-        ),
+        // materialOptions: const MaterialOptions(
+        //   maxImages: 10,
+        //   enableCamera: true,
+        //   actionBarColor: Colors.blue,
+        //   actionBarTitle: "Example App",
+        //   allViewTitle: "All Photos",
+        //   useDetailsView: true,
+        //   selectCircleStrokeColor: Colors.grey,
+        // ),
       );
     } on Exception catch (e) {
       error = e.toString();
