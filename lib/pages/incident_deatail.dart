@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:khulekani_app/components/drop_down.dart ';
 import 'package:khulekani_app/components/header_blue.dart';
 import 'package:khulekani_app/list/lists.dart' as collection;
 import 'package:khulekani_app/components/menu_list.dart';
