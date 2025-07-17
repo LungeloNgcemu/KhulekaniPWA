@@ -1,7 +1,6 @@
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:flutter/material.dart';
 
-import '../data_base.dart  ';
 
 class AlertPop {
 
