@@ -207,7 +207,9 @@ class _TableScreenState extends State<TableScreen> {
                                 final data = snapshot.data!;
                                 print(data);
 
-                                return SizedBox();
+                                return const SizedBox(
+                                  height: 2,
+                                );
                                 // return DataTable2(
                                 //   columnSpacing: 12,
                                 //   horizontalMargin: 12,
