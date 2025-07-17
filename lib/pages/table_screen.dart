@@ -5,7 +5,7 @@ import 'package:khulekani_app/classes/sheet_class.dart';
 import 'package:khulekani_app/classes/table_class.dart';
 import 'package:khulekani_app/components/edit_box.dart';
 import 'package:khulekani_app/components/header_blue.dart';
-import 'package:data_table_2/data_table_2.dart';
+// import 'package:data_table_2/data_table_2.dart';
 import 'package:khulekani_app/components/search_strip.dart';
 import 'package:khulekani_app/components/styles.dart';
 import 'package:khulekani_app/components/table.dart';
@@ -83,53 +83,56 @@ class _TableScreenState extends State<TableScreen> {
   }
 
   Widget likeResultTable(List<Map<String, dynamic>> data) {
-    return DataTable2(
-      columnSpacing: 12,
-      horizontalMargin: 12,
-      minWidth: 600,
-      columns: const [
-        DataColumn2(
-          label: Text('ID Number'),
-          size: ColumnSize.L,
-        ),
-        DataColumn(
-          label: Text('Date of Birth'),
-        ),
-        DataColumn(
-          label: Text('Name'),
-        ),
-        DataColumn(
-          label: Text('Address'),
-        ),
-        DataColumn(
-          label: Text('Co-ordinates'),
-        ),
-        DataColumn(
-          label: Text('Contact'),
-        ),
-      ],
-      rows: data.map((item) {
-        final birthday = table.birthday(item['Identity Number']);
-        return DataRow(
-            onLongPress: () {
-              setState(() {
-                context.read<ProviderIsDetails>().changeValue(newValue: true);
-                selectedItem = item;
-              });
-            },
-            cells: [
-              DataCell(Text(item['Identity Number'].toString())),
-              DataCell(Text(birthday ?? '')),
-              DataCell(Text(item['Head of Household'] ?? '')),
-              DataCell(Text(
-                  item['Specify street address where possible/applicable'] ??
-                      '')),
-              DataCell(Text(
-                  "${item['Longitude (E)']}\n ${item['Latitude (S)']}" ?? '')),
-              DataCell(Text(item['Contact Number'] ?? '')),
-            ]);
-      }).toList(),
-    );
+    return SizedBox();
+
+    //   DataTable2(
+    //     columnSpacing: 12,
+    //     horizontalMargin: 12,
+    //     minWidth: 600,
+    //     columns: const [
+    //       DataColumn2(
+    //         label: Text('ID Number'),
+    //         size: ColumnSize.L,
+    //       ),
+    //       DataColumn(
+    //         label: Text('Date of Birth'),
+    //       ),
+    //       DataColumn(
+    //         label: Text('Name'),
+    //       ),
+    //       DataColumn(
+    //         label: Text('Address'),
+    //       ),
+    //       DataColumn(
+    //         label: Text('Co-ordinates'),
+    //       ),
+    //       DataColumn(
+    //         label: Text('Contact'),
+    //       ),
+    //     ],
+    //     rows: data.map((item) {
+    //       final birthday = table.birthday(item['Identity Number']);
+    //       return DataRow(
+    //           onLongPress: () {
+    //             setState(() {
+    //               context.read<ProviderIsDetails>().changeValue(newValue: true);
+    //               selectedItem = item;
+    //             });
+    //           },
+    //           cells: [
+    //             DataCell(Text(item['Identity Number'].toString())),
+    //             DataCell(Text(birthday ?? '')),
+    //             DataCell(Text(item['Head of Household'] ?? '')),
+    //             DataCell(Text(
+    //                 item['Specify street address where possible/applicable'] ??
+    //                     '')),
+    //             DataCell(Text(
+    //                 "${item['Longitude (E)']}\n ${item['Latitude (S)']}" ?? '')),
+    //             DataCell(Text(item['Contact Number'] ?? '')),
+    //           ]);
+    //     }).toList(),
+    //   );
+    // }
   }
 
   @override
@@ -203,70 +206,73 @@ class _TableScreenState extends State<TableScreen> {
                               } else {
                                 final data = snapshot.data!;
                                 print(data);
-                                return DataTable2(
-                                  columnSpacing: 12,
-                                  horizontalMargin: 12,
-                                  minWidth: 600,
-                                  columns: const [
-                                    DataColumn2(
-                                      label: Text(
-                                        'ID Number',
-                                        style: TextStyle(fontSize: kFontDmi),
-                                      ),
-                                      size: ColumnSize.L,
-                                    ),
-                                    DataColumn(
-                                      label: Text('Date of Birth',
-                                          style: TextStyle(fontSize: kFontDmi),
-                                      ),
-                                    ),
-                                    DataColumn(
-                                      label: Text('Name'),
-                                    ),
-                                    DataColumn(
-                                      label: Text('Address'),
-                                    ),
-                                    DataColumn(
-                                      label: Text('Co-ordinates'),
-                                    ),
-                                    DataColumn(
-                                      label: Text('Contact'),
-                                    ),
-                                  ],
-                                  rows: data.map((item) {
-                                    //use the pass the item['Identity Number'] into a function and get birth date
-                                    final birthday =
-                                        table.birthday(item['Identity Number']);
-                                    print(birthday);
-                                    return DataRow(
-                                        onLongPress: () {
-                                          setState(() {
-                                            // isDetails = true;
-                                            context
-                                                .read<ProviderIsDetails>()
-                                                .changeValue(newValue: true);
-                                            print(
-                                                "ISdetails ${Provider.of<ProviderIsDetails>(context, listen: false).isDetails}");
-                                            selectedItem = item;
-                                          });
-                                        },
-                                        cells: [
-                                          DataCell(Text(item['Identity Number']
-                                              .toString())),
-                                          DataCell(Text(birthday ?? '')),
-                                          DataCell(Text(
-                                              item['Head of Household'] ?? '')),
-                                          DataCell(Text(item[
-                                                  'Specify street address where possible/applicable'] ??
-                                              '')),
-                                          DataCell(Text(
-                                              "${item['Longitude (E)']}\n ${item['Latitude (S)']}" ??
-                                                  '')),
-                                          DataCell(Text(
-                                              item['Contact Number'] ?? '')),
-                                        ]);
-                                  }).toList(),
-                                );
+
+                                return SizedBox();
+                                // return DataTable2(
+                                //   columnSpacing: 12,
+                                //   horizontalMargin: 12,
+                                //   minWidth: 600,
+                                //   columns: const [
+                                //     DataColumn2(
+                                //       label: Text(
+                                //         'ID Number',
+                                //         style: TextStyle(fontSize: kFontDmi),
+                                //       ),
+                                //       size: ColumnSize.L,
+                                //     ),
+                                //     DataColumn(
+                                //       label: Text(
+                                //         'Date of Birth',
+                                //         style: TextStyle(fontSize: kFontDmi),
+                                //       ),
+                                //     ),
+                                //     DataColumn(
+                                //       label: Text('Name'),
+                                //     ),
+                                //     DataColumn(
+                                //       label: Text('Address'),
+                                //     ),
+                                //     DataColumn(
+                                //       label: Text('Co-ordinates'),
+                                //     ),
+                                //     DataColumn(
+                                //       label: Text('Contact'),
+                                //     ),
+                                //   ],
+                                //   rows: data.map((item) {
+                                //     //use the pass the item['Identity Number'] into a function and get birth date
+                                //     final birthday =
+                                //         table.birthday(item['Identity Number']);
+                                //     print(birthday);
+                                //     return DataRow(
+                                //         onLongPress: () {
+                                //           setState(() {
+                                //             // isDetails = true;
+                                //             context
+                                //                 .read<ProviderIsDetails>()
+                                //                 .changeValue(newValue: true);
+                                //             print(
+                                //                 "ISdetails ${Provider.of<ProviderIsDetails>(context, listen: false).isDetails}");
+                                //             selectedItem = item;
+                                //           });
+                                //         },
+                                //         cells: [
+                                //           DataCell(Text(item['Identity Number']
+                                //               .toString())),
+                                //           DataCell(Text(birthday ?? '')),
+                                //           DataCell(Text(
+                                //               item['Head of Household'] ?? '')),
+                                //           DataCell(Text(item[
+                                //                   'Specify street address where possible/applicable'] ??
+                                //               '')),
+                                //           DataCell(Text(
+                                //               "${item['Longitude (E)']}\n ${item['Latitude (S)']}" ??
+                                //                   '')),
+                                //           DataCell(Text(
+                                //               item['Contact Number'] ?? '')),
+                                //         ]);
+                                //   }).toList(),
+                                // );
                               }
                             },
                           ),

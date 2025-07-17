@@ -58,7 +58,7 @@ dependencies:
   path_provider: ^2.1.2
   flutter_image_compress: ^2.1.0
   postgres: ^3.2.1
-  data_table_2: ^2.5.12
+  # data_table_2: ^2.5.12
 
   supabase_flutter: ^2.6.0
   bottom_sheet: ^4.0.4
