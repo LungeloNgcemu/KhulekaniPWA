@@ -34,60 +34,6 @@ class _WellbeingImpactState extends State<WellbeingImpact>
   String? selectedValue11;
   String? selectedValue12;
   String? selectedValue13;
-//TODO this is the table
-  // void childTable(dataBase, String id) async {
-  //   final conn = await connectToDatabase();
-  //   for (List<dynamic> data in dataBase.skip(1)) {
-  //     final result1 = await conn.execute(
-  //       r'INSERT INTO People (info_id,name,birthdate,gender,age,school,grade,shoeSize,uniformSize,additionalInfo)'
-  //       r'VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)',
-  //       parameters: [
-  //         id,
-  //         data[0],
-  //         data[1],
-  //         data[2],
-  //         data[3],
-  //         data[4],
-  //         data[5],
-  //         data[6],
-  //         data[7],
-  //         data[8]
-  //       ],
-  //     );
-  //   }
-  //   conn.close();
-  // }
-  //
-  // void createChildTable() async {
-  //   final conn = await connectToDatabase();
-  //
-  //   await conn.execute('CREATE TABLE IF NOT EXISTS People ('
-  //       ' id SERIAL PRIMARY KEY,'
-  //       ' id_info SERIAL,'
-  //       ' name VARCHAR(45),'
-  //       ' birthdate VARCHAR(45),'
-  //       ' gender VARCHAR(45),'
-  //       'age VARCHAR(45),'
-  //       ' school VARCHAR(45),'
-  //       ' grade VARCHAR(45),'
-  //       'shoeSize VARCHAR(45),'
-  //       '  uniformSize VARCHAR(45),'
-  //       ' additionalInfo VARCHAR(45)'
-  //       ' FOREIGN KEY (info_id) REFRENCES info(info_id)'
-  //       ')');
-  //   conn.close();
-  //
-  //
-  //   void createInfoTable() async {
-  //     final conn = await connectToDatabase();
-  //
-  //     await conn.execute('CREATE TABLE IF NOT EXISTS info ('
-  //         ' info_id SERIAL PRIMARY KEY,'
-  //         ' someInfoColumn VARCHAR(45),'
-  //         ' anotherInfoColumn VARCHAR(45)'
-  //         ')');
-  //     conn.close();
-  //   }
 
   bool isSaved = false;
 
@@ -98,8 +44,8 @@ class _WellbeingImpactState extends State<WellbeingImpact>
     return SingleChildScrollView(
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 1.0),
+          const Padding(
+            padding: EdgeInsets.only(top: 1.0),
             child: Divider(
               color: Colors.black,
             ),
@@ -107,7 +53,7 @@ class _WellbeingImpactState extends State<WellbeingImpact>
           HeaderBlue(
             text: "WELL-BEING IMPACT ON THE HOUSEHOLD MEMBERS",
           ),
-          Divider(
+          const Divider(
             color: Colors.black,
           ),
           SubTitle(
@@ -387,12 +333,12 @@ class _WellbeingImpactState extends State<WellbeingImpact>
                   desc: "Your Data has been Saved.",
                   buttons: [
                     DialogButton(
-                      child: Text(
+                      onPressed: () => Navigator.pop(context),
+                      width: 120,
+                      child: const Text(
                         "Done",
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
-                      onPressed: () => Navigator.pop(context),
-                      width: 120,
                     )
                   ],
                 ).show();

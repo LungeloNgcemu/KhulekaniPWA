@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:khulekani_app/pages/table_screen.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'pages/spacialLocation.dart';
 import 'pages/incident_deatail.dart';
 import 'pages/household_effected.dart';
@@ -14,7 +15,7 @@ import 'not_google.dart';
 import 'pages/image_screen.dart';
 import 'pages/notes_sceen.dart';
 import 'pages/submit_screen.dart';
-//import 'pages/table.dart' as collect;
+
 
 List<Widget> _pages = const [
   SpacialLocationPage(),
@@ -46,18 +47,20 @@ class _ViewxState extends State<Viewx> {
   @override
   void initState() {
     super.initState();
-    // Call connect function when the widget is initialized
-
-    connect(context);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      connect(context);
+    });
   }
 
   Future<bool?> connect(BuildContext context) async {
     try {
-      final conn = await connectToDatabase();
-      print('has connection!');
-      setState(() {
-        isLoading = false;
-      });
+      final supabase = Supabase.instance.client;
+
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
       return Alert(
         context: context,
         type: AlertType.success,
@@ -75,31 +78,28 @@ class _ViewxState extends State<Viewx> {
         ],
       ).show();
     } catch (error) {
-      setState(() {
-        isLoading = false;
-      });
-
-      print("THis is the connection error :$error");
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
 
       return Alert(
         context: context,
         type: AlertType.error,
         title: "No Connection",
         desc: "$error",
-
-        // desc: "Network Error...Close and Reopen App",
         buttons: [
           DialogButton(
-            child: Text(
+            onPressed: () => Navigator.pop(context),
+            width: 120,
+            child: const Text(
               "Okay",
               style: TextStyle(color: Colors.white, fontSize: 20),
             ),
-            onPressed: () => Navigator.pop(context),
-            width: 120,
           )
         ],
       ).show();
-      // print("problem : ${error}");
     }
   }
 
@@ -117,10 +117,3 @@ class _ViewxState extends State<Viewx> {
     );
   }
 }
-//
-// (index) {
-// setState(() {
-// visit = index;
-// (context as Element).markNeedsBuild();
-// });
-// },

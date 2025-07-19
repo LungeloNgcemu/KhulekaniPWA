@@ -12,24 +12,13 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:khulekani_app/providers/clear_function.dart';
 import 'package:khulekani_app/providers/saved_pages.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:khulekani_app/const/superbase_constants.dart';
 
-
-// const supabaseUrl = 'https://xritndwmdbbjeqcocsnr.supabase.co';
-// const supabaseKey = String.fromEnvironment('SUPABASE_KEY');
-
-// Future<void> main() async {
-//   await Supabase.initialize(url: supabaseUrl, anonKey: supabaseKey);
-//   runApp(MyApp());
-// }
-
-//https://stackoverflow.com/questions/51806662/how-to-set-landscape-orientation-mode-for-flutter-app
 void main(context) async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Supabase.initialize(
-      url: "https://xritndwmdbbjeqcocsnr.supabase.co",
-      anonKey:
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhyaXRuZHdtZGJiamVxY29jc25yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTgwNjMyOTIsImV4cCI6MjAzMzYzOTI5Mn0.uKMbFyn-En4cUe4hC_Ga4R3UofbkMZkQBuOQZES40L0");
+      url: SuperbaseConstants.url, anonKey: SuperbaseConstants.anonkey);
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft])
       .then((_) {
@@ -158,7 +147,6 @@ class MyApp extends StatelessWidget {
 
         ChangeNotifierProvider(create: (context) => ProviderIsDetails()),
         ChangeNotifierProvider(create: (context) => TableListProvider()),
-
       ],
       child: MaterialApp(
         navigatorObservers: [FlutterSmartDialog.observer],

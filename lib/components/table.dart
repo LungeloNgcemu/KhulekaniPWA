@@ -17,64 +17,7 @@ class TableT extends StatefulWidget {
 }
 
 class _TableTState extends State<TableT> {
-  List<List<dynamic>> dummyData = [
-    // [
-    //   "John Doe",
-    //   DateTime(1990, 5, 15),
-    //   "Male",
-    //   "19", //age
-    //   "School ",
-    //   "10", //grade
-    //   "8", // Shoe Size
-    //   "8", // Uniform Size
-    //   "Additional info about John",
-    // ],
-  ];
-
-  // List<List<dynamic>> dummyData = [
-  //   [
-  //     "John Doe",
-  //     DateTime(1990, 5, 15),
-  //     "Male",
-  //     "19",
-  //     "School ",
-  //     "10",
-  //     "8", // Shoe Size
-  //     "8", // Uniform Size
-  //     "Additional info about John",
-  //   ],
-  //   [
-  //     "Jane Doe",
-  //     DateTime(1990, 5, 15),
-  //     "Female",
-  //     "19",
-  //     "School XYZ",
-  //     "12",
-  //     "7", // Shoe Size
-  //     "8", // Uniform Size
-  //     "Additional info about Jane",
-  //   ],
-  //   // Add more rows as needed
-  // ];
-
-  // List<List<dynamic>> dummyData = [
-  //   [
-  //     "John Doe",
-  //     "12345",
-  //     DateTime(1990, 5, 15),
-  //     "Male",
-  //     "20",
-  //     "Some info about John"
-  //   ],
-  //   [
-  //     "Jane Doe",
-  //     "67890",
-  //     DateTime(1985, 8, 22),
-  //     "Female",
-  //     "20",
-  //     "Some info about Jane"
-  //   ],
-  // ];
+  List<List<dynamic>> dummyData = [];
 
   var tableKey = GlobalKey<DynamicTableState>();
   late List<List<dynamic>> myData;
@@ -89,9 +32,6 @@ class _TableTState extends State<TableT> {
   }
 
   void tableUpdate() {
-    // setState(() {
-    //   myData = dummyData;
-    // });
     context.read<ProviderFortyTwo>().changeValue(newValue: myData);
   }
 
@@ -99,8 +39,9 @@ class _TableTState extends State<TableT> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
-          width: MediaQuery.of(context).size.width * 0.8,
+        ConstrainedBox(
+          constraints:
+              BoxConstraints(minWidth: MediaQuery.of(context).size.width * 0.5),
           child: DynamicTable(
             key: tableKey,
             header: const Text("Scholars effected"),
@@ -123,15 +64,7 @@ class _TableTState extends State<TableT> {
               return true;
             },
             onRowSave: (index, old, newValue) {
-              // ScaffoldMessenger.of(context).showSnackBar(
-              //   SnackBar(
-              //     content:
-              //         Text("Row Saved index:$index old:$old new:$newValue"),
-              //   ),
-              // );
-
               if (newValue[1] == null) {
-                // Show a snackbar indicating that the birth date cannot be null
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text("Birth Date cannot be null"),
@@ -189,7 +122,6 @@ class _TableTState extends State<TableT> {
               print("THIS IT $newValue");
               print("LIST : $myData");
               return newValue;
-
             },
             showActions: true,
             showAddRowButton: true,
@@ -441,7 +373,7 @@ class _TableTState extends State<TableT> {
                 isSaved = true;
               });
               // items here
-        print(myData);
+              print(myData);
               return Alert(
                 context: context,
                 type: AlertType.success,
@@ -449,16 +381,17 @@ class _TableTState extends State<TableT> {
                 desc: "Your Data has been Saved.",
                 buttons: [
                   DialogButton(
-                    child: Text(
+                    onPressed: () => Navigator.pop(context),
+                    width: 120,
+                    child: const Text(
                       "Done",
                       style: TextStyle(color: Colors.white, fontSize: 20),
                     ),
-                    onPressed: () => Navigator.pop(context),
-                    width: 120,
                   )
                 ],
               ).show();
             }
+
             saveData();
           },
           ///////////////////////////////////////////
