@@ -29,6 +29,8 @@ class _WorldViewState extends State<WorldView> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isSmallScreen = screenWidth < 900;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -46,11 +48,11 @@ class _WorldViewState extends State<WorldView> {
               onPressed: () {
                 const title = "Close App ?";
 
-                AlertPop().alertExit(context, title, (){
+                AlertPop().alertExit(context, title, () {
                   SystemNavigator.pop();
                 });
               },
-              icon:const  Icon(
+              icon: const Icon(
                 Icons.power_settings_new_rounded,
                 color: Colors.red,
                 size: 35.0,
@@ -66,63 +68,130 @@ class _WorldViewState extends State<WorldView> {
           ),
         ),
       ),
-      body: Row(
-        children: [
-          Expanded(
-            flex: 1,
-            child: Container(
-              color: Colors.white,
-              //TODO hook up
-              // Colors.grey[100],
+      body: isSmallScreen
+          ? Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: IntrinsicHeight(
+              
+                    //TODO hook up
+                    // Colors.grey[100],
 
-              child: Selection(
-                onTap1: () => navigateToPage(0),
-                color1: visit == 0 ? Colors.grey[300] : Colors.grey[100],
-                onTap2: () => navigateToPage(1),
-                color2: visit == 1 ? Colors.grey[300] : Colors.grey[100],
-                onTap3: () => navigateToPage(2),
-                color3: visit == 2 ? Colors.grey[300] : Colors.grey[100],
-                onTap4: () => navigateToPage(3),
-                color4: visit == 3 ? Colors.grey[300] : Colors.grey[100],
-                onTap5: () => navigateToPage(4),
-                color5: visit == 4 ? Colors.grey[300] : Colors.grey[100],
-                onTap6: () => navigateToPage(5),
-                color6: visit == 5 ? Colors.grey[300] : Colors.grey[100],
-                onTap7: () => navigateToPage(6),
-                color7: visit == 6 ? Colors.grey[300] : Colors.grey[100],
-                onTap8: () => navigateToPage(7),
-                color8: visit == 7 ? Colors.grey[300] : Colors.grey[100],
-                onTap9: () => navigateToPage(8),
-                color9: visit == 8 ? Colors.grey[300] : Colors.grey[100],
-                onTap10: () => navigateToPage(9),
-                color10: visit == 9 ? Colors.grey[300] : Colors.grey[100],
-                onTap11: () => navigateToPage(10),
-                color11: visit == 10 ? Colors.grey[300] : Colors.grey[100],
-                onTap12: () => navigateToPage(11),
-                color12: visit == 11 ? Colors.grey[300] : Colors.grey[100],
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 3,
-            child: Container(
-                color: Colors.grey[50],
-                child: Padding(
-                  padding: const EdgeInsets.all(30.0),
-                  //TODO hook up
-                  child: Viewx(
-                    controller: controller,
-                    changer: (int pageIndex) {
-                      setState(() {
-                        visit = pageIndex;
-                        (context as Element).markNeedsBuild();
-                      });
-                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Selection(
+                        onTap1: () => navigateToPage(0),
+                        color1: visit == 0 ? Colors.grey[300] : Colors.grey[100],
+                        onTap2: () => navigateToPage(1),
+                        color2: visit == 1 ? Colors.grey[300] : Colors.grey[100],
+                        onTap3: () => navigateToPage(2),
+                        color3: visit == 2 ? Colors.grey[300] : Colors.grey[100],
+                        onTap4: () => navigateToPage(3),
+                        color4: visit == 3 ? Colors.grey[300] : Colors.grey[100],
+                        onTap5: () => navigateToPage(4),
+                        color5: visit == 4 ? Colors.grey[300] : Colors.grey[100],
+                        onTap6: () => navigateToPage(5),
+                        color6: visit == 5 ? Colors.grey[300] : Colors.grey[100],
+                        onTap7: () => navigateToPage(6),
+                        color7: visit == 6 ? Colors.grey[300] : Colors.grey[100],
+                        onTap8: () => navigateToPage(7),
+                        color8: visit == 7 ? Colors.grey[300] : Colors.grey[100],
+                        onTap9: () => navigateToPage(8),
+                        color9: visit == 8 ? Colors.grey[300] : Colors.grey[100],
+                        onTap10: () => navigateToPage(9),
+                        color10: visit == 9 ? Colors.grey[300] : Colors.grey[100],
+                        onTap11: () => navigateToPage(10),
+                        color11:
+                            visit == 10 ? Colors.grey[300] : Colors.grey[100],
+                        onTap12: () => navigateToPage(11),
+                        color12:
+                            visit == 11 ? Colors.grey[300] : Colors.grey[100],
+                      ),
+                    ),
                   ),
-                )),
-          ),
-        ],
-      ),
+                ),
+                Expanded(
+                  flex: 4,
+                  child: Container(
+                      color: Colors.grey[50],
+                      child: Padding(
+                        padding: const EdgeInsets.all(30.0),
+                        //TODO hook up
+                        child: Viewx(
+                          controller: controller,
+                          changer: (int pageIndex) {
+                            setState(() {
+                              visit = pageIndex;
+                              (context as Element).markNeedsBuild();
+                            });
+                          },
+                        ),
+                      )),
+                ),
+              ],
+            )
+          : Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    color: Colors.white,
+                    //TODO hook up
+                    // Colors.grey[100],
+
+                    child: Selection(
+                      onTap1: () => navigateToPage(0),
+                      color1: visit == 0 ? Colors.grey[300] : Colors.grey[100],
+                      onTap2: () => navigateToPage(1),
+                      color2: visit == 1 ? Colors.grey[300] : Colors.grey[100],
+                      onTap3: () => navigateToPage(2),
+                      color3: visit == 2 ? Colors.grey[300] : Colors.grey[100],
+                      onTap4: () => navigateToPage(3),
+                      color4: visit == 3 ? Colors.grey[300] : Colors.grey[100],
+                      onTap5: () => navigateToPage(4),
+                      color5: visit == 4 ? Colors.grey[300] : Colors.grey[100],
+                      onTap6: () => navigateToPage(5),
+                      color6: visit == 5 ? Colors.grey[300] : Colors.grey[100],
+                      onTap7: () => navigateToPage(6),
+                      color7: visit == 6 ? Colors.grey[300] : Colors.grey[100],
+                      onTap8: () => navigateToPage(7),
+                      color8: visit == 7 ? Colors.grey[300] : Colors.grey[100],
+                      onTap9: () => navigateToPage(8),
+                      color9: visit == 8 ? Colors.grey[300] : Colors.grey[100],
+                      onTap10: () => navigateToPage(9),
+                      color10: visit == 9 ? Colors.grey[300] : Colors.grey[100],
+                      onTap11: () => navigateToPage(10),
+                      color11:
+                          visit == 10 ? Colors.grey[300] : Colors.grey[100],
+                      onTap12: () => navigateToPage(11),
+                      color12:
+                          visit == 11 ? Colors.grey[300] : Colors.grey[100],
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 3,
+                  child: Container(
+                    color: Colors.grey[50],
+                    child: Padding(
+                      padding: const EdgeInsets.all(30.0),
+                      //TODO hook up
+                      child: Viewx(
+                        controller: controller,
+                        changer: (int pageIndex) {
+                          setState(() {
+                            visit = pageIndex;
+                            (context as Element).markNeedsBuild();
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
     );
   }
 }

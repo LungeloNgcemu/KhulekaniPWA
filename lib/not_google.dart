@@ -329,8 +329,6 @@ class _NotGoogleState extends State<NotGoogle> {
         shipWreck = markers;
       });
     });
-
-
   }
 
   Future<List<Marker>?> _initializeMarkers(String type, Color? color) async {
@@ -457,6 +455,9 @@ class _NotGoogleState extends State<NotGoogle> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    final isSmallScreen = screenWidth < 900;
     return isLoading == true
         ? const Center(
             child: SizedBox(
@@ -654,53 +655,120 @@ class _NotGoogleState extends State<NotGoogle> {
               //     ],
               //   ),
               // ),
-              SizedBox(
-                height: 100.0,
-                child: GridView(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 4,
-                      mainAxisExtent: 30,
-                      mainAxisSpacing: 1,
-                      crossAxisSpacing: 1.0),
-                  children: <Widget>[
-                    LegendDiscription(text: "Snow", color: Colors.red),
-                    LegendDiscription(text: "Veld Fire", color: Colors.orange),
-                    LegendDiscription(text: "Lightning", color: Colors.yellow),
-                    LegendDiscription(text: "Hailstorm", color: Colors.blue),
-                    LegendDiscription(
-                        text: "Road Accident", color: Colors.green),
-                    LegendDiscription(
-                        text: "Heavy Rainfall", color: Colors.blue),
-                    LegendDiscription(text: "Strong Wind", color: Colors.green),
-                    LegendDiscription(
-                        text: "Rail Accident", color: Colors.teal),
-                    LegendDiscription(
-                        text: "Earthquake", color: Colors.deepOrange),
-                    LegendDiscription(
-                        text: "Disease Outbreak", color: Colors.pink),
-                    LegendDiscription(
-                        text: "Plantation Fire", color: Colors.lime),
-                    LegendDiscription(
-                        text: "Severe Thunderstorm", color: Colors.cyan),
-                    LegendDiscription(text: "Drought", color: Colors.amber),
-                    LegendDiscription(text: "Mud Slide", color: Colors.brown),
-                    LegendDiscription(
-                        text: "Air Crash", color: Colors.deepPurple),
-                    LegendDiscription(
-                        text: "Hazmat Spillage", color: Colors.lightGreen),
-                    LegendDiscription(
-                        text: "Industrial Pollution", color: Colors.lightBlue),
-                    LegendDiscription(
-                        text: "Civil Unrest", color: Colors.redAccent),
-                    LegendDiscription(
-                        text: "Industrial Fire", color: Colors.orangeAccent),
-                    LegendDiscription(
-                        text: "Structural Failure", color: Colors.blueAccent),
-                    LegendDiscription(
-                        text: "Ship Wreck", color: Colors.purpleAccent),
-                  ],
-                ),
-              ),
+              isSmallScreen
+                  ? SizedBox(
+                      height: 100.0,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: <Widget>[
+                            LegendDiscription(text: "Snow", color: Colors.red),
+                            LegendDiscription(
+                                text: "Veld Fire", color: Colors.orange),
+                            LegendDiscription(
+                                text: "Lightning", color: Colors.yellow),
+                            LegendDiscription(
+                                text: "Hailstorm", color: Colors.blue),
+                            LegendDiscription(
+                                text: "Road Accident", color: Colors.green),
+                            LegendDiscription(
+                                text: "Heavy Rainfall", color: Colors.blue),
+                            LegendDiscription(
+                                text: "Strong Wind", color: Colors.green),
+                            LegendDiscription(
+                                text: "Rail Accident", color: Colors.teal),
+                            LegendDiscription(
+                                text: "Earthquake", color: Colors.deepOrange),
+                            LegendDiscription(
+                                text: "Disease Outbreak", color: Colors.pink),
+                            LegendDiscription(
+                                text: "Plantation Fire", color: Colors.lime),
+                            LegendDiscription(
+                                text: "Severe Thunderstorm",
+                                color: Colors.cyan),
+                            LegendDiscription(
+                                text: "Drought", color: Colors.amber),
+                            LegendDiscription(
+                                text: "Mud Slide", color: Colors.brown),
+                            LegendDiscription(
+                                text: "Air Crash", color: Colors.deepPurple),
+                            LegendDiscription(
+                                text: "Hazmat Spillage",
+                                color: Colors.lightGreen),
+                            LegendDiscription(
+                                text: "Industrial Pollution",
+                                color: Colors.lightBlue),
+                            LegendDiscription(
+                                text: "Civil Unrest", color: Colors.redAccent),
+                            LegendDiscription(
+                                text: "Industrial Fire",
+                                color: Colors.orangeAccent),
+                            LegendDiscription(
+                                text: "Structural Failure",
+                                color: Colors.blueAccent),
+                            LegendDiscription(
+                                text: "Ship Wreck", color: Colors.purpleAccent),
+                          ],
+                        ),
+                      ),
+                    )
+                  : SizedBox(
+                      height: 100.0,
+                      child: GridView(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 4,
+                            mainAxisExtent: 30,
+                            mainAxisSpacing: 1,
+                            crossAxisSpacing: 1.0),
+                        children: <Widget>[
+                          LegendDiscription(text: "Snow", color: Colors.red),
+                          LegendDiscription(
+                              text: "Veld Fire", color: Colors.orange),
+                          LegendDiscription(
+                              text: "Lightning", color: Colors.yellow),
+                          LegendDiscription(
+                              text: "Hailstorm", color: Colors.blue),
+                          LegendDiscription(
+                              text: "Road Accident", color: Colors.green),
+                          LegendDiscription(
+                              text: "Heavy Rainfall", color: Colors.blue),
+                          LegendDiscription(
+                              text: "Strong Wind", color: Colors.green),
+                          LegendDiscription(
+                              text: "Rail Accident", color: Colors.teal),
+                          LegendDiscription(
+                              text: "Earthquake", color: Colors.deepOrange),
+                          LegendDiscription(
+                              text: "Disease Outbreak", color: Colors.pink),
+                          LegendDiscription(
+                              text: "Plantation Fire", color: Colors.lime),
+                          LegendDiscription(
+                              text: "Severe Thunderstorm", color: Colors.cyan),
+                          LegendDiscription(
+                              text: "Drought", color: Colors.amber),
+                          LegendDiscription(
+                              text: "Mud Slide", color: Colors.brown),
+                          LegendDiscription(
+                              text: "Air Crash", color: Colors.deepPurple),
+                          LegendDiscription(
+                              text: "Hazmat Spillage",
+                              color: Colors.lightGreen),
+                          LegendDiscription(
+                              text: "Industrial Pollution",
+                              color: Colors.lightBlue),
+                          LegendDiscription(
+                              text: "Civil Unrest", color: Colors.redAccent),
+                          LegendDiscription(
+                              text: "Industrial Fire",
+                              color: Colors.orangeAccent),
+                          LegendDiscription(
+                              text: "Structural Failure",
+                              color: Colors.blueAccent),
+                          LegendDiscription(
+                              text: "Ship Wreck", color: Colors.purpleAccent),
+                        ],
+                      ),
+                    ),
               Column(
                 children: [
                   // SaveButton(

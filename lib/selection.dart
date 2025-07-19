@@ -206,141 +206,284 @@ class _SelectionState extends State<Selection> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    final isSmallScreen = screenWidth < 900;
+
     return Padding(
       padding: const EdgeInsets.all(23.0),
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(top: 1.0),
-                child: Divider(
-                  color: Colors.black26,
+      child: isSmallScreen
+          ? Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // const Padding(
+                  //   padding: EdgeInsets.only(top: 1.0),
+                  //   child: Divider(
+                  //     color: Colors.black26,
+                  //   ),
+                  // ),
+                  // SubTitle2(
+                  //   title: 'Sections',
+                  // ),
+                  // const Padding(
+                  //   padding: EdgeInsets.only(top: 1.0),
+                  //   child: Divider(
+                  //     color: Colors.black26,
+                  //   ),
+                  // ),
+                  // Divider(),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        ButtonSelection(
+                          inSide: "1. SPATIAL LOCATION",
+                          onTap: widget.onTap1,
+                          color: widget.color1!,
+                        ),
+                        ButtonSelection(
+                          inSide: "2. INCIDENT DETAILS",
+                          onTap: widget.onTap2,
+                          color: widget.color2!,
+                        ),
+                        ButtonSelection(
+                          inSide: "3. HOUSEHOLD EFFECTED",
+                          onTap: widget.onTap3,
+                          color: widget.color3!,
+                        ),
+                        ButtonSelection(
+                          inSide:
+                              "4. WELLBEING IMPACT ON THE HOUSEHOLD MEMBERS",
+                          onTap: widget.onTap4,
+                          color: widget.color4!,
+                        ),
+                        ButtonSelection(
+                          inSide: "5. CONDITION OF THE INFRASTRUCTURE",
+                          onTap: widget.onTap5,
+                          color: widget.color5!,
+                        ),
+                        ButtonSelection(
+                          inSide: "6. SOCIAL RELIEF SUPPORT",
+                          onTap: widget.onTap6,
+                          color: widget.color6!,
+                        ),
+                        ButtonSelection(
+                          inSide: "7. AGRICULTURAL DAMAGE – PRELIMINARY SURVEY",
+                          onTap: widget.onTap7,
+                          color: widget.color7!,
+                        ),
+                        ButtonSelection(
+                          inSide: "8. Pictures Selection",
+                          onTap: widget.onTap8,
+                          color: widget.color8,
+                        ),
+                        ButtonSelection(
+                          inSide: "9. Special Notes       ",
+                          onTap: widget.onTap9,
+                          color: widget.color9,
+                        ),
+                        ButtonSelection(
+                          inSide: "10. Submit               ",
+                          onTap: widget.onTap10,
+                          color: widget.color10,
+                        ),
+                        ButtonSelection2(
+                          inSide: "View Map",
+                          size: 24.0,
+                          color: widget.color11,
+                          onTap: widget.onTap11,
+                        ),
+                        ButtonSelection2(
+                          inSide: "View Beneficiary               ",
+                          onTap: widget.onTap12,
+                          color: widget.color12,
+                        ),
+                      ],
+                    ),
+                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(top: 30.0, bottom: 10.0),
+                  //   child: Row(
+                  //     children: [
+                  //       Expanded(
+                  //         child: ElevatedButton(
+                  //           onPressed: () {
+                  //             createFull();
+                  //           },
+                  //           child: Text("CREATE MAIN DATABASE"),
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(top: 30.0, bottom: 10.0),
+                  //   child: Row(
+                  //     children: [
+                  //       Expanded(
+                  //         child: ElevatedButton(
+                  //           onPressed: () {
+                  //             createChildrenTable();
+                  //           },
+                  //           child: Text("CREAT CHILD DATABASE"),
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(top: 30.0, bottom: 10.0),
+                  //   child: Row(
+                  //     children: [
+                  //       Expanded(
+                  //         child: ElevatedButton(
+                  //           onPressed: () {
+                  //             createImageTable();
+                  //           },
+                  //           child: Text("CREAT IMAGE DATABASE"),
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // )
+                ],
+              ),
+            )
+          : SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(top: 1.0),
+                      child: Divider(
+                        color: Colors.black26,
+                      ),
+                    ),
+                    SubTitle2(
+                      title: 'Sections',
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 1.0),
+                      child: Divider(
+                        color: Colors.black26,
+                      ),
+                    ),
+                    // Divider(),
+                    ButtonSelection(
+                      inSide: "1. SPATIAL LOCATION",
+                      onTap: widget.onTap1,
+                      color: widget.color1!,
+                    ),
+                    ButtonSelection(
+                      inSide: "2. INCIDENT DETAILS",
+                      onTap: widget.onTap2,
+                      color: widget.color2!,
+                    ),
+                    ButtonSelection(
+                      inSide: "3. HOUSEHOLD EFFECTED",
+                      onTap: widget.onTap3,
+                      color: widget.color3!,
+                    ),
+                    ButtonSelection(
+                      inSide: "4. WELLBEING IMPACT ON THE HOUSEHOLD MEMBERS",
+                      onTap: widget.onTap4,
+                      color: widget.color4!,
+                    ),
+                    ButtonSelection(
+                      inSide: "5. CONDITION OF THE INFRASTRUCTURE",
+                      onTap: widget.onTap5,
+                      color: widget.color5!,
+                    ),
+                    ButtonSelection(
+                      inSide: "6. SOCIAL RELIEF SUPPORT",
+                      onTap: widget.onTap6,
+                      color: widget.color6!,
+                    ),
+                    ButtonSelection(
+                      inSide: "7. AGRICULTURAL DAMAGE – PRELIMINARY SURVEY",
+                      onTap: widget.onTap7,
+                      color: widget.color7!,
+                    ),
+                    ButtonSelection(
+                      inSide: "8. Pictures Selection",
+                      onTap: widget.onTap8,
+                      color: widget.color8,
+                    ),
+                    ButtonSelection(
+                      inSide: "9. Special Notes       ",
+                      onTap: widget.onTap9,
+                      color: widget.color9,
+                    ),
+                    ButtonSelection(
+                      inSide: "10. Submit               ",
+                      onTap: widget.onTap10,
+                      color: widget.color10,
+                    ),
+                    ButtonSelection2(
+                      inSide: "View Map",
+                      size: 24.0,
+                      color: widget.color11,
+                      onTap: widget.onTap11,
+                    ),
+                    ButtonSelection2(
+                      inSide: "View Beneficiary               ",
+                      onTap: widget.onTap12,
+                      color: widget.color12,
+                    ),
+                    Divider(),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(top: 30.0, bottom: 10.0),
+                    //   child: Row(
+                    //     children: [
+                    //       Expanded(
+                    //         child: ElevatedButton(
+                    //           onPressed: () {
+                    //             createFull();
+                    //           },
+                    //           child: Text("CREATE MAIN DATABASE"),
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(top: 30.0, bottom: 10.0),
+                    //   child: Row(
+                    //     children: [
+                    //       Expanded(
+                    //         child: ElevatedButton(
+                    //           onPressed: () {
+                    //             createChildrenTable();
+                    //           },
+                    //           child: Text("CREAT CHILD DATABASE"),
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(top: 30.0, bottom: 10.0),
+                    //   child: Row(
+                    //     children: [
+                    //       Expanded(
+                    //         child: ElevatedButton(
+                    //           onPressed: () {
+                    //             createImageTable();
+                    //           },
+                    //           child: Text("CREAT IMAGE DATABASE"),
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // )
+                  ],
                 ),
               ),
-              SubTitle2(
-                title: 'Sections',
-              ),
-              const Padding(
-                padding: EdgeInsets.only(top: 1.0),
-                child: Divider(
-                  color: Colors.black26,
-                ),
-              ),
-              // Divider(),
-              ButtonSelection(
-                inSide: "1. SPATIAL LOCATION",
-                onTap: widget.onTap1,
-                color: widget.color1!,
-              ),
-              ButtonSelection(
-                inSide: "2. INCIDENT DETAILS",
-                onTap: widget.onTap2,
-                color: widget.color2!,
-              ),
-              ButtonSelection(
-                inSide: "3. HOUSEHOLD EFFECTED",
-                onTap: widget.onTap3,
-                color: widget.color3!,
-              ),
-              ButtonSelection(
-                inSide: "4. WELLBEING IMPACT ON THE HOUSEHOLD MEMBERS",
-                onTap: widget.onTap4,
-                color: widget.color4!,
-              ),
-              ButtonSelection(
-                inSide: "5. CONDITION OF THE INFRASTRUCTURE",
-                onTap: widget.onTap5,
-                color: widget.color5!,
-              ),
-              ButtonSelection(
-                inSide: "6. SOCIAL RELIEF SUPPORT",
-                onTap: widget.onTap6,
-                color: widget.color6!,
-              ),
-              ButtonSelection(
-                inSide: "7. AGRICULTURAL DAMAGE – PRELIMINARY SURVEY",
-                onTap: widget.onTap7,
-                color: widget.color7!,
-              ),
-              ButtonSelection(
-                inSide: "8. Pictures Selection",
-                onTap: widget.onTap8,
-                color: widget.color8,
-              ),
-              ButtonSelection(
-                inSide: "9. Special Notes       ",
-                onTap: widget.onTap9,
-                color: widget.color9,
-              ),
-              ButtonSelection(
-                inSide: "10. Submit               ",
-                onTap: widget.onTap10,
-                color: widget.color10,
-              ),
-              ButtonSelection2(
-                inSide: "View Map",
-                size: 24.0,
-                color: widget.color11,
-                onTap: widget.onTap11,
-              ),
-              ButtonSelection2(
-                inSide: "View Beneficiary               ",
-                onTap: widget.onTap12,
-                color: widget.color12,
-              ),
-              Divider(),
-              // Padding(
-              //   padding: const EdgeInsets.only(top: 30.0, bottom: 10.0),
-              //   child: Row(
-              //     children: [
-              //       Expanded(
-              //         child: ElevatedButton(
-              //           onPressed: () {
-              //             createFull();
-              //           },
-              //           child: Text("CREATE MAIN DATABASE"),
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
-              // Padding(
-              //   padding: const EdgeInsets.only(top: 30.0, bottom: 10.0),
-              //   child: Row(
-              //     children: [
-              //       Expanded(
-              //         child: ElevatedButton(
-              //           onPressed: () {
-              //             createChildrenTable();
-              //           },
-              //           child: Text("CREAT CHILD DATABASE"),
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
-              // Padding(
-              //   padding: const EdgeInsets.only(top: 30.0, bottom: 10.0),
-              //   child: Row(
-              //     children: [
-              //       Expanded(
-              //         child: ElevatedButton(
-              //           onPressed: () {
-              //             createImageTable();
-              //           },
-              //           child: Text("CREAT IMAGE DATABASE"),
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // )
-            ],
-          ),
-        ),
-      ),
+            ),
     );
   }
 }
@@ -361,6 +504,8 @@ class ButtonSelection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isSmallScreen = screenWidth < 900;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
@@ -373,7 +518,7 @@ class ButtonSelection extends StatelessWidget {
             color: color!,
             //todo remember this
           ),
-          height: 85.0,
+          height:isSmallScreen ? 50 : 85.0,
           child: Padding(
             padding: const EdgeInsets.only(
                 left: 30.0, top: 10, bottom: 10, right: 15.0),

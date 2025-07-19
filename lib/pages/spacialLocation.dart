@@ -21,7 +21,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:khulekani_app/create_table.dart';
 
-
 //TODO is saved logo
 class SpacialLocationPage extends StatefulWidget {
   const SpacialLocationPage({super.key});
@@ -73,10 +72,12 @@ class _SpacialLocationPageState extends State<SpacialLocationPage>
 
       setState(() {
         // Update your state variables here with lat and lng
-        context.read<ProviderFourteen>().changeValue(
-            newValue: longitude.toString());
-        context.read<ProviderFifteen>().changeValue(
-            newValue: latitude.toString());
+        context
+            .read<ProviderFourteen>()
+            .changeValue(newValue: longitude.toString());
+        context
+            .read<ProviderFifteen>()
+            .changeValue(newValue: latitude.toString());
       });
 
       print('Latitude: $latitude, Longitude: $longitude');
@@ -134,11 +135,9 @@ class _SpacialLocationPageState extends State<SpacialLocationPage>
     print("cleared 1");
   }
 
-
   // void inputFunction() {
   //   context.read<ProviderClear1>().setMyFunction(newFunction: clear1);
   // }
-
 
   // void insert20(BuildContext context)async{
   //   final conn = await connectToDatabase();
@@ -302,7 +301,8 @@ class _SpacialLocationPageState extends State<SpacialLocationPage>
     // continue accessing the position of the device.
     return await Geolocator.getCurrentPosition(
       forceAndroidLocationManager: true,
-      desiredAccuracy: LocationAccuracy.bestForNavigation,);
+      desiredAccuracy: LocationAccuracy.bestForNavigation,
+    );
   }
 
   // void postgressUpload() async {
@@ -321,8 +321,6 @@ class _SpacialLocationPageState extends State<SpacialLocationPage>
   //   );
   //   print('Inserted ${result1.affectedRows} rows');
   // }
-
-
 
   @override
   bool get wantKeepAlive => true;
@@ -360,15 +358,12 @@ class _SpacialLocationPageState extends State<SpacialLocationPage>
           //   controller: controllerB,
           // ),
 
-        
           ///////////////////////////////////////////////////////////
           MenuList(
-            choice: context
-                .watch<ProviderTwo>()
-                .two ?? "",
+            choice: context.watch<ProviderTwo>().two ?? "",
             selectedValue: '',
             listName: collect.municipality,
-            text:  "1.2. Local municipality: ",
+            text: "1.2. Local municipality: ",
             onChanged: (String? value) {
               setState(() {
                 selectedValue3 = value;
@@ -386,7 +381,7 @@ class _SpacialLocationPageState extends State<SpacialLocationPage>
           ),
           QuestionTextStrip(
             text:
-            "1.4. Name of the area (Isigodi) where the incident occurred:",
+                "1.4. Name of the area (Isigodi) where the incident occurred:",
             controller: controllerD,
           ),
           QuestionTextStrip(
@@ -412,9 +407,7 @@ class _SpacialLocationPageState extends State<SpacialLocationPage>
             title: "1.8 Date and Time",
           ),
           MuliDateTime(
-            textTime: context
-                .watch<ProviderEight>()
-                .eight ?? "",
+            textTime: context.watch<ProviderEight>().eight ?? "",
             text: "A) Date of the incident",
             call: () async {
               String? datenow = await _selectDate(context);
@@ -427,9 +420,7 @@ class _SpacialLocationPageState extends State<SpacialLocationPage>
             },
           ),
           MuliDateTime(
-            textTime: context
-                .watch<ProviderNine>()
-                .nine ?? "",
+            textTime: context.watch<ProviderNine>().nine ?? "",
             text: "B) Date of reporting",
             call: () async {
               String? datenow = await _selectDate(context);
@@ -442,9 +433,7 @@ class _SpacialLocationPageState extends State<SpacialLocationPage>
             },
           ),
           MuliDateTime(
-            textTime: context
-                .watch<ProviderTen>()
-                .ten ?? "",
+            textTime: context.watch<ProviderTen>().ten ?? "",
             text: "C) Actual date of response",
             call: () async {
               String? datenow = await _selectDate(context);
@@ -460,9 +449,7 @@ class _SpacialLocationPageState extends State<SpacialLocationPage>
             height: 30.0,
           ),
           MuliDateTime(
-            textTime: context
-                .watch<ProviderEleven>()
-                .eleven ?? "",
+            textTime: context.watch<ProviderEleven>().eleven ?? "",
             text: "D) Time of the incident",
             call: () async {
               String? time = await _selectTime(context);
@@ -475,9 +462,7 @@ class _SpacialLocationPageState extends State<SpacialLocationPage>
             },
           ),
           MuliDateTime(
-            textTime: context
-                .watch<ProviderTwelve>()
-                .twelve ?? "",
+            textTime: context.watch<ProviderTwelve>().twelve ?? "",
             text: "E) Time of the reporting",
             call: () async {
               String? time = await _selectTime(context);
@@ -490,9 +475,7 @@ class _SpacialLocationPageState extends State<SpacialLocationPage>
             },
           ),
           MuliDateTime(
-            textTime: context
-                .watch<ProviderThirteen>()
-                .thirteen ?? "",
+            textTime: context.watch<ProviderThirteen>().thirteen ?? "",
             text: "F) Actual time of response",
             call: () async {
               String? time = await _selectTime(context);
@@ -511,11 +494,7 @@ class _SpacialLocationPageState extends State<SpacialLocationPage>
           ),
           Locator(
             text:
-            "${context
-                .watch<ProviderFourteen>()
-                .fourteen} ${context
-                .read<ProviderFifteen>()
-                .fifteen}",
+                "${context.watch<ProviderFourteen>().fourteen} ${context.read<ProviderFifteen>().fifteen}",
             buttonText: "1.9 Get current GPS Location",
             get: () async {
               // final location = await _determinePosition();
@@ -532,9 +511,7 @@ class _SpacialLocationPageState extends State<SpacialLocationPage>
             },
           ),
           MenuList(
-            choice: context
-                .watch<ProviderSixteen>()
-                .sixteen ?? "",
+            choice: context.watch<ProviderSixteen>().sixteen ?? "",
             selectedValue: "",
             listName: collect.yesOrNo,
             text: "1.10 Early warning received: Yes/No",
@@ -550,7 +527,9 @@ class _SpacialLocationPageState extends State<SpacialLocationPage>
           ),
 
           SaveButton(
-            color: context.watch<ProviderSavedOne>().one == false ? Colors.red : Colors.green[500],
+            color: context.watch<ProviderSavedOne>().one == false
+                ? Colors.red
+                : Colors.green[500],
             onPressed: () {
               context.read<ProviderClear1>().setMyFunction(newFunction: clear1);
               context.read<ProviderSavedOne>().changeValue(newValue: true);
@@ -581,9 +560,7 @@ class _SpacialLocationPageState extends State<SpacialLocationPage>
                     .changeValue(newValue: controllerG.text);
                 //  print('here : ${context.watch<ProviderOne>(listen: false).one}');
                 print(
-                    'ProviderOne value: ${Provider
-                        .of<ProviderOne>(context, listen: false)
-                        .one}');
+                    'ProviderOne value: ${Provider.of<ProviderOne>(context, listen: false).one}');
 
                 return Alert(
                   context: context,
@@ -602,9 +579,9 @@ class _SpacialLocationPageState extends State<SpacialLocationPage>
                   ],
                 ).show();
               }
+
               saveData();
             },
-
           ),
         ],
       ),
@@ -626,38 +603,76 @@ class MuliDateTime extends StatefulWidget {
 class _MuliDateTimeState extends State<MuliDateTime> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Container(
-        height: 80.0,
-        color: Colors.grey[100],
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8.0),
-                child: Text(
-                  widget.text ?? "",
-                  // Use null-aware operator to provide an empty string if text is null
-                  style: TextStyle(fontSize: 25.0, color: Colors.black),
-                ),
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: MaterialButton(
-                  child: Text(
-                    widget.textTime ?? "",
-                    style: TextStyle(fontSize: 20.0),
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isSmallScreen = screenWidth < 900;
+
+    return IntrinsicHeight(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: Container(
+          color: Colors.grey[100],
+          child: isSmallScreen
+              ? Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8.0, vertical: 8),
+                          child: Text(
+                            widget.text ?? "",
+                            // Use null-aware operator to provide an empty string if text is null
+                            style:
+                                TextStyle(fontSize: 25.0, color: Colors.black),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: MaterialButton(
+                            child: Text(
+                              widget.textTime ?? "",
+                              style: TextStyle(fontSize: 20.0),
+                            ),
+                            color: Colors.grey[300],
+                            onPressed: widget.call! ?? () {},
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  color: Colors.grey[300],
-                  onPressed: widget.call! ?? () {},
+                )
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Text(
+                          widget.text ?? "",
+                          // Use null-aware operator to provide an empty string if text is null
+                          style: TextStyle(fontSize: 25.0, color: Colors.black),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: MaterialButton(
+                          child: Text(
+                            widget.textTime ?? "",
+                            style: TextStyle(fontSize: 20.0),
+                          ),
+                          color: Colors.grey[300],
+                          onPressed: widget.call! ?? () {},
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ),
-          ],
         ),
       ),
     );
@@ -678,43 +693,84 @@ class Locator extends StatefulWidget {
 class _LocatorState extends State<Locator> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Container(
-        height: 80.0,
-        color: Colors.grey[100],
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: MaterialButton(
-                  color: Colors.grey[300],
-                  onPressed: widget.get ?? () {},
-                  child: Text(
-                    widget.buttonText ?? "",
-                    style: const TextStyle(fontSize: 20.0),
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isSmallScreen = screenWidth < 900;
+
+    return IntrinsicHeight(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: Container(
+          color: Colors.grey[100],
+          child: isSmallScreen
+              ? Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
+                          child: MaterialButton(
+                            color: Colors.grey[300],
+                            onPressed: widget.get ?? () {},
+                            child: Text(
+                              widget.buttonText ?? "",
+                              style: const TextStyle(fontSize: 20.0),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Text(
+                                widget.text ?? "",
+                                style: const TextStyle(
+                                    fontSize: 20.0, color: Colors.black),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ),
-            ),
-            Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Text(
-                      widget.text ?? "",
-                      style: const TextStyle(
-                          fontSize: 20.0, color: Colors.black),
+              )
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: MaterialButton(
+                          color: Colors.grey[300],
+                          onPressed: widget.get ?? () {},
+                          child: Text(
+                            widget.buttonText ?? "",
+                            style: const TextStyle(fontSize: 20.0),
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Text(
+                              widget.text ?? "",
+                              style: const TextStyle(
+                                  fontSize: 20.0, color: Colors.black),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
         ),
       ),
     );
