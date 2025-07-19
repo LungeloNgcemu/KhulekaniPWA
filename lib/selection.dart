@@ -502,6 +502,11 @@ class ButtonSelection extends StatelessWidget {
   Color? color;
   double? size;
 
+  String extractLeadingNumber(String input) {
+    final match = RegExp(r'^(\d+)\.').firstMatch(input);
+    return match != null ? match.group(1)! : '';
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -511,25 +516,41 @@ class ButtonSelection extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap ?? () {},
         child: Container(
-          alignment: Alignment.centerLeft,
+          alignment: isSmallScreen ? Alignment.center : Alignment.centerLeft,
           margin: EdgeInsets.only(left: 8.0),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(0.0),
-            color: color!,
-            //todo remember this
-          ),
-          height:isSmallScreen ? 50 : 85.0,
+          decoration: isSmallScreen
+              ? BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: color!,
+                  //todo remember this
+                )
+              : BoxDecoration(
+                  borderRadius: BorderRadius.circular(0.0),
+                  color: color!,
+                  //todo remember this
+                ),
+          height: isSmallScreen ? 50 : 85.0,
           child: Padding(
-            padding: const EdgeInsets.only(
-                left: 30.0, top: 10, bottom: 10, right: 15.0),
+            padding: isSmallScreen
+                ? const EdgeInsets.only(
+                    left: 10.0, top: 10, bottom: 10, right: 10.0)
+                : const EdgeInsets.only(
+                    left: 30.0, top: 10, bottom: 10, right: 15.0),
             child: Center(
               child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  inSide ?? "",
-                  style: TextStyle(fontSize: size ?? 18.0),
-                  textAlign: TextAlign.start,
-                ),
+                alignment:
+                    isSmallScreen ? Alignment.center : Alignment.centerLeft,
+                child: isSmallScreen
+                    ? Text(
+                        extractLeadingNumber(inSide!) ?? "",
+                        style: TextStyle(fontSize: size ?? 18.0),
+                        textAlign: TextAlign.start,
+                      )
+                    : Text(
+                        inSide ?? "",
+                        style: TextStyle(fontSize: size ?? 18.0),
+                        textAlign: TextAlign.start,
+                      ),
               ),
             ),
           ),
