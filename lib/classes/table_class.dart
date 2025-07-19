@@ -363,6 +363,10 @@ class TableTable {
 
   String birthday(String item) {
     var date = "";
+    if (item.isEmpty) {
+      return '';
+    }
+    
     String yearNumber = item.substring(0, 2); // "92"
     String monthNumber = item.substring(2, 4); // "02"
     String day = item.substring(4, 6); // "26"

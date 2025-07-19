@@ -82,62 +82,172 @@ class _TableScreenState extends State<TableScreen> {
     stream = startStream();
   }
 
-  Widget likeResultTable(List<Map<String, dynamic>> data) {
-    return SizedBox();
+  String extractBirthday(String idNumber) {
+    // Make sure it's at least 8 digits
+    if (idNumber.length < 8) return '';
 
-    //   DataTable2(
-    //     columnSpacing: 12,
-    //     horizontalMargin: 12,
-    //     minWidth: 600,
-    //     columns: const [
-    //       DataColumn2(
-    //         label: Text('ID Number'),
-    //         size: ColumnSize.L,
-    //       ),
-    //       DataColumn(
-    //         label: Text('Date of Birth'),
-    //       ),
-    //       DataColumn(
-    //         label: Text('Name'),
-    //       ),
-    //       DataColumn(
-    //         label: Text('Address'),
-    //       ),
-    //       DataColumn(
-    //         label: Text('Co-ordinates'),
-    //       ),
-    //       DataColumn(
-    //         label: Text('Contact'),
-    //       ),
-    //     ],
-    //     rows: data.map((item) {
-    //       final birthday = table.birthday(item['Identity Number']);
-    //       return DataRow(
-    //           onLongPress: () {
-    //             setState(() {
-    //               context.read<ProviderIsDetails>().changeValue(newValue: true);
-    //               selectedItem = item;
-    //             });
-    //           },
-    //           cells: [
-    //             DataCell(Text(item['Identity Number'].toString())),
-    //             DataCell(Text(birthday ?? '')),
-    //             DataCell(Text(item['Head of Household'] ?? '')),
-    //             DataCell(Text(
-    //                 item['Specify street address where possible/applicable'] ??
-    //                     '')),
-    //             DataCell(Text(
-    //                 "${item['Longitude (E)']}\n ${item['Latitude (S)']}" ?? '')),
-    //             DataCell(Text(item['Contact Number'] ?? '')),
-    //           ]);
-    //     }).toList(),
-    //   );
-    // }
+    try {
+      final year = idNumber.substring(0, 4);
+      final day = idNumber.substring(4, 6);
+      final month = idNumber.substring(6, 8);
+
+      final date = DateTime.parse('$year$month$day');
+      return '${date.day.toString().padLeft(2, '0')}-${date.month.toString().padLeft(2, '0')}-${date.year}';
+    } catch (e) {
+      return '';
+    }
+  }
+
+  // Widget likeResultTable(List<Map<String, dynamic>> data) {
+  //   return SizedBox();
+
+  //   //   DataTable2(
+  //   //     columnSpacing: 12,
+  //   //     horizontalMargin: 12,
+  //   //     minWidth: 600,
+  //   //     columns: const [
+  //   //       DataColumn2(
+  //   //         label: Text('ID Number'),
+  //   //         size: ColumnSize.L,
+  //   //       ),
+  //   //       DataColumn(
+  //   //         label: Text('Date of Birth'),
+  //   //       ),
+  //   //       DataColumn(
+  //   //         label: Text('Name'),
+  //   //       ),
+  //   //       DataColumn(
+  //   //         label: Text('Address'),
+  //   //       ),
+  //   //       DataColumn(
+  //   //         label: Text('Co-ordinates'),
+  //   //       ),
+  //   //       DataColumn(
+  //   //         label: Text('Contact'),
+  //   //       ),
+  //   //     ],
+  //   //     rows: data.map((item) {
+  //   //       final birthday = table.birthday(item['Identity Number']);
+  //   //       return DataRow(
+  //   //           onLongPress: () {
+  //   //             setState(() {
+  //   //               context.read<ProviderIsDetails>().changeValue(newValue: true);
+  //   //               selectedItem = item;
+  //   //             });
+  //   //           },
+  //   //           cells: [
+  //   //             DataCell(Text(item['Identity Number'].toString())),
+  //   //             DataCell(Text(birthday ?? '')),
+  //   //             DataCell(Text(item['Head of Household'] ?? '')),
+  //   //             DataCell(Text(
+  //   //                 item['Specify street address where possible/applicable'] ??
+  //   //                     '')),
+  //   //             DataCell(Text(
+  //   //                 "${item['Longitude (E)']}\n ${item['Latitude (S)']}" ?? '')),
+  //   //             DataCell(Text(item['Contact Number'] ?? '')),
+  //   //           ]);
+  //   //     }).toList(),
+  //   //   );
+  //   // }
+  // }
+
+  Widget likeResultTable(List<Map<String, dynamic>> data) {
+    return SingleChildScrollView(
+      // scrollDirection: Axis.horizontal,
+      child: Table(
+        columnWidths: const {
+          0: FlexColumnWidth(2),
+          1: FlexColumnWidth(),
+          2: FlexColumnWidth(),
+          3: FlexColumnWidth(2),
+          4: FlexColumnWidth(),
+          5: FlexColumnWidth(),
+        },
+        border: TableBorder.all(),
+        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+        children: [
+          // Header row
+          TableRow(
+            decoration: BoxDecoration(color: Colors.grey[200]),
+            children: const [
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text('ID Number',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+              ),
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text('Date of Birth',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+              ),
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child:
+                    Text('Name', style: TextStyle(fontWeight: FontWeight.bold)),
+              ),
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text('Address',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+              ),
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text('Co-ordinates',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+              ),
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text('Contact',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+              ),
+            ],
+          ),
+
+          // Data rows
+          ...data.map((item) {
+            final birthday = extractBirthday(
+                item['Identity Number']); // Assuming `table` is accessible
+            return TableRow(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(item['Identity Number']?.toString() ?? ''),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(birthday ?? ''),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(item['Head of Household'] ?? ''),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(item[
+                          'Specify street address where possible/applicable'] ??
+                      ''),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                      "${item['Longitude (E)'] ?? ''}\n${item['Latitude (S)'] ?? ''}"),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(item['Contact Number'] ?? ''),
+                ),
+              ],
+            );
+          }).toList(),
+        ],
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
 
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
@@ -164,6 +274,7 @@ class _TableScreenState extends State<TableScreen> {
               },
             )
           : Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Column(
                   children: [
@@ -181,104 +292,89 @@ class _TableScreenState extends State<TableScreen> {
                     likeSearch(value);
                   },
                 ),
-                Container(
-                  color: Colors.white,
-                  height: h * 0.655,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: isSearch
-                        ? likeResultTable(data2)
-                        : StreamBuilder<List<Map<String, dynamic>>>(
-                            stream:
-                                stream as Stream<List<Map<String, dynamic>>>,
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return const Center(
-                                    child: CircularProgressIndicator());
-                              } else if (snapshot.hasError) {
-                                return const Center(
-                                    child: Text('Error loading data'));
-                              } else if (!snapshot.hasData ||
-                                  snapshot.data!.isEmpty) {
-                                return const Center(
-                                    child: Text('No data available'));
-                              } else {
-                                final data = snapshot.data!;
-                                print(data);
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: isSearch
+                      ? likeResultTable(data2)
+                      : StreamBuilder<List<Map<String, dynamic>>>(
+                          stream: stream as Stream<List<Map<String, dynamic>>>,
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const Center(
+                                  child: Center(
+                                      child: CircularProgressIndicator()));
+                            } else if (snapshot.hasError) {
+                              return const Center(
+                                  child: Text('Error loading data'));
+                            } else if (!snapshot.hasData ||
+                                snapshot.data!.isEmpty) {
+                              return const Center(
+                                  child: Text('No data available'));
+                            } else {
+                              final data = snapshot.data!;
+                              print(data);
 
-                                return const SizedBox(
-                                  height: 2,
-                                );
-                                // return DataTable2(
-                                //   columnSpacing: 12,
-                                //   horizontalMargin: 12,
-                                //   minWidth: 600,
-                                //   columns: const [
-                                //     DataColumn2(
-                                //       label: Text(
-                                //         'ID Number',
-                                //         style: TextStyle(fontSize: kFontDmi),
-                                //       ),
-                                //       size: ColumnSize.L,
-                                //     ),
-                                //     DataColumn(
-                                //       label: Text(
-                                //         'Date of Birth',
-                                //         style: TextStyle(fontSize: kFontDmi),
-                                //       ),
-                                //     ),
-                                //     DataColumn(
-                                //       label: Text('Name'),
-                                //     ),
-                                //     DataColumn(
-                                //       label: Text('Address'),
-                                //     ),
-                                //     DataColumn(
-                                //       label: Text('Co-ordinates'),
-                                //     ),
-                                //     DataColumn(
-                                //       label: Text('Contact'),
-                                //     ),
-                                //   ],
-                                //   rows: data.map((item) {
-                                //     //use the pass the item['Identity Number'] into a function and get birth date
-                                //     final birthday =
-                                //         table.birthday(item['Identity Number']);
-                                //     print(birthday);
-                                //     return DataRow(
-                                //         onLongPress: () {
-                                //           setState(() {
-                                //             // isDetails = true;
-                                //             context
-                                //                 .read<ProviderIsDetails>()
-                                //                 .changeValue(newValue: true);
-                                //             print(
-                                //                 "ISdetails ${Provider.of<ProviderIsDetails>(context, listen: false).isDetails}");
-                                //             selectedItem = item;
-                                //           });
-                                //         },
-                                //         cells: [
-                                //           DataCell(Text(item['Identity Number']
-                                //               .toString())),
-                                //           DataCell(Text(birthday ?? '')),
-                                //           DataCell(Text(
-                                //               item['Head of Household'] ?? '')),
-                                //           DataCell(Text(item[
-                                //                   'Specify street address where possible/applicable'] ??
-                                //               '')),
-                                //           DataCell(Text(
-                                //               "${item['Longitude (E)']}\n ${item['Latitude (S)']}" ??
-                                //                   '')),
-                                //           DataCell(Text(
-                                //               item['Contact Number'] ?? '')),
-                                //         ]);
-                                //   }).toList(),
-                                // );
-                              }
-                            },
-                          ),
-                  ),
+                              return DataTable(
+                                columns: const [
+                                  DataColumn(
+                                    label: Text('ID Number',
+                                        style: TextStyle(fontSize: 14)),
+                                  ),
+                                  DataColumn(
+                                    label: Text('Date of Birth',
+                                        style: TextStyle(fontSize: 14)),
+                                  ),
+                                  DataColumn(
+                                    label: Text('Name',
+                                        style: TextStyle(fontSize: 14)),
+                                  ),
+                                  DataColumn(
+                                    label: Text('Address',
+                                        style: TextStyle(fontSize: 14)),
+                                  ),
+                                  DataColumn(
+                                    label: Text('Co-ordinates',
+                                        style: TextStyle(fontSize: 14)),
+                                  ),
+                                  DataColumn(
+                                    label: Text('Contact',
+                                        style: TextStyle(fontSize: 14)),
+                                  ),
+                                ],
+                                rows: data.map((item) {
+                                  final birthday =
+                                      extractBirthday(item['Identity Number']);
+
+                                  return DataRow(
+                                    onLongPress: () {
+                                      setState(() {
+                                        context
+                                            .read<ProviderIsDetails>()
+                                            .changeValue(newValue: true);
+                                        selectedItem = item;
+                                      });
+                                    },
+                                    cells: [
+                                      DataCell(Text(
+                                          item['Identity Number'].toString())),
+                                      DataCell(Text('$birthday')),
+                                      DataCell(Text(
+                                          item['Head of Household'] ?? '')),
+                                      DataCell(Text(item[
+                                              'Specify street address where possible/applicable'] ??
+                                          '')),
+                                      DataCell(Text(
+                                          "${item['Longitude (E)'] ?? ''}\n${item['Latitude (S)'] ?? ''}")),
+                                      DataCell(
+                                          Text(item['Contact Number'] ?? '')),
+                                    ],
+                                  );
+                                }).toList(),
+                              );
+                            }
+                          },
+                        ),
                 ),
               ],
             ),

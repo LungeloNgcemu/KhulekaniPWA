@@ -18,77 +18,9 @@ class NotGoogle extends StatefulWidget {
   State<NotGoogle> createState() => _NotGoogleState();
 }
 
-
-
 class _NotGoogleState extends State<NotGoogle> {
   bool isLoading = true;
-    List<Marker> newMarkers = [];
-
-  // List<Marker> markersA = [];
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   // Generate sample markers
-  //   generateMarkersA();
-  // }
-
-  // List<Marker> generateMarkersA() {
-  //   // Add your logic to generate markers dynamically
-  //   List<Marker> markersList = [];
-  //
-  //   for (int i = 0; i < 10; i++) {
-  //     markersList.add(
-  //       Marker(
-  //         point: LatLng(-29.8587 + i * 0.01, 31.0218 + i * 0.01),
-  //         width: 80,
-  //         height: 80,
-  //         child: Pin(),
-  //       ),
-  //     );
-  //   }
-  //
-  //   return markersList;
-  // }
-
-  // void getRed(String target) async {
-  //   final conn = await connectToDatabase();
-  //
-  //   final result = await conn.execute(
-  //     Sql.named('SELECT headOfHousehold,gpsCoordinatesLong, gpsCoordinatesLatt,typeOfIncident  FROM info WHERE typeOfIncident=@type'),
-  //     parameters: {'type': target },
-  //   );
-  //   if (result.isNotEmpty) {
-  //     List<dynamic> items = result.map((item) {
-  //       return {
-  //         'name': item[0].toString(),
-  //         'gpsLng': item[1].toString(),
-  //         'gpsLat': item[2].toString(),
-  //       };
-  //     }).toList();
-  //     print(items);
-  //   } else {
-  //     print('No records found.');
-  //   }
-  // }
-  //
-  // void vonvertToMArkerList(items){
-  //
-  //   final List<Marker> markersStresm = items.map((item){
-  //
-  //     Marker(
-  //       point: LatLng(item.gpsLat, item.gpsLng),
-  //       width: 80,
-  //       height: 80,
-  //       child: Pin(
-  //         color: Colors.blue,
-  //       ),
-  //     );
-  //
-  //   }).toList();
-  //
-  //
-  // }
+  List<Marker> newMarkers = [];
 
   List<Marker>? snow;
   List<Marker>? veldFire;
@@ -121,32 +53,23 @@ class _NotGoogleState extends State<NotGoogle> {
       // id: type ?? "",
       buttons: [
         DialogButton(
-          child: Text(
-            "Done",
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          ),
           onPressed: () => Navigator.pop(context),
-          gradient: LinearGradient(colors: [
+          gradient: const LinearGradient(colors: [
             Color.fromRGBO(116, 116, 191, 1.0),
             Color.fromRGBO(52, 138, 199, 1.0)
           ]),
+          child: const Text(
+            "Done",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
         )
       ],
     ).show();
-    // SmartDialog.showToast('test toast');
-    print("hello");
   }
 
   @override
   void initState() {
     super.initState();
-    // _initializeMarkers('Snow', Colors.red).then((markers) {
-    //   setState(() {
-    //     snow = markers!;
-    //     print('SNOW : $snow');
-    //   });
-    // });
-/////////////////////////////////////////////////////////
 
     _initializeMarkers('Snow', Colors.red).then((markers) {
       setState(() {
@@ -406,6 +329,8 @@ class _NotGoogleState extends State<NotGoogle> {
         shipWreck = markers;
       });
     });
+
+
   }
 
   Future<List<Marker>?> _initializeMarkers(String type, Color? color) async {
@@ -420,15 +345,16 @@ class _NotGoogleState extends State<NotGoogle> {
   //   });
   // }
 
-
   void getMap() async {}
 
   Future<List<Marker>> getForMap(String target, Color color) async {
     try {
       final supabase = Supabase.instance.client;
 
-      final List<Map<String, dynamic>> result =
-          await supabase.from('Information').select().eq("Type of Incident", target);
+      final List<Map<String, dynamic>> result = await supabase
+          .from('Information')
+          .select()
+          .eq("Type of Incident", target);
 
       print("map data : $result");
 
@@ -439,7 +365,9 @@ class _NotGoogleState extends State<NotGoogle> {
             'gpsLng': double.tryParse(item['Longitude (E)']) ?? 0.0,
             'gpsLat': double.tryParse(item['Latitude (S)']) ?? 0.0,
             'type': item['Type of Incident'] ?? '',
-            'adress': item['Specify street address where possible/applicable'].toString() ?? 'No Adress',
+            'adress': item['Specify street address where possible/applicable']
+                    .toString() ??
+                'No Adress',
           };
         }).toList();
         final List<Marker> markersStream = items.map((item) {
