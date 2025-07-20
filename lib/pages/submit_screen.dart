@@ -29,6 +29,10 @@ class _SubmitScreenState extends State<SubmitScreen> {
   bool isLoading = false;
   /////////////////////////////////////////////////////////////////////////
   Future<void> checkSavedStatus(BuildContext context) async {
+    setState(() {
+      isLoading = true;
+    });
+
     final providerSavedOne = context.read<ProviderSavedOne>();
     final providerSavedTwo = context.read<ProviderSavedTwo>();
     final providerSavedThree = context.read<ProviderSavedThree>();
@@ -39,57 +43,90 @@ class _SubmitScreenState extends State<SubmitScreen> {
     final providerSavedeight = context.read<ProviderSavedEight>();
     final providerSavedNine = context.read<ProviderSavedNine>();
 
-    if (providerSavedOne.one &&
-        providerSavedTwo.two &&
-        providerSavedThree.three &&
-        providerSavedFour.four &&
-        providerSavedFive.five &&
-        providerSavedSix.six &&
-        providerSavedSeven.seven &&
-        providerSavedeight.eight &&
-        providerSavedNine.nine) {
-      print("They are all saved.");
+    try {
+      if (providerSavedOne.one &&
+          providerSavedTwo.two &&
+          providerSavedThree.three &&
+          providerSavedFour.four &&
+          providerSavedFive.five &&
+          providerSavedSix.six &&
+          providerSavedSeven.seven &&
+          providerSavedeight.eight &&
+          providerSavedNine.nine) {
+        setState(() {
+          isLoading = true;
+        });
 
-      await insertFull(context);
+        await insertFull(context);
 
-      await childTable(
-        Provider.of<ProviderFortyTwo>(context, listen: false).fortyTwo,
-        Provider.of<ProviderEightyFour>(context, listen: false).eightyFour,
-      );
+        await childTable(
+          Provider.of<ProviderFortyTwo>(context, listen: false).fortyTwo,
+          Provider.of<ProviderEightyFour>(context, listen: false).eightyFour,
+        );
 
-      await imageTable(
-          Provider.of<ProviderPictuers>(context, listen: false).pictures,
-          Provider.of<ProviderEightyFour>(context, listen: false).eightyFour);
+        await imageTable(
+            Provider.of<ProviderPictuers>(context, listen: false).pictures,
+            Provider.of<ProviderEightyFour>(context, listen: false).eightyFour);
 
-      // Clear providers
-      ultimateClear(context);
-      context.read<ProviderSavedOne>().changeValue(newValue: false);
-      context.read<ProviderSavedTwo>().changeValue(newValue: false);
-      context.read<ProviderSavedThree>().changeValue(newValue: false);
-      context.read<ProviderSavedFour>().changeValue(newValue: false);
-      context.read<ProviderSavedFive>().changeValue(newValue: false);
-      context.read<ProviderSavedSix>().changeValue(newValue: false);
-      context.read<ProviderSavedSeven>().changeValue(newValue: false);
-      context.read<ProviderSavedEight>().changeValue(newValue: false);
-      context.read<ProviderSavedNine>().changeValue(newValue: false);
-    } else {
-      Alert(
-        context: context,
-        type: AlertType.error,
-        title: "ALERT",
-        desc: "One or more pages are not saved",
-        buttons: [
-          DialogButton(
-            onPressed: () => Navigator.pop(context),
-            width: 120,
-            child: const Text(
-              "Exit",
-              style: TextStyle(color: Colors.white, fontSize: 20),
-            ),
-          )
-        ],
-      ).show();
-      print("At least one of them is not saved.");
+        ultimateClear(context);
+        context.read<ProviderSavedOne>().changeValue(newValue: false);
+        context.read<ProviderSavedTwo>().changeValue(newValue: false);
+        context.read<ProviderSavedThree>().changeValue(newValue: false);
+        context.read<ProviderSavedFour>().changeValue(newValue: false);
+        context.read<ProviderSavedFive>().changeValue(newValue: false);
+        context.read<ProviderSavedSix>().changeValue(newValue: false);
+        context.read<ProviderSavedSeven>().changeValue(newValue: false);
+        context.read<ProviderSavedEight>().changeValue(newValue: false);
+        context.read<ProviderSavedNine>().changeValue(newValue: false);
+
+        setState(() {
+          isLoading = false;
+        });
+
+        Alert(
+          context: context,
+          type: AlertType.success,
+          title: "Congratulations",
+          desc: "Data save succesfully",
+          buttons: [
+            DialogButton(
+              onPressed: () => Navigator.pop(context),
+              width: 120,
+              child: const Text(
+                "Exit",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+            )
+          ],
+        ).show();
+      } else {
+        setState(() {
+          isLoading = false;
+        });
+
+        Alert(
+          context: context,
+          type: AlertType.error,
+          title: "ALERT",
+          desc: "One or more pages are not saved",
+          buttons: [
+            DialogButton(
+              onPressed: () => Navigator.pop(context),
+              width: 120,
+              child: const Text(
+                "Exit",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+            )
+          ],
+        ).show();
+        print("At least one of them is not saved.");
+      }
+    } catch (error) {
+      setState(() {
+        isLoading = false;
+      });
+      print("Error inserting all $error");
     }
   }
 
@@ -465,7 +502,9 @@ class _SubmitScreenState extends State<SubmitScreen> {
           .map((data) => {
                 'Information Id': informationId,
                 'Name': data[0],
-                'Birthdate': data[1] is DateTime ? (data[1] as DateTime).toIso8601String() : data[1],
+                'Birthdate': data[1] is DateTime
+                    ? (data[1] as DateTime).toIso8601String()
+                    : data[1],
                 'Gender': data[2],
                 'Age': data[3],
                 'School': data[4],
@@ -521,12 +560,16 @@ class _SubmitScreenState extends State<SubmitScreen> {
         Container(
           height: h * 0.75,
           // color: Colors.redAccent,
-          child: SaveButton(
-            text: 'Submit',
-            onPressed: () {
-              checkSavedStatus(context);
-            },
-          ),
+          child: isLoading
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : SaveButton(
+                  text: 'Submit',
+                  onPressed: () {
+                    checkSavedStatus(context);
+                  },
+                ),
         ),
       ],
     );
