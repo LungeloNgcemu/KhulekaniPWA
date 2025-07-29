@@ -40,33 +40,32 @@
     const serviceWorkerVersion = null;
   </script>
   <!-- This script adds the flutter initialization JS code -->
-<script src="main.dart.js" defer></script>
+  <script src="main.dart.js" defer></script>
 </head>
 
 <body>
-<!-- Your other scripts should come after -->
-   <!-- <script>
-  if ('serviceWorker' in navigator) {
+
+  <script>
+    if ('serviceWorker' in navigator) {
       window.addEventListener('flutter-first-frame', function () {
         navigator.serviceWorker.register('flutter_service_worker.js?v=1417913520');
         navigator.serviceWorker.register('flutter_service_worker.js');
       });
     }
-    window.addEventListener('load', function(ev) {
-      // Download main.dart.js
+    window.addEventListener('load', function (ev) {
       entrypointUrl: "/main.dart.js",
-      _flutter.loader.loadEntrypoint({
-        serviceWorker: {
-          serviceWorkerVersion: serviceWorkerVersion,
-        },
-        onEntrypointLoaded: function (engineInitializer) {
-          engineInitializer.initializeEngine().then(function (appRunner) {
-            appRunner.runApp();
-          });
-        }
-      });
+        _flutter.loader.loadEntrypoint({
+          serviceWorker: {
+            serviceWorkerVersion: serviceWorkerVersion,
+          },
+          onEntrypointLoaded: function (engineInitializer) {
+            engineInitializer.initializeEngine().then(function (appRunner) {
+              appRunner.runApp();
+            });
+          }
+        });
     });
-  </script> -->
+  </script>
 </body>
 
 </html>
