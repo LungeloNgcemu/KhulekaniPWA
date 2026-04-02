@@ -1,5 +1,5 @@
 class SuperbaseConstants {
-  static const url = 'https://rfvaloxuxjvwkjmbtehy.supabase.co';
+  static const url = 'https://ffvwhdjmwyypewyyypjp.supabase.co';
   static const anonkey =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJmdmFsb3h1eGp2d2tqbWJ0ZWh5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI2OTc3MzUsImV4cCI6MjA2ODI3MzczNX0.i9q1Hxs3MER2AFCuW4kK5yhty_EiRq4E2yaxE2aTo50';
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZmdndoZGptd3l5cGV3eXl5cGpwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxMzEyNjYsImV4cCI6MjA5MDcwNzI2Nn0.cGUF-GpXS6LX4HVMofSKfXyMcnQUe9PNMYXIqTTQWac';
 }

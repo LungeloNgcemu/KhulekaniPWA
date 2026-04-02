@@ -67,10 +67,49 @@ class _NotGoogleState extends State<NotGoogle> {
     ).show();
   }
 
+  Map<String, List<Marker>> markerMap = {};
+
   @override
   void initState() {
     super.initState();
 
+    final incidentTypes = {
+      'Snow': Colors.red,
+      'Veld Fire': Colors.orange,
+      'Heavy Rainfall': Colors.blue,
+      'Lightning': Colors.yellow,
+      'Strong Wind': Colors.green,
+      'Strong wind': Colors.green,
+      'Hailstorm': Colors.purple,
+      'Rail Accident': Colors.teal,
+      'Road Accident': Colors.indigo,
+      'Earthquake': Colors.deepOrange,
+      'Disease Outbreak': Colors.pink,
+      'Plantation Fire': Colors.lime,
+      'Severe Thunderstorm': Colors.cyan,
+      'Drought': Colors.amber,
+      'Mud Slide': Colors.brown,
+      'Air Crash': Colors.deepPurple,
+      'Hazmat Spillage': Colors.lightGreen,
+      'Industrial Pollution': Colors.lightBlue,
+      'Civil Unrest': Colors.redAccent,
+      'Industrial Fire': Colors.orangeAccent,
+      'Structural Failure': Colors.blueAccent,
+      'Ship Wreck': Colors.purpleAccent,
+      'Ship Wrec': Colors.purpleAccent,
+    };
+
+    for (final entry in incidentTypes.entries) {
+      _initializeMarkers(entry.key, entry.value).then((markers) {
+        setState(() {
+          markerMap[entry.key] = markers ?? [];
+        });
+      });
+    }
+    isLoading = false;
+  }
+
+  void callHome() {
     _initializeMarkers('Snow', Colors.red).then((markers) {
       setState(() {
         snow = markers;
@@ -101,133 +140,7 @@ class _NotGoogleState extends State<NotGoogle> {
       });
     });
 
-    _initializeMarkers('Hailstorm', Colors.purple).then((markers) {
-      setState(() {
-        hailstorm = markers;
-      });
-    });
-
-    _initializeMarkers('Rail Accident', Colors.teal).then((markers) {
-      setState(() {
-        railAccident = markers;
-      });
-    });
-
-    _initializeMarkers('Road Accident', Colors.indigo).then((markers) {
-      setState(() {
-        roadAccident = markers;
-      });
-    });
-
-    _initializeMarkers('Earthquake', Colors.deepOrange).then((markers) {
-      setState(() {
-        earthquake = markers;
-      });
-    });
-
-    _initializeMarkers('Disease Outbreak', Colors.pink).then((markers) {
-      setState(() {
-        diseaseOutbreak = markers;
-      });
-    });
-
-    _initializeMarkers('Plantation Fire', Colors.lime).then((markers) {
-      setState(() {
-        plantationFire = markers;
-      });
-    });
-
-    _initializeMarkers('Severe Thunderstorm', Colors.cyan).then((markers) {
-      setState(() {
-        severeThunderstorm = markers;
-      });
-    });
-
-    _initializeMarkers('Drought', Colors.amber).then((markers) {
-      setState(() {
-        drought = markers;
-      });
-    });
-
-    _initializeMarkers('Mud Slide', Colors.brown).then((markers) {
-      setState(() {
-        mudSlide = markers;
-      });
-    });
-
-    _initializeMarkers('Air Crash', Colors.deepPurple).then((markers) {
-      setState(() {
-        airCrash = markers;
-      });
-    });
-
-    _initializeMarkers('Hazmat Spillage', Colors.lightGreen).then((markers) {
-      setState(() {
-        hazmatSpillage = markers;
-      });
-    });
-
-    _initializeMarkers('Industrial Pollution', Colors.lightBlue)
-        .then((markers) {
-      setState(() {
-        industrialPollution = markers;
-      });
-    });
-
-    _initializeMarkers('Civil Unrest', Colors.redAccent).then((markers) {
-      setState(() {
-        civilUnrest = markers;
-      });
-    });
-
-    _initializeMarkers('Industrial Fire', Colors.orangeAccent).then((markers) {
-      setState(() {
-        industrialFire = markers;
-      });
-    });
-
-    _initializeMarkers('Structural Failure', Colors.blueAccent).then((markers) {
-      setState(() {
-        structuralFailure = markers;
-      });
-    });
-
-    _initializeMarkers('Ship Wreck', Colors.purpleAccent).then((markers) {
-      setState(() {
-        shipWreck = markers;
-      });
-    });
-
-//////////////////////////////////////////////////
-    isLoading = false;
-  }
-
-  void callHome() {
-    _initializeMarkers('Snow', Colors.red).then((markers) {
-      setState(() {
-        snow = markers;
-      });
-    });
-
-    _initializeMarkers('Veld Fire', Colors.orange).then((markers) {
-      setState(() {
-        veldFire = markers;
-      });
-    });
-
-    _initializeMarkers('Heavy Rainfall', Colors.blue).then((markers) {
-      setState(() {
-        heavyRainfall = markers;
-      });
-    });
-
-    _initializeMarkers('Lightning', Colors.yellow).then((markers) {
-      setState(() {
-        lightning = markers;
-      });
-    });
-
-    _initializeMarkers('Strong Wind', Colors.green).then((markers) {
+    _initializeMarkers('Strong wind', Colors.green).then((markers) {
       setState(() {
         strongWind = markers;
       });
@@ -336,13 +249,6 @@ class _NotGoogleState extends State<NotGoogle> {
     return newMarkers;
   }
 
-  // Future<void> _initializeMarkers(String type,List<Marker>? name ) async {
-  //   List<Marker> newMarkers = await getForMap(type);
-  //   setState(() {
-  //     name = newMarkers;
-  //   });
-  // }
-
   void getMap() async {}
 
   Future<List<Marker>> getForMap(String target, Color color) async {
@@ -354,18 +260,15 @@ class _NotGoogleState extends State<NotGoogle> {
           .select()
           .eq("Type of Incident", target);
 
-      print("map data : $result");
-
       if (result.isNotEmpty) {
-        List<dynamic> items = await result.map((item) {
+        List<dynamic> items = result.map((item) {
           return {
             'name': item['Head of Household'] ?? 'No Family Name',
             'gpsLng': double.tryParse(item['Longitude (E)']) ?? 0.0,
             'gpsLat': double.tryParse(item['Latitude (S)']) ?? 0.0,
             'type': item['Type of Incident'] ?? '',
             'adress': item['Specify street address where possible/applicable']
-                    .toString() ??
-                'No Adress',
+                    .toString(),
           };
         }).toList();
         final List<Marker> markersStream = items.map((item) {
@@ -382,11 +285,8 @@ class _NotGoogleState extends State<NotGoogle> {
           );
         }).toList();
 
-        print('these are items : ${items}');
-        print(markersStream);
         return markersStream;
       } else {
-        print('No records found.');
         return [];
       }
     } catch (error) {
@@ -394,64 +294,6 @@ class _NotGoogleState extends State<NotGoogle> {
       return [];
     }
   }
-
-//   Future<List<Marker>> getForMap(String target, Color color) async {
-
-// try {
-//   final conn = await connectToDatabase();
-//   final result = await conn.execute(
-//     Sql.named(
-//         'SELECT "Head of Household", "Longitude (E)", "Latitude (S)", "Type of Incident", "Specify street address where possible/applicable" FROM "Information" WHERE "Type of Incident"=@type'),
-//     parameters: {'type': target},
-//   );
-
-// print("map data : $result");
-
-//   if (result.isNotEmpty) {
-//     List<dynamic> items = await result.map((item) {
-//       return {
-//         'name': item[0].toString() ?? 'No Family Name',
-//         'gpsLng': double.tryParse(item[1]) ?? 0.0,
-//         'gpsLat': double.tryParse(item[2]) ?? 0.0,
-//         'type': item[3].toString() ?? '',
-//         'adress': item[4].toString() ?? 'No Adress',
-//       };
-//     }).toList();
-//     final List<Marker> markersStream = items.map((item) {
-//       return Marker(
-//         point: LatLng(item['gpsLat'], item['gpsLng']),
-//         width: 500,
-//         height: 500,
-//         child: Pin(
-//           color: color!,
-//           call: () {
-//             showT(context, item['type'], item['type'], item['type']);
-//           },
-//         ),
-//       );
-//     }).toList();
-
-//     print('these are items : ${items}');
-//     print(markersStream);
-//     return markersStream;
-//   } else {
-//     print('No records found.');
-//     return [];
-//   }
-// }catch(error){
-//   print(error);
-//   return [];
-// }
-//   }
-
-  // IconButton(
-  // splashColor: null,
-  // icon: Icon(Icons.location_on),
-  // onPressed: () {
-  // showT(context, item['type']);
-  // },
-  // color: color!,
-  // ),
 
   @override
   Widget build(BuildContext context) {
@@ -480,181 +322,21 @@ class _NotGoogleState extends State<NotGoogle> {
                       urlTemplate:
                           'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                       userAgentPackageName: 'com.example.app',
-                      // You can implement custom error handling logic here
                     ),
                     TileLayer(
                       urlTemplate:
                           'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
                       userAgentPackageName: 'com.example.app',
-                      // You can implement custom error handling logic here
-                    ),
 
-                    // https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}
-                    // 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                    // https://www.google.cn/maps/vt?lyrs=s@189&gl=cn&x={x}&y={y}&z={z},
-
-                    MarkerLayer(markers: snow ?? []),
-                    MarkerLayer(markers: veldFire ?? []),
-                    MarkerLayer(markers: lightning ?? []),
-
-                    MarkerLayer(
-                      markers: snow ?? [],
                     ),
-                    MarkerLayer(
-                      markers: veldFire ?? [],
-                    ),
-                    MarkerLayer(
-                      markers: heavyRainfall ?? [],
-                    ),
-                    MarkerLayer(
-                      markers: lightning ?? [],
-                    ),
-                    MarkerLayer(
-                      markers: strongWind ?? [],
-                    ),
-                    MarkerLayer(
-                      markers: hailstorm ?? [],
-                    ),
-                    MarkerLayer(
-                      markers: railAccident ?? [],
-                    ),
-                    MarkerLayer(
-                      markers: roadAccident ?? [],
-                    ),
-                    MarkerLayer(
-                      markers: earthquake ?? [],
-                    ),
-                    MarkerLayer(
-                      markers: diseaseOutbreak ?? [],
-                    ),
-                    MarkerLayer(
-                      markers: plantationFire ?? [],
-                    ),
-                    MarkerLayer(
-                      markers: severeThunderstorm ?? [],
-                    ),
-                    MarkerLayer(
-                      markers: drought ?? [],
-                    ),
-                    MarkerLayer(
-                      markers: mudSlide ?? [],
-                    ),
-                    MarkerLayer(
-                      markers: airCrash ?? [],
-                    ),
-                    MarkerLayer(
-                      markers: hazmatSpillage ?? [],
-                    ),
-                    MarkerLayer(
-                      markers: industrialPollution ?? [],
-                    ),
-                    MarkerLayer(
-                      markers: civilUnrest ?? [],
-                    ),
-                    MarkerLayer(
-                      markers: industrialFire ?? [],
-                    ),
-                    MarkerLayer(
-                      markers: structuralFailure ?? [],
-                    ),
-                    MarkerLayer(
-                      markers: shipWreck ?? [],
-                    ),
-                    //
-                    // Cluster(
-                    //   markers1: snow ?? [],
-                    // ),
-                    // Cluster(
-                    //   markers1: veldFire ?? [],
-                    // ),
-                    // Cluster(
-                    //   markers1: heavyRainfall ?? [],
-                    // ),
-                    // Cluster(
-                    //   markers1: lightning ?? [],
-                    // ),
-                    // Cluster(
-                    //   markers1: strongWind ?? [],
-                    // ),
-                    // Cluster(
-                    //   markers1: hailstorm ?? [],
-                    // ),
-                    // Cluster(
-                    //   markers1: railAccident ?? [],
-                    // ),
-                    // Cluster(
-                    //   markers1: roadAccident ?? [],
-                    // ),
-                    // Cluster(
-                    //   markers1: earthquake ?? [],
-                    // ),
-                    // Cluster(
-                    //   markers1: diseaseOutbreak ?? [],
-                    // ),
-                    // Cluster(
-                    //   markers1: plantationFire ?? [],
-                    // ),
-                    // Cluster(
-                    //   markers1: severeThunderstorm ?? [],
-                    // ),
-                    // Cluster(
-                    //   markers1: drought ?? [],
-                    // ),
-                    // Cluster(
-                    //   markers1: mudSlide ?? [],
-                    // ),
-                    // Cluster(
-                    //   markers1: airCrash ?? [],
-                    // ),
-                    // Cluster(
-                    //   markers1: hazmatSpillage ?? [],
-                    // ),
-                    // Cluster(
-                    //   markers1: industrialPollution ?? [],
-                    // ),
-                    // Cluster(
-                    //   markers1: civilUnrest ?? [],
-                    // ),
-                    // Cluster(
-                    //   markers1: industrialFire ?? [],
-                    // ),
-                    // Cluster(
-                    //   markers1: structuralFailure ?? [],
-                    // ),
-                    // Cluster(
-                    //   markers1: shipWreck ?? [],
-                    // ),
-                    // RichAttributionWidget(
-                    //   attributions: [
-                    //     TextSourceAttribution(
-                    //       'Secret',
-                    //       onTap: () =>
-                    //           launchUrl(Uri.parse('https://mt1.google.com')),
-                    //     ),
-                    //   ],
-                    // ),
+                    ...markerMap.entries
+                        .map((entry) => MarkerLayer(markers: entry.value)),
                   ],
                 ),
               ),
               SubTitle(
                 title: "Legend Description",
               ),
-              // const  Padding(
-              //   padding: EdgeInsets.symmetric(vertical: 8.0),
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.center,
-              //     children: [
-              //       Text(
-              //         "Legend Description",
-              //         style: TextStyle(fontSize: 25.0),
-              //       ),
-              //       Padding(
-              //         padding: EdgeInsets.symmetric(horizontal: 8.0),
-              //         child: Icon(color: Colors.black, Icons.location_on),
-              //       ),
-              //     ],
-              //   ),
-              // ),
               isSmallScreen
                   ? SizedBox(
                       height: 100.0,
